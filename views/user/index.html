@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <!-- 理想视窗 -->
+  <meta name="viewport" content="width=device-width, initial-scale=1.0,maximum-scale=1,minimum-scale=1,user-scalable=no">
+  <title>千旅客网</title>
+  <link rel="shortcut icon" href="jd.ico" />
+  <!-- 添加ico -->
+  <link rel="stylesheet" href="lib/mui/css/mui.min.css" />
+  <!-- <link rel="stylesheet" href="lib/fontAwesome/css/font-awesome.min.css" /> -->
+  <!-- 字体图标用阿里巴巴的 或者 Mui icon图标 -->
+  <link rel="stylesheet" href="css/common.css" />
+  <!-- 公共样式 顶部侧滑的是公共的-->
+  <link rel="stylesheet" href="css/index.css" />
+</head>
+
+<body>
+
+  <!-- 侧滑导航根容器 -->
+  <div class="mui-off-canvas-wrap mui-draggable mui-slide-in">
+    <!-- 菜单容器 -->
+    <aside class="mui-off-canvas-right">
+      <div id="offCanvasSideScroll" class="mui-scroll-wrapper">
+        <div class="mui-scroll">
+          <!-- 菜单具体展示内容 -->
+
+          <p>我是菜单内容</p>
+          <p>我是菜单内容</p>
+          <p>我是菜单内容</p>
+          <p>我是菜单内容</p>
+          <p>我是菜单内容</p>
+          <p>我是菜单内容</p>
+          <p>我是菜单内容</p>
+          <p>我是菜单内容</p>
+          <p>我是菜单内容</p>
+          <p>我是菜单内容</p>
+          <p>我是菜单内容</p>
+          <p>我是菜单内容</p>
+          <p>我是菜单内容</p>
+          <p>我是菜单内容</p>
+          <p>我是菜单内容</p>
+          <p>我是菜单内容</p>
+          <p>我是菜单内容</p>
+          <p>我是菜单内容</p>
+          <p>我是菜单内容</p>
+          <p>我是菜单内容</p>
+          <p>我是菜单内容</p>
+          <p>我是菜单内容</p>
+          <p>我是菜单内容</p>
+          <p>我是菜单内容</p>
+
+        </div>
+      </div>
+    </aside>
+    <!-- 主页面容器 -->
+    <div class="mui-inner-wrap">
+      <!-- 主页面标题 -->
+      <header class="mui-bar mui-bar-nav">
+        <span id="left-menu" class="mui-icon mui-action-menu mui-icon-bars mui-pull-right"></span>
+
+        <div class="mui-input-row mui-search">
+          <input type="search" class="mui-input-clear" placeholder="青年旅社">
+        </div>
+
+      </header>
+      <div id="offCanvasContentScroll" class="mui-content mui-scroll-wrapper">
+        <div class="mui-scroll">
+          <!-- 主界面具体展示内容 -->
+
+          <!-- 轮播图 -->
+          <div class="mui-slider">
+            <div class="mui-slider-group mui-slider-loop">
+              <!--支持循环，需要重复图片节点-->
+              <div class="mui-slider-item mui-slider-item-duplicate">
+                <a href="#">
+                  <img src="images/4.jpg" />
+                </a>
+              </div>
+              <div class="mui-slider-item">
+                <a href="#">
+                  <img src="images/1.jpg" />
+                </a>
+              </div>
+              <div class="mui-slider-item">
+                <a href="#">
+                  <img src="images/2.jpg" />
+                </a>
+              </div>
+              <div class="mui-slider-item">
+                <a href="#">
+                  <img src="images/3.jpg" />
+                </a>
+              </div>
+              <div class="mui-slider-item">
+                <a href="#">
+                  <img src="images/4.jpg" />
+                </a>
+              </div>
+              <!--支持循环，需要重复图片节点-->
+              <div class="mui-slider-item mui-slider-item-duplicate">
+                <a href="#">
+                  <img src="images/1.jpg" />
+                </a>
+              </div>
+            </div>
+            <div class="mui-slider-indicator">
+              <div class="mui-indicator mui-active"></div>
+              <div class="mui-indicator"></div>
+              <div class="mui-indicator"></div>
+              <div class="mui-indicator"></div>
+            </div>
+          </div>
+
+
+          <ul class="liebiao">
+            <li>
+              <a href="https://www.baidu.com/">
+                <img src="images/a1.png">
+                <p>结伴</p>
+              </a>
+            </li>
+            <li>
+              <a href="javascript:;">
+                <img src="images/a2.png">
+                <p>沙发客</p>
+              </a>
+            </li>
+            <li>
+              <a href="javascript:;">
+                <img src="images/a3.png">
+                <p>召集令</p>
+              </a>
+            </li>
+            <li>
+              <a href="javascript:;">
+                <img src="images/a4.png">
+                <p>装备</p>
+              </a>
+            </li>
+            <li>
+              <a href="javascript:;">
+                <img src="images/a5.png">
+                <p>游记</p>
+              </a>
+            </li>
+            <li>
+              <a href="javascript:;">
+                <img src="images/a6.png">
+                <p>攻略</p>
+              </a>
+            </li>
+            <li>
+              <a href="javascript:;">
+                <img src="images/a7.png">
+                <p>美食</p>
+              </a>
+            </li>
+            <li>
+              <a href="javascript">
+                <img src="images/a8.png">
+                <p>美景</p>
+              </a>
+            </li>
+            <div class="clear"></div>
+          </ul>
+
+
+
+
+
+
+
+
+
+
+
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script src="lib/zepto/zepto.min.js"></script>
+  <!-- 移动端jquery -->
+  <script src="lib/mui/js/mui.min.js"></script>
+  <!-- mui -->
+  <script src="lib/artTemplate/template-native.js"></script>
+  <!-- 模板引擎，不用拼接字符串 -->
+  <script src="js/common.js"></script>
+  <!-- 公共js工具 包括 全局ajax工具函数 -->
+  <script src="js/index.js"></script>
+</body>
+
+</html>

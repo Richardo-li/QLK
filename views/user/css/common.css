@@ -1,0 +1,25 @@
+*{
+  padding: 0;
+  margin: 0;
+}
+
+html{
+  font-size: 100px;
+}
+#offCanvasContentScroll{
+  background: white;
+}
+
+ul li{
+  list-style: none;
+}
+
+
+.mui-search{
+  position: fixed;
+  top: 4%;
+  left: 20%;
+  width: 60%; 
+}
+
+
