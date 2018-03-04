@@ -16,4 +16,9 @@ $(function () {
     document.querySelector('html').style.fontSize = fs + 'px';
   }
 
+    // 单击隐藏侧滑菜单
+    $("#offCanvasHide").on('tap', function (event) {
+      mui('.mui-off-canvas-wrap').offCanvas('close');
+    });
+
 })

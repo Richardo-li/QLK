@@ -1,8 +1,8 @@
 .liebiao {
-   margin-top: 3%;
+    margin-top: 3%;
 }
 
-.liebiao li a{
+.liebiao li a {
     display: block;
     width: 25%;
     float: left;
@@ -11,4 +11,64 @@
 
 .liebiao li a img {
     width: 60%;
+}
+
+.liebiao li a p {
+    font-size: 0.25rem;
+}
+
+#box ul {
+    height: .5rem;
+}
+
+#box ul li {
+    font-size: 0.28rem;
+}
+
+#box>div {
+    margin-top: 43px;
+    width: 100%;
+}
+
+#box>div a {
+    position: relative;
+    display: block;
+    height: 1.5rem;
+    border-bottom: .03rem dashed #dcdcdc;
+}
+
+#box>div a img {
+    position: absolute;
+    border-radius: 50%;
+    top: .1rem;
+    left: .1rem;
+    height: 1.3rem;
+    width: 1.3rem;
+}
+
+#box>div a span:nth-of-type(1) {
+    position: absolute;
+    top: 0;
+    left: 1.5rem;
+    font-size: 0.3rem;
+    text-align: left;
+    overflow : hidden;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-line-clamp: 1;
+    -webkit-box-orient: vertical;
+}
+
+#box>div a span:nth-of-type(2) {
+    position: absolute;
+    color: #8f8f94;
+    font-size: 0.24rem;
+    top: .33rem;
+    left: 1.5rem;
+    text-align: left;
+    overflow : hidden;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
 }

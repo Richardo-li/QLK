@@ -1,236 +1,420 @@
-<!DOCTYPE html>
 <html lang="en">
 
 <head>
   <meta charset="UTF-8">
-  <!-- 理想视窗 -->
-  <meta name="viewport" content="width=device-width, initial-scale=1.0,maximum-scale=1,minimum-scale=1,user-scalable=no">
-  <title>千旅客网</title>
-  <link rel="shortcut icon" href="jd.ico" />
-  <!-- 添加ico -->
-  <link rel="stylesheet" href="lib/mui/css/mui.min.css" />
-  <!-- <link rel="stylesheet" href="lib/fontAwesome/css/font-awesome.min.css" /> -->
-  <!-- 字体图标用阿里巴巴的 或者 Mui icon图标 -->
-  <link rel="stylesheet" href="css/common.css" />
-  <!-- 公共样式 顶部侧滑的是公共的-->
-  <link rel="stylesheet" href="css/index.css" />
+  <meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no;" name="viewport">
+
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Swiper/4.0.2/css/swiper.min.css">
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/Swiper/4.0.2/js/swiper.min.js"></script>
+  <script src="lib/zepto/zepto.min.js"></script>
+
+
+  <style type="text/css">
+    /* 用户绑定拨动框架 */
+
+    .my-pagination .swiper-pagination-bullet {
+      text-align: center;
+      border-radius: 0;
+      opacity: 1;
+    }
+
+    .my-pagination ul {
+      display: -webkit-box;
+    }
+
+    .my-pagination li {
+      display: block;
+      background: #fff;
+      overflow: hidden;
+      box-flex: 1;
+      -moz-box-flex: 1;
+      -webkit-box-flex: 1;
+      height: 40px;
+      line-height: 40px;
+      position: relative;
+      font-size: 15px;
+    }
+
+    .my-pagination li:after {
+      position: absolute;
+      top: auto;
+      right: auto;
+      bottom: 0;
+      left: 0;
+      z-index: 1;
+      display: block;
+      width: 100%;
+      height: 1px;
+      content: '';
+      background-color: #dcdcdc;
+      -webkit-transform-origin: 50% 100%;
+      transform-origin: 50% 100%;
+      -webkit-transform: scaleY(.5)
+    }
+
+    .my-pagination .swiper-pagination-bullet-active {
+      color: #21a4f4;
+    }
+
+    .my-pagination .swiper-pagination-bullet-active:after {
+      opacity: 1;
+      background-color: #21a4f4;
+      height: 4px;
+    }
+
+
+    /* 用户绑定 */
+
+    .user_zc_body {
+      margin: 0px auto;
+      overflow: hidden;
+      background: #fff;
+    }
+
+    .user_zc_body ul {
+      margin: 0 20px;
+      overflow: hidden;
+    }
+
+    .user_zc_body li {
+      background: #fff;
+      overflow: hidden;
+      padding: 10px 0;
+      position: relative;
+    }
+
+    .user_zc_body li:last-child {
+      margin-bottom: 0;
+    }
+
+    .user_zc_body li:after {
+      content: "";
+      display: block;
+      position: absolute;
+      left: 0;
+      bottom: 0;
+      z-index: 1;
+      width: 100%;
+      height: 1px;
+      background: #dcdcdc;
+      -webkit-transform: scaleY(.5);
+    }
+
+    .user_zc_body .p_input {
+      padding-left: 40px;
+      position: relative;
+    }
+
+    .user_zc_body .p_input input {
+      width: 100%;
+      padding: 0;
+      margin: 0;
+      height: 40px;
+      color: #444;
+      font-size: 15px;
+    }
+
+    .user_zc_body .p_input em {
+      position: absolute;
+      left: 0;
+      top: 0;
+      z-index: 1;
+      width: 40px;
+      height: 40px;
+      line-height: 40px;
+      text-align: center;
+      color: #6ecb09;
+      font-size: 16px;
+    }
+
+    .user_zc_body .p_wjmm {
+      margin: 20px;
+      text-align: right;
+    }
+
+    .user_zc_body .p_input_sm {
+      padding-right: 50px;
+    }
+
+    .user_zc_body .p_input_sm .sp_btn {
+      display: inline-block;
+      position: absolute;
+      right: 5px;
+      top: 5px;
+      z-index: 1;
+      width: 40px;
+      height: 30px;
+      line-height: 30px;
+      text-align: center;
+      background: #f4f4f4;
+      color: #666;
+      border-radius: 4px;
+      font-size: 12px;
+    }
+
+    .user_zc_body .p_input_sm .sp_btn i {
+      font-size: 24px;
+      margin-top: 4px;
+      line-height: 32px;
+    }
+
+    .user_zc_body .p_input_yzm {
+      padding-right: 90px;
+    }
+
+    .user_zc_body .p_input_yzm .sp_btn {
+      display: inline-block;
+      position: absolute;
+      right: 5px;
+      top: 5px;
+      z-index: 1;
+      width: 80px;
+      height: 30px;
+      line-height: 30px;
+      text-align: center;
+      background: #288eff;
+      color: #fff;
+      border-radius: 4px;
+      font-size: 12px;
+    }
+
+    .user_zc_body .p_input_yzm .sp_btn:active {
+      background: #2686ef;
+    }
+
+    .user_zc_body .p_input_yzm .sp_btn_dx {
+      right: 70px;
+    }
+
+    .user_zc_body .p_input_yzm .sp_btn.no_hit {
+      color: #bbb;
+    }
+
+    .user_wj_pw {
+      overflow: hidden;
+      padding: 0 10px;
+    }
+
+    .user_zc_btn {
+      padding: 20px;
+      overflow: hidden;
+      background: #fff;
+    }
+
+    .user_zc_btn .p_btn {
+      overflow: hidden;
+    }
+
+    .user_zc_btn .p_btn a {
+      display: block;
+      height: 40px;
+      line-height: 40px;
+      text-align: center;
+      color: #fff;
+      border-radius: 4px;
+      font-size: 16px;
+    }
+
+    .user_zc_btn .p_btn a.c_1 {
+      background: #f15145;
+    }
+
+    .user_zc_btn .p_btn a.c_1:active {
+      background: #e44d41;
+    }
+
+    .user_zc_btn .p_btn a.c_2 {
+      background: #00cfbe;
+    }
+
+    .user_zc_btn .p_btn a.c_2:active {
+      background: #00c3b3;
+    }
+
+    .user_zc_btn .p_btn a.c_3 {
+      background: #288eff;
+    }
+
+    .user_zc_btn .p_btn a.c_3:active {
+      background: #2686ef;
+    }
+
+    .user_zc_btn .p_btn a.c_4 {
+      background: #6ecb09;
+    }
+
+    .user_zc_btn .p_btn a.c_4:active {
+      background: #66bc08;
+    }
+  </style>
+
+
 </head>
 
-<body>
+<body ontouchstart="">
 
 
-  <!-- 侧滑导航根容器 -->
-  <div class="mui-off-canvas-wrap mui-draggable">
-    <!-- 菜单容器 -->
-    <aside class="mui-off-canvas-right">
-      <div class="mui-scroll-wrapper">
-        <div class="mui-scroll">
-          <!-- 菜单具体展示内容 -->
-          侧滑菜单内容
+
+  <div class="swiper-container swiper-container-horizontal swiper-container-android">
+    <div class="my-pagination">
+      <ul class="my-pagination-ul swiper-pagination-clickable">
+        <li class="swiper-pagination-bullet">手机</li>
+        <li class="swiper-pagination-bullet swiper-pagination-bullet-active">固话</li>
+        <li class="swiper-pagination-bullet">你好</li>
+        <li class="swiper-pagination-bullet">我好</li>
+      </ul>
+    </div>
+    <div class="swiper-wrapper" style="transition-duration: 0ms; transform: translate3d(-360px, 0px, 0px);">
+
+      <div class="swiper-slide swiper-slide-prev" style="width: 360px;">
+        <!--手机绑定GO-->
+        <div class="user_zc_body">
+          <ul>
+
+            <li>
+              <p class="p_input">
+                <em class="fa fa-tablet" style="font-size:18px;"></em>
+                <input type="tel" placeholder="请输入手机号">
+              </p>
+            </li>
+            <li>
+              <p class="p_input p_input_yzm">
+                <em class="fa  fa-envelope" style="font-size:14px;"></em>
+                <input type="text" placeholder="请输入验证码">
+                <span class="sp_btn">获取验证码</span>
+              </p>
+            </li>
+
+          </ul>
         </div>
-      </div>
-    </aside>
-    <!-- 主页面容器 -->
-    <div class="mui-inner-wrap">
-      <!-- 主页面标题 -->
-      <header class="mui-bar mui-bar-nav">
-        <a class="mui-icon mui-action-menu mui-icon-bars mui-pull-right"></a>
-
-        <div class="mui-input-row mui-search">
-          <input type="search" class="mui-input-clear" placeholder="青年旅社">
-        </div>
-
-      </header>
-      <div class="mui-content mui-scroll-wrapper">
-        <div class="mui-scroll">
-          <!-- 主界面具体展示内容 -->
-
-
-
-
-          <div class="mui-slider">
-            <div class="mui-slider-group mui-slider-loop">
-              <!--支持循环，需要重复图片节点-->
-              <div class="mui-slider-item mui-slider-item-duplicate">
-                <a href="#">
-                  <img src="images/4.jpg" />
-                </a>
-              </div>
-              <div class="mui-slider-item">
-                <a href="#">
-                  <img src="images/1.jpg" />
-                </a>
-              </div>
-              <div class="mui-slider-item">
-                <a href="#">
-                  <img src="images/2.jpg" />
-                </a>
-              </div>
-              <div class="mui-slider-item">
-                <a href="#">
-                  <img src="images/3.jpg" />
-                </a>
-              </div>
-              <div class="mui-slider-item">
-                <a href="#">
-                  <img src="images/4.jpg" />
-                </a>
-              </div>
-              <!--支持循环，需要重复图片节点-->
-              <div class="mui-slider-item mui-slider-item-duplicate">
-                <a href="#">
-                  <img src="images/1.jpg" />
-                </a>
-              </div>
-            </div>
-            <div class="mui-slider-indicator">
-              <div class="mui-indicator mui-active"></div>
-              <div class="mui-indicator"></div>
-              <div class="mui-indicator"></div>
-              <div class="mui-indicator"></div>
-            </div>
-          </div>
-
-
-
-          <!-- <ul class="liebiao">
-              <li>
-                  <a href="javascript:;">
-                      <img src="images/a1.png">
-                      <p>结伴</p>
-                  </a>
-              </li>
-              <li>
-                  <a href="javascript:;">
-                      <img src="images/a2.png">
-                      <p>沙发客</p>
-                  </a>
-              </li>
-              <li>
-                  <a href="javascript:;">
-                      <img src="images/a3.png">
-                      <p>召集令</p>
-                  </a>
-              </li>
-              <li>
-                  <a href="javascript:;">
-                      <img src="images/a4.png">
-                      <p>装备</p>
-                  </a>
-              </li>
-              <li>
-                  <a href="javascript:;">
-                      <img src="images/a5.png">
-                      <p>游记</p>
-                  </a>
-              </li>
-              <li>
-                  <a href="javascript:;">
-                      <img src="images/a6.png">
-                      <p>攻略</p>
-                  </a>
-              </li>
-              <li>
-                  <a href="javascript:;">
-                      <img src="images/a7.png">
-                      <p>美食</p>
-                  </a>
-              </li>
-              <li>
-                  <a href="javascript">
-                      <img src="images/a8.png">
-                      <p>美景</p>
-                  </a>
-              </li>
-              <div class="clear"></div>
-          </ul> -->
-
-
-
-          <p>22222222</p>
-          <p>22222222</p>
-          <p>22222222</p>
-          <p>22222222</p>
-          <p>22222222</p>
-          <p>22222222</p>
-          <p>22222222</p>
-          <p>22222222</p>
-          <p>22222222</p>
-          <p>22222222</p>
-          <p>22222222</p>
-          <p>22222222</p>
-          <p>22222222</p>
-          <p>22222222</p>
-          <p>22222222</p>
-          <p>22222222</p>
-          <p>22222222</p>
-          <p>22222222</p>
-          <p>22222222</p>
-          <p>22222222</p>
-          <p>22222222</p>
-          <p>22222222</p>
-          <p>22222222</p>
-          <p>22222222</p>
-          <p>22222222</p>
-          <p>22222222</p>
-          <p>22222222</p>
-          <p>22222222</p>
-          <p>22222222</p>
-          <p>22222222</p>
-          <p>22222222</p>
-          <p>22222222</p>
-          <p>22222222</p>
-          <p>22222222</p>
-          <p>22222222</p>
-          <p>22222222</p>
-          <p>22222222</p>
-          <p>22222222</p>
-
+        <div class="user_zc_btn">
+          <p class="p_btn">
+            <a href="#" class="c_4">立即绑定</a>
+          </p>
         </div>
 
+        <!--手机绑定END-->
 
       </div>
+
+
+      <div class="swiper-slide swiper-slide-active" style="width: 360px;">
+
+        <!--固话绑定GO-->
+        <div class="user_zc_body">
+          <ul>
+
+            <li>
+              <p class="p_input">
+                <em class="fa fa-user" style=""></em>
+                <input type="text" placeholder="客户号 / 开户人姓名">
+              </p>
+            </li>
+            <li>
+              <p class="p_input ">
+                <em class="fa fa-lock"></em>
+                <input type="text" placeholder="服务密码 / 开户人身份证号">
+              </p>
+            </li>
+
+          </ul>
+        </div>
+        <div class="user_zc_btn">
+          <p class="p_btn">
+            <a href="#" class="c_4">立即绑定</a>
+          </p>
+        </div>
+
+        <!--固话绑定END-->
+
+      </div>
+      <div class="swiper-slide swiper-slide-next" style="width: 360px;">
+
+        <!--固话绑定GO-->
+        <div class="user_zc_body">
+          <ul>
+
+            <li>
+              <p class="p_input">
+                <em class="fa fa-user" style=""></em>
+                <input type="text" placeholder="客户号 / 开户人姓名">
+              </p>
+            </li>
+            <li>
+              <p class="p_input ">
+                <em class="fa fa-lock"></em>
+                <input type="text" placeholder="服务密码 / 开户人身份证号">
+              </p>
+            </li>
+
+          </ul>
+        </div>
+        <div class="user_zc_btn">
+          <p class="p_btn">
+            <a href="#" class="c_4">立即绑定</a>
+          </p>
+        </div>
+
+        <!--固话绑定END-->
+
+      </div>
+      <div class="swiper-slide" style="width: 360px;">
+
+        <!--固话绑定GO-->
+        <div class="user_zc_body">
+          <ul>
+
+            <li>
+              <p class="p_input">
+                <em class="fa fa-user" style=""></em>
+                <input type="text" placeholder="客户号 / 开户人姓名">
+              </p>
+            </li>
+            <li>
+              <p class="p_input ">
+                <em class="fa fa-lock"></em>
+                <input type="text" placeholder="服务密码 / 开户人身份证号">
+              </p>
+            </li>
+
+          </ul>
+        </div>
+        <div class="user_zc_btn">
+          <p class="p_btn">
+            <a href="#" class="c_4">立即绑定</a>
+          </p>
+        </div>
+
+        <!--固话绑定END-->
+
+      </div>
+
     </div>
   </div>
 
+  <script> 
+    var mySwiper = new Swiper('.swiper-container', {
+      pagination: '.my-pagination-ul',
+      paginationClickable: true,
+      paginationBulletRender: function (index, className) {
+        switch (index) {
+          case 0: name = '手机'; break;
+          case 1: name = '固话'; break;
+          case 2: name = '你好'; break;
+          case 3: name = '我好'; break;
+          default: name = '';
+        }
+        return '<li class="' + className + '">' + name + '</li>';
+      }
+    })
+  </script>
 
 
-  <script src="lib/mui/js/mui.js"></script>
-  <!-- mui -->
-  <script src="lib/artTemplate/template-native.js"></script>
-  <!-- 模板引擎，不用拼接字符串 -->
-  <script src="lib/zepto/zepto.min.js"></script>
-  <!-- 移动端jquery -->
-  <script src="js/common.js"></script>
-  <!-- 公共js工具 包括 全局ajax工具函数 -->
-  <script src="js/index.js"></script>
+
+
+
+
 </body>
 
 </html>
-
-<script>
-
-
-  $.ajax({
-    type: 'get',
-    url: 'http://localhost:3000/123',
-    success: function (data) {
-      console.log(data);
-    },
-    error: function () {
-      console.log('error');
-    }
-  })
-
-</script>
-
-<script>  
-  $("#left-menu").on('tap', function (event) {
-    mui('.mui-off-canvas-wrap').offCanvas('show');
-  });
-
-  window.onload = function () {
-    mui('#offCanvasSideScroll').scroll();
-    mui('#offCanvasContentScroll').scroll();
-  }  
-</script>
