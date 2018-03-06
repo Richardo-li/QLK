@@ -34,7 +34,7 @@
     position: relative;
     display: block;
     height: 1.5rem;
-    border-bottom: .03rem dashed #dcdcdc;
+    border-bottom: .026rem dashed #dcdcdc;
 }
 
 #box>div a img {
@@ -69,6 +69,20 @@
     overflow : hidden;
     text-overflow: ellipsis;
     display: -webkit-box;
-    -webkit-line-clamp: 3;
+    -webkit-line-clamp: 1;
+    -webkit-box-orient: vertical;
+}
+
+#box>div a span:nth-of-type(3) {
+    position: absolute;
+    color: #8f8f94;
+    font-size: 0.24rem;
+    top: .63rem;
+    left: 1.5rem;
+    text-align: left;
+    overflow : hidden;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
     -webkit-box-orient: vertical;
 }

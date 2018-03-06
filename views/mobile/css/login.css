@@ -1,0 +1,28 @@
+ html {
+     background: white;
+ }
+
+ .Ali {
+     position: absolute;
+     width: 150px;
+     height: 150px;
+     left: 50%;
+     transform: translateX(-50%);
+ }
+
+ .mui-content {
+     background: white;
+ }
+
+ #login {
+     position: relative;
+     top: 0.6rem;
+     left: -0.3rem;
+ }
+
+ #reg {
+     position: relative;
+     top: 0.6rem;
+     left: 0.3rem;
+     
+ }

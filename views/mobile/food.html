@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <!-- 理想视窗 -->
+  <meta name="viewport" content="width=device-width, initial-scale=1.0,maximum-scale=1,minimum-scale=1,user-scalable=no">
+  <title>千旅客网-美食</title>
+  <link rel="shortcut icon" href="jd.ico" />
+  <!-- 添加ico -->
+  <link rel="stylesheet" href="lib/mui/css/mui.min.css" />
+  <!-- <link rel="stylesheet" href="lib/fontAwesome/css/font-awesome.min.css" /> -->
+  <!-- 字体图标用阿里巴巴的 或者 Mui icon图标 -->
+  <link rel="stylesheet" href="css/common.css" />
+  <!-- 公共样式 顶部侧滑的是公共的-->
+  <link rel="stylesheet" href="css/food.css" />
+</head>
+
+<body>
+
+  <!-- 侧滑导航根容器 -->
+  <div class="mui-off-canvas-wrap mui-draggable mui-slide-in">
+    <!-- 菜单容器 -->
+    <aside class="mui-off-canvas-right">
+      <div id="offCanvasSideScroll" class="mui-scroll-wrapper">
+        <div class="mui-scroll">
+          <!-- 菜单具体展示内容 -->
+
+          <p style="color:white;font-size:.38rem;margin:.2rem 0 .2rem .2rem;">宗旨</p>
+          <div style="color:#bbb;font-size:.23rem;padding:0 .2rem .2rem .2rem;text-align:left;">
+            千旅客网致力建设成为背包客驴友穷游时提供最全面最方便的旅行信息和服务。
+          </div>
+          <ul class="mui-table-view mui-table-view-chevron mui-table-view-inverted menu">
+            <li class="mui-table-view-cell">
+              <a href="./index.html" class="mui-navigate-right">
+                首页
+              </a>
+            </li>
+            <li class="mui-table-view-cell">
+              <a href="javascript:;" class="mui-navigate-right">
+                注册
+              </a>
+            </li>
+            <li class="mui-table-view-cell">
+              <a href="./user/login.html" class="mui-navigate-right">
+                登录
+              </a>
+            </li>
+            <li class="mui-table-view-cell">
+              <a href="./user/personalCenter.html" class="mui-navigate-right">
+                个人中心
+              </a>
+            </li>
+            <li class="mui-table-view-cell">
+              <a href="javascript:;" class="mui-navigate-right">
+                我的文章
+              </a>
+            </li>
+
+          </ul>
+
+          <button id="offCanvasHide" type="button" class="mui-btn mui-btn-danger mui-btn-block" style="padding: 5px 10px;margin-top:40px;">关闭侧滑菜单</button>
+
+        </div>
+      </div>
+    </aside>
+    <!-- 主页面容器 -->
+    <div class="mui-inner-wrap">
+      <!-- 主页面标题 -->
+      <header class="mui-bar mui-bar-nav">
+        <span id="left-menu" class="mui-icon mui-action-menu mui-icon-bars mui-pull-right"></span>
+
+        <a href="javascript:history.go(-1)" class="mui-icon mui-icon-back" style="color:black"></a>
+
+        <h1 class="mui-title">美食推荐 </h1>
+
+      </header>
+      <div id="offCanvasContentScroll" class="mui-content mui-scroll-wrapper">
+        <div class="mui-scroll">
+          <ul class="mui-table-view mui-grid-view">
+            <!-- <a href="https://www.baidu.com/" class="kuang"></a> -->
+
+            <li class="mui-table-view-cell mui-media mui-col-xs-6">
+              <a href="https://www.baidu.com/">
+                <img class="mui-media-object" src="./images/1.jpg">
+                <div class="mui-media-body">幸福就是可以一起睡觉</div>
+              </a>
+            </li>
+            <li class="mui-table-view-cell mui-media mui-col-xs-6">
+              <a href="#">
+                <img class="mui-media-object" src="./images/2.jpg">
+                <div class="mui-media-body">想要一间这样的木屋，静静的喝咖啡</div>
+              </a>
+            </li>
+            <li class="mui-table-view-cell mui-media mui-col-xs-6">
+              <a href="#">
+                <img class="mui-media-object" src="./images/3.jpg">
+                <div class="mui-media-body">Color of SIP CBD</div>
+              </a>
+            </li>
+            <li class="mui-table-view-cell mui-media mui-col-xs-6">
+              <a href="#">
+                <img class="mui-media-object" src="./images/4.jpg">
+                <div class="mui-media-body">静静看这世界</div>
+              </a>
+            </li>
+
+
+
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+</body>
+
+</html>
+<script src="lib/zepto/zepto.min.js"></script>
+<!-- 移动端jquery -->
+<script src="lib/mui/js/mui.min.js"></script>
+<!-- mui -->
+<script src="lib/artTemplate/template-native.js"></script>
+<!-- 模板引擎，不用拼接字符串 -->
+<script src="js/common.js"></script>
+<!-- 公共js工具 包括 全局ajax工具函数 -->
+<script src="js/food.js"></script>

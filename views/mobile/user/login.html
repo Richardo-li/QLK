@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <!-- 理想视窗 -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0,maximum-scale=1,minimum-scale=1,user-scalable=no">
+    <title>千旅客网-登录</title>
+    <link rel="shortcut icon" href="../jd.ico" />
+    <!-- 添加ico -->
+    <link rel="stylesheet" href="../lib/mui/css/mui.min.css" />
+    <!-- <link rel="stylesheet" href="lib/fontAwesome/css/font-awesome.min.css" /> -->
+    <!-- 字体图标用阿里巴巴的 或者 Mui icon图标 -->
+    <link rel="stylesheet" href="../css/common.css" />
+    <!-- 公共样式 顶部侧滑的是公共的-->
+    <link rel="stylesheet" href="../css/login.css" />
+</head>
+
+<body>
+
+    <header class="mui-bar mui-bar-nav">
+
+        <a href="javascript:history.go(-1)" class="mui-icon mui-icon-back" style="color:black"></a>
+
+        <h1 class="mui-title">登录</h1>
+    </header>
+
+    <div class="mui-content">
+
+        <img class="Ali" src="../images/login1.png" alt="">
+
+        <div class="mui-input-group">
+
+            <div class="mui-input-row" style="margin-top:150px;">
+                <label>帐号</label>
+                <input type="text" class="mui-input-clear" placeholder="请输入帐号名" id="username">
+            </div>
+            <div class="mui-input-row">
+                <label>密码</label>
+                <input type="password" class="mui-input-clear" placeholder="请输入密码" id="password">
+            </div>
+        </div>
+        <!-- //注意：登录按钮不能和账号密码输入框放在一个form里面 -->
+        <div class="mui-content-padded" align="center">
+            <button type="button" class="mui-btn mui-btn-blue" id="login">登陆</button>
+            <button type="button" class="mui-btn mui-btn-green" id="reg">注册</button>
+        </div>
+    </div>
+
+
+
+
+</body>
+
+</html>
+<script src="../lib/zepto/zepto.min.js"></script>
+<!-- 移动端jquery -->
+<script src="../lib/mui/js/mui.min.js"></script>
+<!-- mui -->
+<script src="../lib/artTemplate/template-native.js"></script>
+<!-- 模板引擎，不用拼接字符串 -->
+<script src="../js/common.js"></script>
+<!-- 公共js工具 包括 全局ajax工具函数 -->
+<script src="../js/login.js"></script>

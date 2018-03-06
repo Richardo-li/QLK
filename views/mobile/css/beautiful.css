@@ -1,0 +1,9 @@
+.mui-card-content-inner{
+    /* height: 1rem; */
+    padding: 0.18rem;  
+    text-align: left;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    -webkit-line-clamp: 1;
+    -webkit-box-orient: vertical;
+}
