@@ -1,0 +1,29 @@
+{
+  "name": "QLK",
+  "version": "1.0.0",
+  "description": "",
+  "main": "app.js",
+  "dependencies": {
+    "art-template": "^4.12.2",
+    "blueimp-md5": "^2.10.0",
+    "express": "^4.16.2",
+    "express-art-template": "^1.0.1",
+    "formidable": "^1.2.0",
+    "jquery": "^3.3.1"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Richardo-li/QLK.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Richardo-li/QLK/issues"
+  },
+  "homepage": "https://github.com/Richardo-li/QLK#readme"
+}
