@@ -9,7 +9,13 @@ var express = require('express');
 var router = express.Router();
 
 //添加路由   handler.js
-router.get('/', handler.getMobileIndexPage);  //mobile首页路由
+router.get('/', handler.getMobileIndexPageCompanion);  //mobile首页结伴模块十条记录
+router.get('/companion', handler.getMobileIndexPageAllCompanion);  //结伴页面所有记录
+router.get('/addCompanioninfo', handler.getAddCompanioninfoPage);  //打开发布结伴信息页面
+router.post('/addCompanioninfo', handler.doAddCompanioninfo);  //发布结伴信息
+router.get('/register', handler.getRegisterPage);  //打开注册页面
+
+
 // router.get('/', handler.getIndexPage);
 // router.post("/postUpload", handler.postUpload);
 // router.get("/add", handler.getAddPage);
