@@ -59,6 +59,37 @@ module.exports.doAddCompanioninfo = function (newObj, callback) {
 
 }
 
+//注册时匹配数据库中的用户名是否存在相同的，存在相同不允许注册该用户名
+// module.exports.getUserByuserName = function (LoginName, callback) {
+//   var sql = "select * from member where LoginName =" + LoginName;
+//   connection.query(sql, (err, results, fileds) => {
+//     if (err) {
+//       return callback(err);
+//     }
+//     callback(null, results[0]);
+//   });
+// }
+
+module.exports.getUserByuserName = function (LoginName, callback) {
+  var sql = `select * from member where LoginName='${LoginName}'`;
+  connection.query(sql, (err, result) => {
+    if (err) {
+      callback(err);
+    } else {
+      callback(null, result);
+    }
+  });
+}
 
 
+//添加用户--注册
+module.exports.addUser = function (obj, callback) {
+  var sql = `insert into member(LoginName,LoginPwd) values('${obj.LoginName}','${obj.LoginPwd}')`;
+  connection.query(sql, (err, result) => {
+    if (err) {
+      return callback(err);
+    }
+    callback(null, result);
+  });
 
+}

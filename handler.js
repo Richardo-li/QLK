@@ -74,31 +74,69 @@ module.exports.doAddCompanioninfo = function (req, res) {
   });
   // 判断参数是否完全接收完毕
   req.on("end", () => {
-
     var newObj = querystring.parse(str);
-    // 我们拿到的参数是key=value&key=value的字符串数据，但是我们需要的是对象。所以我们利用核心模块querystring将这个格式的字符串转换为对象
-    // console.log(newObj);
+    // 拿到的参数是key=value&key=value的字符串数据，但是我们需要的是对象。所以我们利用核心模块querystring将这个格式的字符串转换为对象
 
-    // 将对象写入到文件
-    // 1.读取所有数据
-    // 2.添加数据
-    // 3.重新写入
-    // // 4.返回
+    // 写入
+    // 
     mymodule.doAddCompanioninfo(newObj, (err, result) => {
       if (err) return res.end(JSON.stringify({ "code": 0, "msg": "添加失败" }));
       res.end(JSON.stringify({ "code": 1, "msg": "添加成功" }));
-
     })
-
   });
 }
 
 
-
 //渲染注册页面   res.render()方法渲染
 module.exports.getRegisterPage = function (req, res) {
-res.setHeader("Content-Type", "text/html");
+  res.setHeader("Content-Type", "text/html");
   res.render(__dirname + '/views/mobile/user/register.html'); //res.render() 为第三方模块 express 内置的方法！
+}
+
+
+// 实现注册
+module.exports.doRegisterPage = function (req, res) {
+  // 接收参数
+  // data事件可以接收参数，但是是以拼接的方式，如果参数较多，有可能分多次来接收，
+  var str = "";
+  req.on("data", (chunk) => {
+    str += chunk;
+  });
+
+  // 判断参数是否完全接收完毕
+  req.on("end", () => {
+    var newObj = querystring.parse(str);
+    //查询数据库是否有相同的账号
+    mymodule.getUserByuserName(newObj.LoginName, (err, data) => {
+      if (err) {
+        res.end('注册失败');
+      } else if (data.length > 0) {
+        return res.end(JSON.stringify({
+          code: 500,
+          msg: '该用户名已被注册！'
+        }))
+      }
+      //数据库无相同账号名后
+      //注册，添加账号进数据库
+      mymodule.addUser(newObj, (err, result) => {
+        if (err) {
+          res.json({ "code": 0, "msg": "注册失败！" });
+        } else {
+          return res.end(JSON.stringify({
+            code: 200,
+            msg: '注册成功！'
+          }))
+        }
+      })
+    })
+  });
+}
+
+
+//渲染登录页面   res.render()方法渲染
+module.exports.getLoginPage = function (req, res) {
+  res.setHeader("Content-Type", "text/html");
+  res.render(__dirname + '/views/mobile/user/login.html'); //res.render() 为第三方模块 express 内置的方法！
 }
 
 

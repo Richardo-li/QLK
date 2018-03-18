@@ -14,6 +14,8 @@ router.get('/companion', handler.getMobileIndexPageAllCompanion);  //结伴页�
 router.get('/addCompanioninfo', handler.getAddCompanioninfoPage);  //打开发布结伴信息页面
 router.post('/addCompanioninfo', handler.doAddCompanioninfo);  //发布结伴信息
 router.get('/register', handler.getRegisterPage);  //打开注册页面
+router.post('/register', handler.doRegisterPage);  //用户进行注册
+router.get('/login', handler.getLoginPage);  //打开登录页面
 
 
 // router.get('/', handler.getIndexPage);
