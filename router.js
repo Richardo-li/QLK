@@ -16,6 +16,8 @@ router.post('/addCompanioninfo', handler.doAddCompanioninfo);  //发布结伴信
 router.get('/register', handler.getRegisterPage);  //打开注册页面
 router.post('/register', handler.doRegisterPage);  //用户进行注册
 router.get('/login', handler.getLoginPage);  //打开登录页面
+router.post('/login', handler.doLogin);  //用户登录
+router.get('/personalCenter', handler.getPersonalCenterPage);  //打开个人中心页面
 
 
 // router.get('/', handler.getIndexPage);

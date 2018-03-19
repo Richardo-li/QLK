@@ -8,12 +8,12 @@
   <title>千旅客网-个人中心</title>
   <link rel="shortcut icon" href="jd.ico" />
   <!-- 添加ico -->
-  <link rel="stylesheet" href="../lib/mui/css/mui.min.css" />
+  <link rel="stylesheet" href="mobile/lib/mui/css/mui.min.css" />
   <!-- <link rel="stylesheet" href="lib/fontAwesome/css/font-awesome.min.css" /> -->
   <!-- 字体图标用阿里巴巴的 或者 Mui icon图标 -->
-  <link rel="stylesheet" href="../css/common.css" />
+  <link rel="stylesheet" href="mobile/css/common.css" />
   <!-- 公共样式 顶部侧滑的是公共的-->
-  <link rel="stylesheet" href="../css/personalCenter.css" />
+  <link rel="stylesheet" href="mobile/css/personalCenter.css" />
 </head>
 
 <body>
@@ -37,17 +37,17 @@
               </a>
             </li>
             <li class="mui-table-view-cell">
-              <a href="javascript:;" class="mui-navigate-right">
+              <a href="/register" class="mui-navigate-right">
                 注册
               </a>
             </li>
             <li class="mui-table-view-cell">
-              <a href="./login.html" class="mui-navigate-right">
+              <a href="/login" class="mui-navigate-right">
                 登录
               </a>
             </li>
             <li class="mui-table-view-cell">
-              <a href="./personalCenter.html" class="mui-navigate-right">
+              <a href="/personalCenter" class="mui-navigate-right">
                 个人中心
               </a>
             </li>
@@ -78,11 +78,129 @@
       <div id="offCanvasContentScroll" class="mui-content mui-scroll-wrapper">
         <div class="mui-scroll">
 
-    
+          {{each personalCenterData}}
+          <!-- 头像部分 -->
           <ul class="mui-table-view mui-table-view-chevron">
             <li class="mui-table-view-cell mui-media">
               <a class="mui-navigate-right" href="javascript:;">
-                <img class="mui-media-object mui-pull-left head-img" id="head-img" src="../images/logo.png">
+
+                <img class="mui-media-object mui-pull-left head-img" id="head-img" src="mobile/images/{{$value.Headportrait}}">
+                <div class="mui-media-body">
+                  {{$value.LoginName}}
+                  <p class='mui-ellipsis'>
+                    <button type="button" style='padding: 1px 10px;' class="mui-btn mui-btn-royal mui-btn-outlined">修改头像</button>
+                  </p>
+                </div>
+              </a>
+            </li>
+          </ul>
+
+          {{/each}}
+
+          <ul class="mui-table-view">
+            <li class="mui-table-view-cell mui-collapse">
+              <a class="mui-navigate-right" href="#">个人资料</a>
+              <div class="mui-collapse-content">
+                <form class="mui-input-group">
+                  <div class="mui-input-row">
+                    <label>真实姓名</label>
+                    <input type="text" placeholder="请填写姓名">
+                  </div>
+                  <div class="mui-input-row">
+                    <label>手机号码</label>
+                    <input type="text" placeholder="请填写手机号">
+                  </div>
+                  <div class="mui-input-row">
+                    <label>住址</label>
+                    <input type="text" placeholder="请填写住址">
+                  </div>
+                  <div class="mui-input-row">
+                    <label>Email</label>
+                    <input type="text" placeholder="请填写Email">
+                  </div>
+                  <div class="mui-input-row">
+                    <label>生日</label>
+                    <input type="text" placeholder="请填写生日">
+                  </div>
+                  <div class="mui-input-row">
+                    <label>QQ</label>
+                    <input type="text" placeholder="请填写QQ">
+                  </div>
+                  <div class="mui-input-row mui-radio mui-left">
+                    <label>男</label>
+                    <input name="radio1" type="radio" checked>
+                  </div>
+                  <div class="mui-input-row mui-radio mui-left">
+                    <label>女</label>
+                    <input name="radio1" type="radio">
+                  </div>
+
+
+
+                  <div class="mui-button-row">
+                    <button class="mui-btn mui-btn-primary" type="button" onclick="return false;">修改</button>&nbsp;&nbsp;
+                  </div>
+                </form>
+              </div>
+            </li>
+            <li class="mui-table-view-cell mui-collapse">
+              <a class="mui-navigate-right" href="#">图片轮播</a>
+              <div class="mui-collapse-content">
+                <p>11111111111</p>
+              </div>
+            </li>
+            <li class="mui-table-view-cell mui-collapse">
+              <a class="mui-navigate-right" href="#">文字排版</a>
+              <div class="mui-collapse-content">
+                <h1>h1. Heading</h1>
+                <h2>h2. Heading</h2>
+                <h3>h3. Heading</h3>
+                <h4>h4. Heading</h4>
+                <h5>h5. Heading</h5>
+                <h6>h6. Heading</h6>
+                <p>
+                  p. 目前最接近原生App效果的框架。
+                </p>
+              </div>
+            </li>
+          </ul>
+
+
+          <ul class="mui-table-view">
+            <li class="mui-table-view-cell" style="text-align: center;">
+              <span>退出登录</span>
+            </li>
+          </ul>
+
+          <!-- <ul class="mui-table-view">
+            <li class="mui-table-view-cell mui-collapse">
+              <a class="mui-navigate-right" href="#">个人资料</a>
+              <div class="mui-collapse-content">
+
+
+
+
+              </div>
+            </li>
+            <li class="mui-table-view-cell mui-collapse">
+              <a class="mui-navigate-right" href="#">面板</a>
+              <div class="mui-collapse-content">
+                <p>面板2子内容</p>
+              </div>
+            </li>
+            <li class="mui-table-view-cell mui-collapse">
+              <a class="mui-navigate-right" href="#">面板3</a>
+              <div class="mui-collapse-content">
+                <p>面板3子内容</p>
+              </div>
+            </li>
+          </ul> -->
+
+
+          <!-- <ul class="mui-table-view mui-table-view-chevron">
+            <li class="mui-table-view-cell mui-media">
+              <a class="mui-navigate-right" href="javascript:;">
+                <img class="mui-media-object mui-pull-left head-img" id="head-img" src="mobile/images/logo.png">
                 <div class="mui-media-body">
                   Hello
                   <p class='mui-ellipsis'>账号:hello</p>
@@ -118,8 +236,8 @@
               <a>退出登录</a>
             </li>
           </ul>
-       
-       
+        -->
+
         </div>
       </div>
     </div>
@@ -133,12 +251,12 @@
 </body>
 
 </html>
-<script src="../lib/zepto/zepto.min.js"></script>
+<script src="mobile/lib/zepto/zepto.min.js"></script>
 <!-- 移动端jquery -->
-<script src="../lib/mui/js/mui.min.js"></script>
+<script src="mobile/lib/mui/js/mui.min.js"></script>
 <!-- mui -->
-<script src="../lib/artTemplate/template-native.js"></script>
+<script src="mobile/lib/artTemplate/template-native.js"></script>
 <!-- 模板引擎，不用拼接字符串 -->
-<script src="../js/common.js"></script>
+<script src="mobile/js/common.js"></script>
 <!-- 公共js工具 包括 全局ajax工具函数 -->
-<script src="../js/personalCenter.js"></script>
+<script src="mobile/js/personalCenter.js"></script>

@@ -27,7 +27,7 @@ var md5 = require("blueimp-md5");
 // }
 
 
-//渲染主页面结伴模块十条数据   res.render()方法渲染
+//渲染主页面结伴模块十条数据   res.render()方法渲染------------------
 module.exports.getMobileIndexPageCompanion = function (req, res) {
   mymodule.getCompanionData((err, data) => {
     if (err) return res.end("err");
@@ -42,7 +42,7 @@ module.exports.getMobileIndexPageCompanion = function (req, res) {
   })
 }
 
-//结伴页面所有数据   res.render()方法渲染
+//结伴页面所有数据   res.render()方法渲染------------------------------
 module.exports.getMobileIndexPageAllCompanion = function (req, res) {
   mymodule.getCompanionAllData((err, data) => {
     if (err) return res.end("err");
@@ -57,14 +57,13 @@ module.exports.getMobileIndexPageAllCompanion = function (req, res) {
   })
 }
 
-//渲染添加结伴信息页面   res.render()方法渲染
+//渲染添加结伴信息页面   res.render()方法渲染--------------------------
 module.exports.getAddCompanioninfoPage = function (req, res) {
   res.setHeader("Content-Type", "text/html");
   res.render(__dirname + '/views/mobile/addCompanioninfo.html'); //res.render() 为第三方模块 express 内置的方法！
 }
 
-
-// 实现添加结伴信息
+// 实现添加结伴信息-------------------------------------------------
 module.exports.doAddCompanioninfo = function (req, res) {
   // 接收参数
   // data事件可以接收参数，但是是以拼接的方式，如果参数较多，有可能分多次来接收，
@@ -86,15 +85,13 @@ module.exports.doAddCompanioninfo = function (req, res) {
   });
 }
 
-
-//渲染注册页面   res.render()方法渲染
+//渲染注册页面   res.render()方法渲染------------------------------
 module.exports.getRegisterPage = function (req, res) {
   res.setHeader("Content-Type", "text/html");
   res.render(__dirname + '/views/mobile/user/register.html'); //res.render() 为第三方模块 express 内置的方法！
 }
 
-
-// 实现注册
+// 实现注册------------------------------------------------------
 module.exports.doRegisterPage = function (req, res) {
   // 接收参数
   // data事件可以接收参数，但是是以拼接的方式，如果参数较多，有可能分多次来接收，
@@ -132,13 +129,70 @@ module.exports.doRegisterPage = function (req, res) {
   });
 }
 
-
-//渲染登录页面   res.render()方法渲染
+//渲染登录页面   res.render()方法渲染-----------------------------
 module.exports.getLoginPage = function (req, res) {
   res.setHeader("Content-Type", "text/html");
   res.render(__dirname + '/views/mobile/user/login.html'); //res.render() 为第三方模块 express 内置的方法！
 }
 
+// 实现登录------------------------------------------------------
+module.exports.doLogin = function (req, res) {
+  //先得到前端传来的数据
+  var str = '';
+  req.on('data', (chunk) => {
+    str += chunk;
+  })
+  req.on('end', () => {
+    var obj = querystring.parse(str);   //querystring第三方模块将拿到的数据分解成对象
+    // obj.LoginPwd = md5(obj.password, "这是我加的盐,增加密码的复杂程度");
+    // 之前通过加密存储的密码，也需要通过加密进行匹配判断
 
+    mymodule.getUserByuserName(obj.LoginName, (err, result) => {
+      if (err) return res.end('服务器异常');
+      if (result.length > 0) { //说明找到了记录
+        if (result[0].LoginPwd == obj.LoginPwd) {
+          req.session.isLogin = true;  // 1.标记登陆状态
+          req.session.user = obj;  // 2.需要一些需要的数据 
+
+          return res.end(JSON.stringify({
+            code: 200,
+            msg: '登录成功'
+          }))
+        } else {
+          return res.end(JSON.stringify({
+            code: 500,
+            msg: '密码错误！'
+          }))
+        }
+      } else {
+        return res.end(JSON.stringify({
+          code: 500,
+          msg: '该账号不存在！'
+        }))
+      }
+    });
+
+  })
+
+}
+
+//渲染个人中心页面   res.render()方法渲染
+module.exports.getPersonalCenterPage = function (req, res) {
+  // req.session.user.LoginName;  //登录名
+
+  mymodule.getUserByuserName(req.session.user.LoginName, (err, data) => {
+    if (err) return res.end("err");
+
+    res.render(__dirname + '/views/mobile/user/personalCenter.html', { 'personalCenterData': data }, (err1, result) => {
+      //数据库获取到的是数组，然而模板传入数据要的是对象，所以写成  {'heros':data}
+      if (err1) {
+        res.end("err1");
+      } else {
+        res.end(result);
+      }
+    })
+  })
+
+}
 
 

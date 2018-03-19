@@ -59,19 +59,10 @@ module.exports.doAddCompanioninfo = function (newObj, callback) {
 
 }
 
-//注册时匹配数据库中的用户名是否存在相同的，存在相同不允许注册该用户名
-// module.exports.getUserByuserName = function (LoginName, callback) {
-//   var sql = "select * from member where LoginName =" + LoginName;
-//   connection.query(sql, (err, results, fileds) => {
-//     if (err) {
-//       return callback(err);
-//     }
-//     callback(null, results[0]);
-//   });
-// }
-
+//注册时匹配数据库中的用户名是否存在相同的,存在则返回一个数组，里面有对应用户的所有数据
 module.exports.getUserByuserName = function (LoginName, callback) {
   var sql = `select * from member where LoginName='${LoginName}'`;
+  // console.log(sql);
   connection.query(sql, (err, result) => {
     if (err) {
       callback(err);
@@ -84,7 +75,10 @@ module.exports.getUserByuserName = function (LoginName, callback) {
 
 //添加用户--注册
 module.exports.addUser = function (obj, callback) {
-  var sql = `insert into member(LoginName,LoginPwd) values('${obj.LoginName}','${obj.LoginPwd}')`;
+  var x = parseInt(8 * Math.random() + 1);
+  //随机头像
+  var sql = `insert into member(LoginName,LoginPwd,Headportrait) values('${obj.LoginName}','${obj.LoginPwd}','default${x}.png')`;
+  //头像 Headportrait 为默认的，所以自动添加
   connection.query(sql, (err, result) => {
     if (err) {
       return callback(err);

@@ -62,11 +62,11 @@
 
             <div class="mui-input-row" style="margin-top:150px;">
                 <label>帐号</label>
-                <input type="text" class="mui-input-clear" placeholder="请输入帐号名" id="username">
+                <input type="text" class="mui-input-clear" placeholder="请输入帐号" id="LoginName">
             </div>
             <div class="mui-input-row">
                 <label>密码</label>
-                <input type="password" class="mui-input-clear" placeholder="请输入密码" id="password">
+                <input type="password" class="mui-input-clear" placeholder="请输入密码" id="LoginPwd">
             </div>
         </div>
         <!-- //注意：登录按钮不能和账号密码输入框放在一个form里面 -->
@@ -94,14 +94,64 @@
     $(function () {
 
         // 睁眼与捂眼
-        $('#password').on('focus', function () {
+        $('#LoginPwd').on('focus', function () {
             $('.Ali').attr('src', 'mobile/images/login2.png');
         })
-        $('#password').on('blur', function () {
+        $('#LoginPwd').on('blur', function () {
             $('.Ali').attr('src', 'mobile/images/login1.png');
         })
 
-        // 登录验证
+        $('#reg').on('tap', function () {
+            window.location.href = "/register";
+        })
+
+
+        $('#login').on('tap', function () {
+            // 登录验证
+            if ($('#LoginName')[0].value.trim() == '') {
+                mui.toast('请输入账号！');
+                return;
+            }
+            if ($('#LoginPwd')[0].value.trim() == '') {
+                mui.toast('请输入密码！');
+                return;
+            }
+            if ($('#LoginPwd').val().length < 6) {
+                mui.toast('密码不能小于6位数！');
+                return;
+            }
+
+            var data = {
+                LoginName: $('#LoginName')[0].value.trim(),
+                LoginPwd: $('#LoginPwd')[0].value.trim(),
+            }
+
+
+            $.ajax({
+                type: 'post',
+                url: "/login",
+                data: data,
+                dataType: "json",
+                success: function (result) {
+                    if (result.code == 200) {
+                        mui.confirm('是否跳转到个人中心？', `${result.msg}`, ['否', '是'], function (e) {
+                            if (e.index == 1) {
+                                window.location.href = "/personalCenter";
+                            } else {
+                                window.location.href = "/";
+                            }
+                        })
+                    } else {
+                        mui.toast(result.msg);
+                    }
+                }
+            });
+
+
+        })
+
+
+
 
 
 
