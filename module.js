@@ -72,12 +72,29 @@ module.exports.getUserByuserName = function (LoginName, callback) {
   });
 }
 
-
 //添加用户--注册
 module.exports.addUser = function (obj, callback) {
   var x = parseInt(8 * Math.random() + 1);
   //随机头像
   var sql = `insert into member(LoginName,LoginPwd,Headportrait) values('${obj.LoginName}','${obj.LoginPwd}','default${x}.png')`;
+  //头像 Headportrait 为默认的，所以自动添加
+  connection.query(sql, (err, result) => {
+    if (err) {
+      return callback(err);
+    }
+    callback(null, result);
+  });
+
+}
+
+//会员修改个人资料
+module.exports.editper = function (obj, callback) {
+
+
+
+  var sql = `update member set MemberName='${obj.MemberName}',Phone='${obj.Phone}',Address='${obj.Address}',Email='${obj.Email}',BirthDate='${obj.BirthDate}',QQ='${obj.QQ}',Sex='${obj.Sex}' where LoginName = '${obj.LoginName}'`;
+
+  // var sql = `insert into member(LoginName,LoginPwd,Headportrait) values('${obj.LoginName}','${obj.LoginPwd}','default${x}.png')`;
   //头像 Headportrait 为默认的，所以自动添加
   connection.query(sql, (err, result) => {
     if (err) {

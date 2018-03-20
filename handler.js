@@ -179,10 +179,8 @@ module.exports.doLogin = function (req, res) {
 //渲染个人中心页面   res.render()方法渲染
 module.exports.getPersonalCenterPage = function (req, res) {
   // req.session.user.LoginName;  //登录名
-
   mymodule.getUserByuserName(req.session.user.LoginName, (err, data) => {
     if (err) return res.end("err");
-
     res.render(__dirname + '/views/mobile/user/personalCenter.html', { 'personalCenterData': data }, (err1, result) => {
       //数据库获取到的是数组，然而模板传入数据要的是对象，所以写成  {'heros':data}
       if (err1) {
@@ -195,4 +193,39 @@ module.exports.getPersonalCenterPage = function (req, res) {
 
 }
 
+// 会员修改个人资料------------------------------------------------------
+module.exports.doEditPersonal = function (req, res) {
+  //先得到前端传来的数据
+  var str = '';
+  req.on('data', (chunk) => {
+    str += chunk;
+  })
+  req.on('end', () => {
+    var obj = querystring.parse(str);   //querystring第三方模块将拿到的数据分解成对象
+
+    obj.LoginName = req.session.user.LoginName;  //注入登录名
+
+
+    mymodule.editper(obj, (err, result) => {
+      if (err) return res.end('服务器异常');
+
+      console.log(result);
+
+      if (result.affectedRows == 1) {
+        return res.end(JSON.stringify({
+          code: 200,
+          msg: '更新成功！'
+        }))
+      } else {
+        return res.end(JSON.stringify({
+          code: 500,
+          msg: '更新失败！'
+        }))
+      }
+
+    });
+
+  })
+
+}
 

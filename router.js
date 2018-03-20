@@ -18,6 +18,7 @@ router.post('/register', handler.doRegisterPage);  //用户进行注册
 router.get('/login', handler.getLoginPage);  //打开登录页面
 router.post('/login', handler.doLogin);  //用户登录
 router.get('/personalCenter', handler.getPersonalCenterPage);  //打开个人中心页面
+router.post('/editPersonal', handler.doEditPersonal);  //会员修改个人资料
 
 
 // router.get('/', handler.getIndexPage);
