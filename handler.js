@@ -57,13 +57,13 @@ module.exports.getMobileIndexPageAllCompanion = function (req, res) {
   })
 }
 
-//渲染添加结伴信息页面   res.render()方法渲染--------------------------
+//渲染会员添加结伴信息页面   res.render()方法渲染--------------------------
 module.exports.getAddCompanioninfoPage = function (req, res) {
   res.setHeader("Content-Type", "text/html");
   res.render(__dirname + '/views/mobile/addCompanioninfo.html'); //res.render() 为第三方模块 express 内置的方法！
 }
 
-// 实现添加结伴信息-------------------------------------------------
+// 实现会员添加结伴信息-------------------------------------------------
 module.exports.doAddCompanioninfo = function (req, res) {
   // 接收参数
   // data事件可以接收参数，但是是以拼接的方式，如果参数较多，有可能分多次来接收，
@@ -85,13 +85,13 @@ module.exports.doAddCompanioninfo = function (req, res) {
   });
 }
 
-//渲染注册页面   res.render()方法渲染------------------------------
+//渲染会员注册页面   res.render()方法渲染------------------------------
 module.exports.getRegisterPage = function (req, res) {
   res.setHeader("Content-Type", "text/html");
   res.render(__dirname + '/views/mobile/user/register.html'); //res.render() 为第三方模块 express 内置的方法！
 }
 
-// 实现注册------------------------------------------------------
+// 实现会员注册------------------------------------------------------
 module.exports.doRegisterPage = function (req, res) {
   // 接收参数
   // data事件可以接收参数，但是是以拼接的方式，如果参数较多，有可能分多次来接收，
@@ -129,13 +129,13 @@ module.exports.doRegisterPage = function (req, res) {
   });
 }
 
-//渲染登录页面   res.render()方法渲染-----------------------------
+//渲染会员登录页面   res.render()方法渲染-----------------------------
 module.exports.getLoginPage = function (req, res) {
   res.setHeader("Content-Type", "text/html");
   res.render(__dirname + '/views/mobile/user/login.html'); //res.render() 为第三方模块 express 内置的方法！
 }
 
-// 实现登录------------------------------------------------------
+// 实现会员登录------------------------------------------------------
 module.exports.doLogin = function (req, res) {
   //先得到前端传来的数据
   var str = '';
@@ -176,7 +176,7 @@ module.exports.doLogin = function (req, res) {
 
 }
 
-//渲染个人中心页面   res.render()方法渲染
+//渲染会员个人中心页面   res.render()方法渲染
 module.exports.getPersonalCenterPage = function (req, res) {
   // req.session.user.LoginName;  //登录名
   mymodule.getUserByuserName(req.session.user.LoginName, (err, data) => {
@@ -202,15 +202,9 @@ module.exports.doEditPersonal = function (req, res) {
   })
   req.on('end', () => {
     var obj = querystring.parse(str);   //querystring第三方模块将拿到的数据分解成对象
-
     obj.LoginName = req.session.user.LoginName;  //注入登录名
-
-
     mymodule.editper(obj, (err, result) => {
       if (err) return res.end('服务器异常');
-
-      console.log(result);
-
       if (result.affectedRows == 1) {
         return res.end(JSON.stringify({
           code: 200,
@@ -229,3 +223,60 @@ module.exports.doEditPersonal = function (req, res) {
 
 }
 
+//渲染会员修改头像页面   res.render()方法渲染
+module.exports.getEditHeadportraitPage = function (req, res) {
+  // req.session.user.LoginName;  //登录名
+  mymodule.getUserByuserName(req.session.user.LoginName, (err, data) => {
+    if (err) return res.end("err");
+    res.render(__dirname + '/views/mobile/user/editHeadportrait.html', { 'personalCenterData': data }, (err1, result) => {
+      //数据库获取到的是数组，然而模板传入数据要的是对象，所以写成  {'heros':data}
+      if (err1) {
+        res.end("err1");
+      } else {
+        res.end(result);
+      }
+    })
+  })
+
+
+}
+
+// 上传图片
+module.exports.doEditHeadportraitPage = function (req, res) {
+  // 接收参数：因为参数中有图片，需要使用第三方模块formidable
+  // 1.创建表单对象
+  var form = new formidable.IncomingForm();
+  // 2，设置上传的目录   是当前文件的目录，handler.js
+  form.uploadDir = './views/mobile/images/';
+  // 3.设置保持文件的扩展名
+  form.keepExtensions = true;
+  // 4.实现上传
+  // 参数说明：
+  // req:因为参数包含在请求报文中
+  // err:上传失败的错误信息对象
+  // fields:普通字符串参数，类似于php中的$_GET  $_POST
+  // files:上传的文件数据，类似于php中的$_FILES
+  form.parse(req, function (err, fields, files) {
+    // 获取一次传递的图片的名称
+    var last = fields.last;
+    // 实现删除操作
+    fs.unlink(__dirname + "/views/mobile/images/" + last, (err) => {
+      res.end("没事，继续！！！");
+    });
+    if (err) {
+      var obj = {
+        "code": 500,
+        "msg": "上传失败"
+      }
+      return res.end(JSON.stringify(obj));
+    }
+    var obj = {
+      "code": 200,
+      "msg": "上传成功",
+      // 我们只需要文件名：因为数据文件中存储的仅仅是文件名称，并没有包含文件夹
+      "img": path.basename(files.img.path)
+    }
+    return res.end(JSON.stringify(obj));
+
+  });
+}

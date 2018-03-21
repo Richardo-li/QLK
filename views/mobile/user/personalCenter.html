@@ -88,18 +88,13 @@
                 <div class="mui-media-body">
                   {{$value.LoginName}}
                   <p class='mui-ellipsis'>
-                    <button type="button" style='padding: 1px 10px;' class="mui-btn mui-btn-royal mui-btn-outlined">修改头像</button>
+                    <a type="button" href="/editHeadportrait" id="editHeadportrait" style='padding: 1px 10px;' class="mui-btn mui-btn-royal mui-btn-outlined">修改头像</a>
                   </p>
                 </div>
               </a>
             </li>
           </ul>
-
-
-
           <form action="">
-
-
             <ul class="mui-table-view">
               <li class="mui-table-view-cell mui-collapse">
                 <a class="mui-navigate-right" href="#">个人资料</a>
@@ -149,7 +144,6 @@
                     </div>
                   </form>
                   {{/each}}
-
 
                 </div>
               </li>
@@ -227,19 +221,6 @@
 
 
 
-    // $.ajax({
-    //   type: 'get',
-    //   url: "/personalCenter",
-    //   dataType: "json",
-    //   success: function (result) {
-    //     console.log(result);
-
-
-    //   }
-    // });
-
-
-
     $('#edit').on('tap', function () {
 
       var data = {
@@ -260,8 +241,6 @@
         data: data,
         dataType: "json",
         success: function (result) {
-          console.log(result);
-
           if (result.code == 200) {
             mui.toast(result.msg);
           } else {
