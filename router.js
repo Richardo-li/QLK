@@ -20,7 +20,8 @@ router.post('/login', handler.doLogin);  //用户登录
 router.get('/personalCenter', handler.getPersonalCenterPage);  //打开个人中心页面
 router.post('/editPersonal', handler.doEditPersonal);  //会员修改个人资料
 router.get('/editHeadportrait', handler.getEditHeadportraitPage);  //会员修改个人头像
-router.post('/editHeadportrait', handler.doEditHeadportraitPage);  //会员修改个人头像
+router.post('/uploadImg', handler.uploadImg);  //会员上传个人头像
+router.post('/editheadH', handler.doEditheadH);  //会员修改个人头像
 
 
 // router.get('/', handler.getIndexPage);

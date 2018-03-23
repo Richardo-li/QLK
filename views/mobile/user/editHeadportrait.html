@@ -17,8 +17,8 @@
     #img {
       position: absolute;
       left: 50%;
-      top: 50%;
-      transform: translate(-50%, 100%);
+      top: 5%;
+      transform: translateX(-50%);
       width: 2.2rem;
       height: 2.2rem;
       background: blueviolet;
@@ -27,12 +27,36 @@
 
     #photo {
       position: absolute;
+      top: 5%;
       left: 50%;
-      top: 50%;
-      transform: translate(-50%, 100%);
+      transform: translateX(-50%);
       width: 2.2rem;
       height: 2.2rem;
       background: blueviolet;
+    }
+
+    .editHeadH {
+      position: absolute;
+      left: 50%;
+      top: 2.8rem;
+      transform: translateX(-50%);
+      width: 125px;
+      height: 35px;
+      z-index: 8;
+    }
+
+    .editBtn {
+      position: absolute;
+      left: 50%;
+      top: 6.5rem;
+      transform: translateX(-50%);
+      width: 125px;
+      height: 35px;
+      z-index: 8;
+    }
+
+    .pwdForm {
+      margin-top: 3.8rem;
     }
   </style>
 </head>
@@ -93,15 +117,41 @@
 
         <a href="javascript:history.go(-1)" class="mui-icon mui-icon-back" style="color:black"></a>
 
-        <h1 class="mui-title">修改头像</h1>
+        <h1 class="mui-title">修改头像和密码</h1>
 
       </header>
       <div id="offCanvasContentScroll" class="mui-content mui-scroll-wrapper">
-        <div class="mui-scroll" style="position:relative">
+        <div class="mui-scroll" style="position:relative;border:1px solid white;">
+
+
           {{each personalCenterData}}
 
           <img id="photo" src="mobile/images/{{$value.Headportrait}}" last="">
           <input type="file" id="img" name="img"> {{/each}}
+
+          <div class="mui-btn mui-btn-primary editHeadH">
+            修改头像
+          </div>
+
+
+          <form class="mui-input-group pwdForm">
+            <div class="mui-input-row">
+              <label>原密码</label>
+              <input type="text" placeholder="原密码" maxlength="10">
+            </div>
+            <div class="mui-input-row">
+              <label>新密码</label>
+              <input type="text" placeholder="新密码" maxlength="10">
+            </div>
+            <div class="mui-input-row">
+              <label>确认密码</label>
+              <input type="text" placeholder="确认密码" maxlength="10">
+            </div>
+          </form>
+          <div class="mui-btn mui-btn-primary editBtn">
+            修改密码
+          </div>
+
 
 
 
@@ -141,15 +191,19 @@
       // 通过append方法可以添加参数，参数的形式是key-value对的形式，但是value可以是任意类型的数据
       // 获取当前需要传递的图片对象
       var file = document.getElementById("img").files[0];
+      //用户取消上传时return;
+      if (file == undefined) {
+        return;
+      }
+      // console.log(file);
       formdata.append("img", file);
       // 重新选择图片上传的时候，将上次已经成功上传的文件名称传递到服务器，让服务器根据名称进行删除
       // 注意，它是一个字符串值，并不是图片对象
       formdata.append("last", $("#photo").attr("last"));
-
-
       $.ajax({
         type: "post",
-        url: "/editHeadportrait",
+        // url: "/editHeadportrait",
+        url: "/uploadImg",
         data: formdata,
         // 因为图片上传需要做预览操作，所以需要服务器返回对应的数据
         dataType: "json",
@@ -168,6 +222,24 @@
         }
       });
     });
+
+    //修改头像
+    $('.editHeadH').on('tap', function () {
+      $.ajax({
+        type: 'post',
+        url: "/editheadH",
+        data: "img=" + $("#photo").attr("src"),
+        dataType: "json",
+        success: function (result) {
+          if (result.code == 200) {
+            mui.toast(result.msg);
+          } else {
+            mui.toast(result.msg);
+          }
+        }
+      });
+
+    })
 
 
 

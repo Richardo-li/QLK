@@ -29,7 +29,7 @@ var md5 = require("blueimp-md5");
 
 //渲染主页面结伴模块十条数据   res.render()方法渲染------------------
 module.exports.getMobileIndexPageCompanion = function (req, res) {
-  mymodule.getCompanionData((err, data) => {
+  mymodule.getCompanionData(req.session.user, (err, data) => {
     if (err) return res.end("err");
     res.render(__dirname + '/views/mobile/index.html', { 'companion': data }, (err1, result) => {
       //数据库获取到的是数组，然而模板传入数据要的是对象，所以写成  {'heros':data}
@@ -44,7 +44,8 @@ module.exports.getMobileIndexPageCompanion = function (req, res) {
 
 //结伴页面所有数据   res.render()方法渲染------------------------------
 module.exports.getMobileIndexPageAllCompanion = function (req, res) {
-  mymodule.getCompanionAllData((err, data) => {
+  //通过登录名查找
+  mymodule.getCompanionAllData(req.session.user, (err, data) => {
     if (err) return res.end("err");
     res.render(__dirname + '/views/mobile/companion.html', { 'companionAlldata': data }, (err1, result) => {
       //数据库获取到的是数组，然而模板传入数据要的是对象，所以写成  {'heros':data}
@@ -63,7 +64,7 @@ module.exports.getAddCompanioninfoPage = function (req, res) {
   res.render(__dirname + '/views/mobile/addCompanioninfo.html'); //res.render() 为第三方模块 express 内置的方法！
 }
 
-// 实现会员添加结伴信息-------------------------------------------------
+// 实现会员发布结伴信息-------------------------------------------------
 module.exports.doAddCompanioninfo = function (req, res) {
   // 接收参数
   // data事件可以接收参数，但是是以拼接的方式，如果参数较多，有可能分多次来接收，
@@ -74,10 +75,9 @@ module.exports.doAddCompanioninfo = function (req, res) {
   // 判断参数是否完全接收完毕
   req.on("end", () => {
     var newObj = querystring.parse(str);
+    newObj.LoginName = req.session.user.LoginName;
     // 拿到的参数是key=value&key=value的字符串数据，但是我们需要的是对象。所以我们利用核心模块querystring将这个格式的字符串转换为对象
-
     // 写入
-    // 
     mymodule.doAddCompanioninfo(newObj, (err, result) => {
       if (err) return res.end(JSON.stringify({ "code": 0, "msg": "添加失败" }));
       res.end(JSON.stringify({ "code": 1, "msg": "添加成功" }));
@@ -241,8 +241,8 @@ module.exports.getEditHeadportraitPage = function (req, res) {
 
 }
 
-// 上传图片
-module.exports.doEditHeadportraitPage = function (req, res) {
+// 会员上传图片
+module.exports.uploadImg = function (req, res) {
   // 接收参数：因为参数中有图片，需要使用第三方模块formidable
   // 1.创建表单对象
   var form = new formidable.IncomingForm();
@@ -279,4 +279,30 @@ module.exports.doEditHeadportraitPage = function (req, res) {
     return res.end(JSON.stringify(obj));
 
   });
+}
+
+
+//会员修改头像
+module.exports.doEditheadH = function (req, res) {
+  var str = "";
+  req.on("data", (chunk) => {
+    str += chunk;
+  });
+
+  req.on("end", () => {
+    var obj = querystring.parse(str);   //querystring第三方模块将拿到的数据分解成对象
+    obj.img = path.basename(obj.img);   //截取图片名+后缀
+    obj.LoginName = req.session.user.LoginName;  //注入登录名
+
+    mymodule.updateImgByLoginName(obj, (err, result) => {
+      if (err) {
+        return res.end(JSON.stringify({ "code": 500, "msg": "头像修改失败" }));
+      } else {
+        res.end(JSON.stringify({ "code": 200, "msg": "头像修改成功" }));
+      }
+    })
+  });
+
+
+
 }

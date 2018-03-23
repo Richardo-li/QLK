@@ -14,8 +14,9 @@ connection.connect();
 
 
 // 主页面获取结伴模块的十条记录
-module.exports.getCompanionData = function (callback) {
-  var sql = 'select * from companion order by ID desc limit 10';    //select * from table1 limit 10
+module.exports.getCompanionData = function (user, callback) {
+  // var sql = 'select * from companion order by ID desc limit 10';    //select * from table1 limit 10
+  var sql = 'select * from companion,member where companion.LoginName=member.LoginName order by companion.ID desc limit 10';    //select * from table1 limit 10
   connection.query(sql, (err, result) => {
     if (err) {
       console.log(err);
@@ -27,8 +28,10 @@ module.exports.getCompanionData = function (callback) {
 }
 
 //结伴页面所有记录
-module.exports.getCompanionAllData = function (callback) {
-  var sql = 'select * from companion order by ID desc';
+module.exports.getCompanionAllData = function (user, callback) {
+  // var sql = 'select * from companion order by ID desc';
+  //连表查询
+  var sql = 'select * from companion,member where companion.LoginName=member.LoginName order by companion.ID desc';
   connection.query(sql, (err, result) => {
     if (err) {
       console.log(err);
@@ -41,8 +44,8 @@ module.exports.getCompanionAllData = function (callback) {
 
 // 增加一条记录到结伴信息表
 module.exports.doAddCompanioninfo = function (newObj, callback) {
-  var sql = `insert into companion(Title,StartDate,Startpoint,Termini,Phone,Content) values('${newObj.Title}','${newObj.StartDate}','${newObj.Startpoint}','${newObj.Termini}','${newObj.Phone}','${newObj.Content}')`;
 
+  var sql = `insert into companion(Title,StartDate,Startpoint,Termini,Phone,Content,LoginName) values('${newObj.Title}','${newObj.StartDate}','${newObj.Startpoint}','${newObj.Termini}','${newObj.Phone}','${newObj.Content}','${newObj.LoginName}')`;
   connection.query(sql, (err, result) => {
     if (err) {
       console.log(err);
@@ -91,6 +94,18 @@ module.exports.addUser = function (obj, callback) {
 module.exports.editper = function (obj, callback) {
   var sql = `update member set MemberName='${obj.MemberName}',Phone='${obj.Phone}',Address='${obj.Address}',Email='${obj.Email}',BirthDate='${obj.BirthDate}',QQ='${obj.QQ}',Sex='${obj.Sex}' where LoginName = '${obj.LoginName}'`;
   //头像 Headportrait 为默认的，所以自动添加
+  connection.query(sql, (err, result) => {
+    if (err) {
+      return callback(err);
+    }
+    callback(null, result);
+  });
+
+}
+
+//会员修改个人头像
+module.exports.updateImgByLoginName = function (obj, callback) {
+  var sql = `update member set Headportrait='${obj.img}' where LoginName = '${obj.LoginName}'`;
   connection.query(sql, (err, result) => {
     if (err) {
       return callback(err);
