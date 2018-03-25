@@ -148,36 +148,18 @@
                 </div>
               </li>
               <li class="mui-table-view-cell mui-collapse">
-                <a class="mui-navigate-right" href="#">图片轮播</a>
+                <a class="mui-navigate-right" href="#" id='published'>我发表的</a>
                 <div class="mui-collapse-content">
-                  <p>11111111111</p>
-                </div>
-              </li>
-              <li class="mui-table-view-cell mui-collapse">
-                <a class="mui-navigate-right" href="#">我的文章</a>
-                <div class="mui-collapse-content">
-                  <h1>h1. Heading</h1>
-                  <h2>h2. Heading</h2>
-                  <h3>h3. Heading</h3>
-                  <h4>h4. Heading</h4>
-                  <h5>h5. Heading</h5>
-                  <h6>h6. Heading</h6>
-                  <p>
-                    p. 目前最接近原生App效果的框架。
-                  </p>
+                  <ul id="info">
+
+                  </ul>
                 </div>
               </li>
               <li class="mui-table-view-cell mui-collapse">
                 <a class="mui-navigate-right" href="#">关于我们</a>
                 <div class="mui-collapse-content">
-                  <h1>h1. Heading</h1>
-                  <h2>h2. Heading</h2>
-                  <h3>h3. Heading</h3>
-                  <h4>h4. Heading</h4>
-                  <h5>h5. Heading</h5>
-                  <h6>h6. Heading</h6>
                   <p>
-                    p. 目前最接近原生App效果的框架。
+                    千旅客网致力建设成为背包客驴友穷游时提供最全面最方便的旅行信息和服务。
                   </p>
                 </div>
               </li>
@@ -186,7 +168,7 @@
 
 
             <ul class="mui-table-view">
-              <li class="mui-table-view-cell" style="text-align: center;">
+              <li class="mui-table-view-cell" style="text-align: center;" id="logout">
                 <span>退出登录</span>
               </li>
             </ul>
@@ -219,11 +201,13 @@
 <script>
   $(function () {
 
+    //跳转页面
     $('#mui-ellipsis').on('tap', function () {
       window.location.href = "/editHeadportrait";
       return false;
     })
 
+    //修改个人资料
     $('#edit').on('tap', function () {
 
       var data = {
@@ -251,6 +235,99 @@
           }
         }
       });
+
+
+    })
+
+    //退出登录
+    $('#logout').on('tap', function () {
+      mui.confirm(`确定退出？`, '您点击了退出按钮', ['否', '是'], function (e) {
+        if (e.index == 1) {
+          // window.location.href = "/personalCenter";
+          $.ajax({
+            type: 'get',
+            url: '/logout',
+            dataType: 'json',
+            success: function (result) {
+              if (result.code == 200) {
+                mui.toast(result.msg);
+                window.location.href = "/";
+              } else {
+                mui.toast(result.msg);
+              }
+            }
+          })
+
+        } else {
+          return;
+          // window.location.href = "/";
+        }
+      })
+
+
+
+
+    })
+
+    function getPublished() {
+      $.ajax({
+        type: 'get',
+        url: "/published",
+        dataType: "json",
+        success: function (result) {
+          if (result.code == 200) {
+            var html = '';
+            for (let i = 0; i < result.data.length; i++) {
+              html += `<li class="mui-table-view-cell mui-transitioning" >
+                          <div class="mui-slider-left mui-disabled">
+                             <a class="mui-btn mui-btn-red delete" CP_ID='${result.data[i].CP_ID}' style="transform: translate(0px, 0px);" href='javascript:;'>删除</a>
+                          </div>
+                          <div class="mui-slider-handle" style="transform: translate(0px, 0px);">
+                            <a href="/companionDetail?CP_ID=${result.data[i].CP_ID}"  style='color:black'>
+                             ${result.data[i].Title}
+                            </a>
+                          </div>
+                       </li>`;
+            }
+            $('#info').html(html);
+          } else {
+            mui.toast('获取信息失败！');
+          }
+        }
+      });
+    }
+
+    //获取 当前会员发表过的文章
+    $('#published').on('tap', function () {
+      getPublished();
+    })
+
+    //删除发布的结伴信息     使用了jQuery事件委托
+    $('#info').on('tap', '.delete', function () {
+      // console.log($(this).attr('CP_ID'));
+      var CP_ID = $(this).attr('CP_ID');
+      mui.confirm(`删除后不可恢复`, '是否删除？', ['否', '是'], function (e) {
+        if (e.index == 1) {
+          $.ajax({
+            type: 'post',
+            data: 'CP_ID=' + CP_ID,
+            url: '/deleteCompanion',
+            dataType: 'json',
+            success: function (result) {
+              if (result.code == 200) {
+                mui.toast(result.msg);
+                getPublished();
+                // window.location.href = "/";
+              } else {
+                mui.toast(result.msg);
+              }
+            }
+          })
+
+        } else {
+          return;
+        }
+      })
 
 
     })

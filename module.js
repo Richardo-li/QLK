@@ -16,7 +16,7 @@ connection.connect();
 // 主页面获取结伴模块的十条记录
 module.exports.getCompanionData = function (user, callback) {
   // var sql = 'select * from companion order by ID desc limit 10';    //select * from table1 limit 10
-  var sql = 'select * from companion,member where companion.LoginName=member.LoginName order by companion.ID desc limit 10';    //select * from table1 limit 10
+  var sql = 'select * from companion,member where companion.LoginName=member.LoginName order by companion.CP_ID desc limit 10';    //select * from table1 limit 10
   connection.query(sql, (err, result) => {
     if (err) {
       console.log(err);
@@ -31,7 +31,8 @@ module.exports.getCompanionData = function (user, callback) {
 module.exports.getCompanionAllData = function (user, callback) {
   // var sql = 'select * from companion order by ID desc';
   //连表查询
-  var sql = 'select * from companion,member where companion.LoginName=member.LoginName order by companion.ID desc';
+  // var sql = 'select * from companion,member where companion.LoginName=member.LoginName order by companion.ID desc';
+  var sql = 'select companion.*,member.Headportrait from companion,member where companion.LoginName=member.LoginName order by companion.CP_ID desc';
   connection.query(sql, (err, result) => {
     if (err) {
       console.log(err);
@@ -114,3 +115,60 @@ module.exports.updateImgByLoginName = function (obj, callback) {
   });
 
 }
+
+//会员修改密码
+module.exports.doEditPwd = function (obj, callback) {
+  var sql = `update member set LoginPwd='${obj.newPwd}' where LoginName = '${obj.LoginName}'`;
+  //头像 Headportrait 为默认的，所以自动添加
+  connection.query(sql, (err, result) => {
+    if (err) {
+      return callback(err);
+    }
+    callback(null, result);
+  });
+
+}
+
+//结伴页面详细数据
+module.exports.getCompanionDetailData = function (CP_ID, callback) {
+  // var sql = 'select * from companion,member where companion.LoginName=member.LoginName order by companion.ID desc';
+  // 查找详情表的所有数据，和会员头像
+  var sql = `select companion.*,member.Headportrait from companion,member where companion.CP_ID=${CP_ID} and companion.LoginName=member.LoginName`;
+  connection.query(sql, (err, result) => {
+    if (err) {
+      console.log(err);
+      callback(err);
+    } else {
+      callback(null, result);
+    }
+  })
+}
+
+//获取会员所写的结伴信息
+module.exports.getPublishedData = function (LoginName, callback) {
+  // var sql = 'select * from companion,member where companion.LoginName=member.LoginName order by companion.ID desc';
+  // 查找详情表的所有数据，和会员头像
+  var sql = `select companion.* from companion where companion.LoginName='${LoginName}' order by companion.CP_ID desc`;
+  connection.query(sql, (err, result) => {
+    if (err) {
+      console.log(err);
+      callback(err);
+    } else {
+      callback(null, result);
+    }
+  })
+}
+
+//会员删除结伴信息
+module.exports.doDeleteCompanionData = function (CP_ID, callback) {
+  var sql = `delete from companion where CP_ID = ${CP_ID}`;
+  connection.query(sql, (err, result) => {
+    if (err) {
+      console.log(err);
+      callback(err);
+    } else {
+      callback(null, result);
+    }
+  })
+}
+

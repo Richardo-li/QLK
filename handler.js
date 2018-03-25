@@ -20,14 +20,14 @@ var md5 = require("blueimp-md5");
 // var mymoduleReg = require('./mymodule-register.js');
 
 
-//渲染XXXXX页面   res.render()方法渲染
+//渲染XXXXX页面   res.render()方法渲染页面
 // module.exports.getXXXXXPage = function (req, res) {
 // res.setHeader("Content-Type", "text/html");
 //   res.render(__dirname + '/views/mobile/index.html'); //res.render() 为第三方模块 express 内置的方法！
 // }
 
 
-//渲染主页面结伴模块十条数据   res.render()方法渲染------------------
+//渲染主页面结伴模块十条数据   
 module.exports.getMobileIndexPageCompanion = function (req, res) {
   mymodule.getCompanionData(req.session.user, (err, data) => {
     if (err) return res.end("err");
@@ -42,7 +42,7 @@ module.exports.getMobileIndexPageCompanion = function (req, res) {
   })
 }
 
-//结伴页面所有数据   res.render()方法渲染------------------------------
+//结伴页面所有数据   
 module.exports.getMobileIndexPageAllCompanion = function (req, res) {
   //通过登录名查找
   mymodule.getCompanionAllData(req.session.user, (err, data) => {
@@ -58,13 +58,13 @@ module.exports.getMobileIndexPageAllCompanion = function (req, res) {
   })
 }
 
-//渲染会员添加结伴信息页面   res.render()方法渲染--------------------------
+//渲染会员添加结伴信息页面    
 module.exports.getAddCompanioninfoPage = function (req, res) {
   res.setHeader("Content-Type", "text/html");
   res.render(__dirname + '/views/mobile/addCompanioninfo.html'); //res.render() 为第三方模块 express 内置的方法！
 }
 
-// 实现会员发布结伴信息-------------------------------------------------
+//实现会员发布结伴信息 
 module.exports.doAddCompanioninfo = function (req, res) {
   // 接收参数
   // data事件可以接收参数，但是是以拼接的方式，如果参数较多，有可能分多次来接收，
@@ -85,13 +85,13 @@ module.exports.doAddCompanioninfo = function (req, res) {
   });
 }
 
-//渲染会员注册页面   res.render()方法渲染------------------------------
+//渲染会员注册页面    
 module.exports.getRegisterPage = function (req, res) {
   res.setHeader("Content-Type", "text/html");
   res.render(__dirname + '/views/mobile/user/register.html'); //res.render() 为第三方模块 express 内置的方法！
 }
 
-// 实现会员注册------------------------------------------------------
+//实现会员注册 
 module.exports.doRegisterPage = function (req, res) {
   // 接收参数
   // data事件可以接收参数，但是是以拼接的方式，如果参数较多，有可能分多次来接收，
@@ -129,13 +129,13 @@ module.exports.doRegisterPage = function (req, res) {
   });
 }
 
-//渲染会员登录页面   res.render()方法渲染-----------------------------
+//渲染会员登录页面   
 module.exports.getLoginPage = function (req, res) {
   res.setHeader("Content-Type", "text/html");
   res.render(__dirname + '/views/mobile/user/login.html'); //res.render() 为第三方模块 express 内置的方法！
 }
 
-// 实现会员登录------------------------------------------------------
+//实现会员登录 
 module.exports.doLogin = function (req, res) {
   //先得到前端传来的数据
   var str = '';
@@ -176,7 +176,7 @@ module.exports.doLogin = function (req, res) {
 
 }
 
-//渲染会员个人中心页面   res.render()方法渲染
+//渲染会员个人中心页面    
 module.exports.getPersonalCenterPage = function (req, res) {
   // req.session.user.LoginName;  //登录名
   mymodule.getUserByuserName(req.session.user.LoginName, (err, data) => {
@@ -193,7 +193,7 @@ module.exports.getPersonalCenterPage = function (req, res) {
 
 }
 
-// 会员修改个人资料------------------------------------------------------
+//会员修改个人资料
 module.exports.doEditPersonal = function (req, res) {
   //先得到前端传来的数据
   var str = '';
@@ -223,7 +223,7 @@ module.exports.doEditPersonal = function (req, res) {
 
 }
 
-//渲染会员修改头像页面   res.render()方法渲染
+//渲染会员修改头像页面   
 module.exports.getEditHeadportraitPage = function (req, res) {
   // req.session.user.LoginName;  //登录名
   mymodule.getUserByuserName(req.session.user.LoginName, (err, data) => {
@@ -241,7 +241,7 @@ module.exports.getEditHeadportraitPage = function (req, res) {
 
 }
 
-// 会员上传图片
+//会员上传图片
 module.exports.uploadImg = function (req, res) {
   // 接收参数：因为参数中有图片，需要使用第三方模块formidable
   // 1.创建表单对象
@@ -281,7 +281,6 @@ module.exports.uploadImg = function (req, res) {
   });
 }
 
-
 //会员修改头像
 module.exports.doEditheadH = function (req, res) {
   var str = "";
@@ -306,3 +305,105 @@ module.exports.doEditheadH = function (req, res) {
 
 
 }
+
+//会员修改密码
+module.exports.doEditPwd = function (req, res) {
+  // 接收参数
+  // data事件可以接收参数，但是是以拼接的方式，如果参数较多，有可能分多次来接收，
+  var str = "";
+  req.on("data", (chunk) => {
+    str += chunk;
+  });
+
+  // 判断参数是否完全接收完毕
+  req.on("end", () => {
+    var newObj = querystring.parse(str);
+    //查询数据库是否有相同的账号
+    mymodule.getUserByuserName(req.session.user.LoginName, (err, result) => {
+      if (err) return res.end('服务器异常');
+      console.log(result);
+      if (result.length > 0) { //说明找到了记录
+        //判断密码是否相同
+        if (result[0].LoginPwd !== newObj.oldPwd) {
+          return res.end(JSON.stringify({ "code": 500, "msg": "原密码不正确！" }));
+        }
+        newObj.LoginName = req.session.user.LoginName;
+        mymodule.doEditPwd(newObj, (err, data) => {
+          if (err) {
+            return res.end(JSON.stringify({ "code": 500, "msg": "密码修改失败！" }));
+          } else {
+            res.end(JSON.stringify({ "code": 200, "msg": "密码修改成功！" }));
+          }
+        })
+      } else {
+        return res.end(JSON.stringify({ "code": 500, "msg": "原密码不正确！" }));
+      }
+    });
+
+  });
+}
+
+//会员退出登录
+module.exports.doLogout = function (req, res) {
+  req.session.destroy();
+  return res.end(JSON.stringify({ 'code': 200, 'msg': '退出成功！' }));
+}
+
+//渲染结伴详情页面  根据CP_ID
+module.exports.getCompanionDetail = function (req, res) {
+  var url = req.url;
+  // 接收参数
+  var CP_ID = myurl.parse(url, true).query.CP_ID;
+  //通过CP_ID查找
+  mymodule.getCompanionDetailData(CP_ID, (err, data) => {
+    if (err) return res.end("err");
+    res.render(__dirname + '/views/mobile/companionDetail.html', { 'companionDetailData': data }, (err1, result) => {
+      //数据库获取到的是数组，然而模板传入数据要的是对象，所以写成  {'heros':data}
+      if (err1) {
+        res.end("err1");
+      } else {
+        res.end(result);
+      }
+    })
+  })
+
+}
+
+//渲染用户发表过的信息
+module.exports.getPublished = function (req, res) {
+  //通过会员登录名查找
+  mymodule.getPublishedData(req.session.user.LoginName, (err, data) => {
+    if (err) return res.end("err");
+    return res.end(JSON.stringify({ "code": 200, "msg": "获取信息成功！", 'data': data }));
+  })
+
+}
+
+
+//会员删除结伴信息
+module.exports.doDeleteCompanion = function (req, res) {
+  //通过会员登录名查找
+  // 接收参数
+  // data事件可以接收参数，但是是以拼接的方式，如果参数较多，有可能分多次来接收，
+  var str = "";
+  req.on("data", (chunk) => {
+    str += chunk;
+  });
+
+  // 判断参数是否完全接收完毕
+  req.on("end", () => {
+    var newObj = querystring.parse(str);
+    mymodule.doDeleteCompanionData(newObj.CP_ID, (err, data) => {
+      if (err) {
+        return res.end(JSON.stringify({ "code": 500, "msg": "删除失败！" }));
+      } else {
+        res.end(JSON.stringify({ "code": 200, "msg": "删除成功" }));
+      }
+
+    })
+
+
+  })
+}
+
+

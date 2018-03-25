@@ -115,7 +115,7 @@
       <header class="mui-bar mui-bar-nav">
         <span id="left-menu" class="mui-icon mui-action-menu mui-icon-bars mui-pull-right"></span>
 
-        <a href="javascript:history.go(-1)" class="mui-icon mui-icon-back" style="color:black"></a>
+        <a href="/personalCenter" class="mui-icon mui-icon-back" style="color:black"></a>
 
         <h1 class="mui-title">修改头像和密码</h1>
 
@@ -137,18 +137,18 @@
           <form class="mui-input-group pwdForm">
             <div class="mui-input-row">
               <label>原密码</label>
-              <input type="text" placeholder="原密码" maxlength="10">
+              <input type="password" placeholder="原密码" maxlength="10" id="oldPwd">
             </div>
             <div class="mui-input-row">
               <label>新密码</label>
-              <input type="text" placeholder="新密码" maxlength="10">
+              <input type="password" placeholder="新密码" maxlength="10" id="newPwd">
             </div>
             <div class="mui-input-row">
               <label>确认密码</label>
-              <input type="text" placeholder="确认密码" maxlength="10">
+              <input type="password" placeholder="确认密码" maxlength="10" id="confirmPwd">
             </div>
           </form>
-          <div class="mui-btn mui-btn-primary editBtn">
+          <div class="mui-btn mui-btn-primary editBtn" id="editPwd">
             修改密码
           </div>
 
@@ -242,11 +242,56 @@
     })
 
 
+    $('#editPwd').on('tap', function () {
+
+      if ($('#oldPwd')[0].value.trim() == '') {
+        mui.toast('请输入原密码！');
+        return;
+      }
+
+      if ($('#newPwd').val().length < 6) {
+        mui.toast('密码不能小于6位数！');
+        return;
+      }
+
+      if ($('#newPwd')[0].value.trim() === $('#oldPwd')[0].value.trim()) {
+        mui.toast('新密码不能和原密码相同！');
+        return;
+      }
+
+      if ($('#confirmPwd')[0].value.trim() !== $('#newPwd')[0].value.trim()) {
+        mui.toast('两次输入密码不一致！');
+        return;
+      }
+
+      var data = {
+        oldPwd: $('#oldPwd')[0].value.trim(),
+        newPwd: $('#newPwd')[0].value.trim(),
+      }
+
+      $.ajax({
+        type: 'post',
+        url: "/editPwd",
+        data: data,
+        dataType: "json",
+        success: function (result) {
+          if (result.code == 200) {
+            mui.toast(result.msg);
+            $('#oldPwd')[0].value='';
+            $('#newPwd')[0].value='';
+            $('#confirmPwd')[0].value='';
+          } else {
+            mui.toast(result.msg);
+          }
+        }
+      });
 
 
 
 
 
+
+    })
 
   })
 </script>
