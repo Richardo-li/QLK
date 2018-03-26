@@ -172,3 +172,14 @@ module.exports.doDeleteCompanionData = function (CP_ID, callback) {
   })
 }
 
+//获取首页轮播图
+module.exports.getRotationData = function (callback) {
+  var sql = `select * from rotation order by ID asc`;
+  connection.query(sql, (err, result) => {
+    if (err) {
+      callback(err);
+    } else {
+      callback(null, result);
+    }
+  });
+}

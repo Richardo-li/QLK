@@ -28,7 +28,7 @@
 
           <p style="color:white;font-size:.38rem;margin:.2rem 0 .2rem .2rem;">名言</p>
           <div style="color:#bbb;font-size:.23rem;padding:0 .2rem .2rem .2rem;text-align:left;">
-              人生至少要有两次冲动，一为奋不顾身的爱情，一为说走就走的旅行。
+            人生至少要有两次冲动，一为奋不顾身的爱情，一为说走就走的旅行。
           </div>
           <ul class="mui-table-view mui-table-view-chevron mui-table-view-inverted menu">
             <li class="mui-table-view-cell">
@@ -71,7 +71,8 @@
         <span id="left-menu" class="mui-icon mui-action-menu mui-icon-bars mui-pull-right"></span>
 
         <div class="mui-input-row mui-search">
-          <input type="search" class="mui-input-clear" placeholder="青年旅社">
+          <!-- <input type="search" class="mui-input-clear" placeholder="青年旅社"> -->
+          <input type="search" class="mui-input-clear" placeholder="天气查询">
         </div>
 
       </header>
@@ -81,7 +82,7 @@
 
           <!-- 轮播图 -->
           <div class="mui-slider">
-            <div class="mui-slider-group mui-slider-loop">
+            <div class="mui-slider-group mui-slider-loop" id="rotation">
               <!--支持循环，需要重复图片节点-->
               <div class="mui-slider-item mui-slider-item-duplicate">
                 <a href="#">
@@ -382,3 +383,63 @@
 <script src="mobile/js/common.js"></script>
 <!-- 公共js工具 包括 全局ajax工具函数 -->
 <script src="mobile/js/index.js"></script>
+<script>
+  $(function () {
+
+
+
+    getRotation();
+    //获取首页轮播图
+    function getRotation() {
+      console.log('121654');
+
+      $.ajax({
+        type: 'get',
+        url: "/getRotation",
+        dataType: "json",
+        success: function (result) {
+          console.log(result);
+          if (result.code == 200) {
+            var html = '';
+            html = `<div class="mui-slider-item mui-slider-item-duplicate">
+                <a href="#">
+                  <img src="mobile/images/${result.data[3].picture}" />
+                </a>
+              </div>
+              <div class="mui-slider-item">
+                <a href="#">
+                  <img src="mobile/images/${result.data[0].picture}" />
+                </a>
+              </div>
+              <div class="mui-slider-item">
+                <a href="#">
+                  <img src="mobile/images/${result.data[1].picture}" />
+                </a>
+              </div>
+              <div class="mui-slider-item">
+                <a href="#">
+                  <img src="mobile/images/${result.data[2].picture}" />
+                </a>
+              </div>
+              <div class="mui-slider-item">
+                <a href="#">
+                  <img src="mobile/images/${result.data[3].picture}" />
+                </a>
+              </div>
+              <!--支持循环，需要重复图片节点-->
+              <div class="mui-slider-item mui-slider-item-duplicate">
+                <a href="#">
+                  <img src="mobile/images/${result.data[0].picture}" />
+                </a>
+              </div>`
+            $('#rotation').html(html);
+          } else {
+            mui.toast(result.msg);
+          }
+        }
+      });
+    }
+
+
+  })
+</script>

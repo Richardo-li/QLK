@@ -379,7 +379,6 @@ module.exports.getPublished = function (req, res) {
 
 }
 
-
 //会员删除结伴信息
 module.exports.doDeleteCompanion = function (req, res) {
   //通过会员登录名查找
@@ -404,6 +403,21 @@ module.exports.doDeleteCompanion = function (req, res) {
 
 
   })
+}
+
+//获取mobile轮播图    
+module.exports.getRotation = function (req, res) {
+  // req.session.user.LoginName;  //登录名
+  console.log('55555555');
+  
+  mymodule.getRotationData((err, result) => {
+    if (err) {
+      return res.end(JSON.stringify({ 'code': 500, 'msg': '获取首页轮播图失败！' }));
+    } else {
+      return res.end(JSON.stringify({ 'code': 200, 'msg': '获取首页轮播图成功！', 'data': result }));
+    }
+  })
+
 }
 
 

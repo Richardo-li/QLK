@@ -1,14 +1,240 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
-  <title>Document</title>
-</head>
-<body>
+  <title>首页</title>
+  <link rel="stylesheet" href="/node_modules/bootstrap/dist/css/bootstrap.css">
+  <link rel="stylesheet" href="/node_modules/toastr/build/toastr.css">
+  <style>
+    .Rotation {
+      width: 24%;
+      margin-right: 5px;
+      /* height: 160px; */
+    }
 
-  这里是首页
-  
+    .fileImg {
+      background: black;
+      width: 24%;
+      position: relative;
+      z-index: 8;
+      opacity: 0;
+    }
+
+    .upImg {
+      position: relative;
+      top: -30px;
+      display: inline-block;
+      width: 24%;
+      text-align: center;
+      vertical-align: middle;
+      cursor: pointer;
+      background: #f2f2f2;
+    }
+  </style>
+</head>
+
+<body style="padding:10px 0 0 10px">
+
+  <div id="Rotation-Box">
+
+
+  </div>
+  <input type="file" name="img1" class="fileImg" id='img1'>
+  <input type="file" name="img2" class="fileImg" id='img2'>
+  <input type="file" name="img3" class="fileImg" id='img3'>
+  <input type="file" name="img4" class="fileImg" id='img4'>
+
+  <span class="upImg">点击上传图片</span>
+  <span class="upImg">点击上传图片</span>
+  <span class="upImg">点击上传图片</span>
+  <span class="upImg">点击上传图片</span>
+
+  <button id='bbtn'>点我</button>
+
+  <script type="text/javascript" src="../common/lib/jquery-1.9.0.min.js"></script>
+  <link rel="stylesheet" href="/node_modules/bootstrap/dist/js/bootstrap.min.js">
+  <script type="text/javascript" src="/node_modules/toastr/build/toastr.min.js"></script>
+
 </body>
+
 </html>
+<script>
+  $(function () {
+    toastr.options.positionClass = 'toast-bottom-right';
+    getRotation();
+    //获取首页轮播图
+    function getRotation() {
+      $.ajax({
+        type: 'get',
+        url: "/getRotation",
+        dataType: "json",
+        success: function (result) {
+
+          if (result.code == 200) {
+            var html = '';
+            for (let i = 0; i < result.data.length; i++) {
+              html += `<img id='photo${i + 1}' last='' src="../../mobile/images/${result.data[i].picture}" title="第${i + 1}张轮播图" class="img-thumbnail Rotation">`
+            }
+            $('#Rotation-Box').html(html);
+          } else {
+            toastr.error(result.msg);
+          }
+        }
+      });
+    }
+
+    // 当用户选择图片之后，就立即进行图片的上传
+    $("#img1").on("change", () => {
+      var formdata = new FormData();
+      var file = document.getElementById("img1").files[0];
+      if (file == undefined) {
+        return;
+      }
+      formdata.append("img", file);
+      formdata.append("last", $("#photo1").attr("last"));
+      $.ajax({
+        type: "post",
+        url: "/uploadImg",
+        data: formdata,
+        dataType: "json",
+        processData: false, //告诉浏览器我自己来传递参数
+        contentType: false, // 告诉浏览器不要对数据进行默认的编码，我自己来编码
+        success: function (result) {
+          if (result.code == 200) {
+            $("#photo1").attr("src", "../../mobile/images/" + result.img);
+            // 将当前成功上传的文件名称存储到自定义属性中
+            $("#photo1").attr("last", result.img);
+            toastr.success(result.msg);
+          } else {
+            toastr.error(result.msg);
+          }
+        }
+      });
+    });
+
+
+    // 当用户选择图片之后，就立即进行图片的上传
+    $("#img2").on("change", () => {
+      var formdata = new FormData();
+      var file = document.getElementById("img2").files[0];
+      if (file == undefined) {
+        return;
+      }
+      formdata.append("img", file);
+      formdata.append("last", $("#photo2").attr("last"));
+      $.ajax({
+        type: "post",
+        url: "/uploadImg",
+        data: formdata,
+        dataType: "json",
+        processData: false, //告诉浏览器我自己来传递参数
+        contentType: false, // 告诉浏览器不要对数据进行默认的编码，我自己来编码
+        success: function (result) {
+          if (result.code == 200) {
+            $("#photo2").attr("src", "../../mobile/images/" + result.img);
+            // 将当前成功上传的文件名称存储到自定义属性中
+            $("#photo2").attr("last", result.img);
+            toastr.success(result.msg);
+          } else {
+            toastr.error(result.msg);
+          }
+        }
+      });
+    });
+
+
+    // 当用户选择图片之后，就立即进行图片的上传
+    $("#img3").on("change", () => {
+      var formdata = new FormData();
+      var file = document.getElementById("img3").files[0];
+      if (file == undefined) {
+        return;
+      }
+      formdata.append("img", file);
+      formdata.append("last", $("#photo3").attr("last"));
+      $.ajax({
+        type: "post",
+        url: "/uploadImg",
+        data: formdata,
+        dataType: "json",
+        processData: false, //告诉浏览器我自己来传递参数
+        contentType: false, // 告诉浏览器不要对数据进行默认的编码，我自己来编码
+        success: function (result) {
+          if (result.code == 200) {
+            $("#photo3").attr("src", "../../mobile/images/" + result.img);
+            // 将当前成功上传的文件名称存储到自定义属性中
+            $("#photo3").attr("last", result.img);
+            toastr.success(result.msg);
+          } else {
+            toastr.error(result.msg);
+          }
+        }
+      });
+    });
+
+
+    // 当用户选择图片之后，就立即进行图片的上传
+    $("#img4").on("change", () => {
+      var formdata = new FormData();
+      var file = document.getElementById("img4").files[0];
+      if (file == undefined) {
+        return;
+      }
+      formdata.append("img", file);
+      formdata.append("last", $("#photo4").attr("last"));
+      $.ajax({
+        type: "post",
+        url: "/uploadImg",
+        data: formdata,
+        dataType: "json",
+        processData: false, //告诉浏览器我自己来传递参数
+        contentType: false, // 告诉浏览器不要对数据进行默认的编码，我自己来编码
+        success: function (result) {
+          if (result.code == 200) {
+            $("#photo4").attr("src", "../../mobile/images/" + result.img);
+            // 将当前成功上传的文件名称存储到自定义属性中
+            $("#photo4").attr("last", result.img);
+            toastr.success(result.msg);
+          } else {
+            toastr.error(result.msg);
+          }
+        }
+      });
+    });
+
+
+
+    //修改轮播图图片
+    $('#bbtn').on('click', function () {
+      var data = {
+        p1: $("#photo1").attr("src"),
+        p2: $("#photo2").attr("src"),
+        p3: $("#photo3").attr("src"),
+        p4: $("#photo4").attr("src"),
+      }
+      // console.log(data);
+      $.ajax({
+        type: 'post',
+        url: "/editRotation",
+        data: data,
+        dataType: "json",
+        success: function (result) {
+          if (result.code == 200) {
+            toastr.success(result.msg);
+          } else {
+            toastr.error(result.msg);
+          }
+        }
+      });
+    })
+
+
+
+
+
+
+  })
+</script>
