@@ -14,6 +14,7 @@
   <link rel="stylesheet" href="mobile/css/common.css" />
   <!-- 公共样式 顶部侧滑的是公共的-->
   <link rel="stylesheet" href="mobile/css/index.css" />
+  <link rel="stylesheet" href="mobile/css/dialog.css" />
 </head>
 
 <body>
@@ -72,7 +73,7 @@
 
         <div class="mui-input-row mui-search">
           <!-- <input type="search" class="mui-input-clear" placeholder="青年旅社"> -->
-          <input type="search" class="mui-input-clear" placeholder="天气查询">
+          <input type="search" class="mui-input-clear" placeholder="天气查询" id="weatherSearch">
         </div>
 
       </header>
@@ -370,6 +371,8 @@
     </div>
   </div>
 
+  <div></div>
+
 
 </body>
 
@@ -382,23 +385,21 @@
 <!-- 模板引擎，不用拼接字符串 -->
 <script src="mobile/js/common.js"></script>
 <!-- 公共js工具 包括 全局ajax工具函数 -->
+<script src="mobile/js/dialog.js"></script>
+<!-- 对话框 -->
 <script src="mobile/js/index.js"></script>
 <script>
   $(function () {
 
-
-
     getRotation();
     //获取首页轮播图
     function getRotation() {
-      console.log('121654');
-
       $.ajax({
         type: 'get',
         url: "/getRotation",
         dataType: "json",
         success: function (result) {
-          console.log(result);
+          // console.log(result);
           if (result.code == 200) {
             var html = '';
             html = `<div class="mui-slider-item mui-slider-item-duplicate">
@@ -439,6 +440,46 @@
         }
       });
     }
+
+    //这里的请求会触发多次，我也不知道为什么，用个flag控制一下
+    var flag = 0;
+    $('#weatherSearch').on('focus', function () {
+      flag = 1
+      $(document).keyup(function (e) {//捕获文档对象的按键弹起事件  
+        if (e.keyCode == 13) {//按键信息对象以参数的形式传递进来了 
+          if (flag == 1) {
+            console.log('6666666666');
+            var data = {};
+            data.city = $('#weatherSearch')[0].value.trim();
+            $.ajax({
+              type: 'post',
+              url: "/getWeather",
+              data: data,
+              dataType: "json",
+              success: function (result) {
+                if (result.code == 200) {
+                  console.log(result.data.weatherinfo);
+                  var info = result.data.weatherinfo;
+                  $.dialog({
+                    width: '100px',
+                    titleText: `${info.city}天气`,
+                    contentHtml: `<p>气&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;象：&nbsp;&nbsp;&nbsp;&nbsp;${info.weather}</p> 
+                      <p>最低气温：&nbsp;&nbsp;&nbsp;&nbsp${info.temp1}</p> 
+                      <p>最高气温：&nbsp;&nbsp;&nbsp;&nbsp${info.temp2}</p>
+                      <p>发布时间：&nbsp;&nbsp;&nbsp;&nbsp${info.ptime}</P>
+                      `
+                  });
+                } else {
+                  mui.toast(result.msg);
+                }
+              }
+            });
+          }
+          flag++;
+        }
+      });
+    })
+
 
 
   })

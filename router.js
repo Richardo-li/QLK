@@ -28,6 +28,7 @@ router.get('/companionDetail', handler.getCompanionDetail);  //结伴详情页�
 router.get('/published', handler.getPublished);  //获取会员发表过的信息
 router.post('/deleteCompanion', handler.doDeleteCompanion);  //会员删除结伴信息
 router.get('/getRotation', handler.getRotation);  //获取mobile首页轮播图
+router.post('/getWeather', handler.getWeather);  //获取天气信息
 
 
 // router.get('/', handler.getIndexPage);

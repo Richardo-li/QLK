@@ -18,6 +18,8 @@ var mymodule = require("./module.js");
 var md5 = require("blueimp-md5");
 //引入自己的模块
 // var mymoduleReg = require('./mymodule-register.js');
+var cityData = require("./cityData");
+var http = require('http');
 
 
 //渲染XXXXX页面   res.render()方法渲染页面
@@ -408,8 +410,6 @@ module.exports.doDeleteCompanion = function (req, res) {
 //获取mobile轮播图    
 module.exports.getRotation = function (req, res) {
   // req.session.user.LoginName;  //登录名
-  console.log('55555555');
-  
   mymodule.getRotationData((err, result) => {
     if (err) {
       return res.end(JSON.stringify({ 'code': 500, 'msg': '获取首页轮播图失败！' }));
@@ -419,5 +419,55 @@ module.exports.getRotation = function (req, res) {
   })
 
 }
+
+//获取天气信息 
+module.exports.getWeather = function (req, res) {
+  // 接收参数
+  // data事件可以接收参数，但是是以拼接的方式，如果参数较多，有可能分多次来接收，
+  var str = "";
+  req.on("data", (chunk) => {
+    str += chunk;
+  });
+
+  // 判断参数是否完全接收完毕
+  req.on("end", () => {
+    var data = querystring.parse(str);
+    // console.log(data.city);   //拿到城市名
+    var citycode = cityData[data.city];
+    // console.log(citycode);
+    if (citycode === undefined) {
+      return res.end(JSON.stringify({ "code": 500, "msg": "没有找到该城市！" }));
+    }
+    var url = "http://www.weather.com.cn/data/cityinfo/" + citycode + ".html"
+
+    getCityData(url, res);
+
+    function getCityData(url, myRes) {
+      http.get(url, function (req, res) {//通过上面传过来的url来获取该天气信息的数据        http.get是异步请求，在外面拿不到jsonData
+        var jsonData = '';
+        req.on("data", function (data) {
+          jsonData += data.toString('utf8');//保存天气信息的数据  
+        })
+        req.on("end", function () {
+          jsonData = JSON.parse(jsonData);//因为获取到的天气信息数据是JSON格式的，通过JSON.parse函数进行解析，得到一个对象  
+          //输出天气的信息  
+          // console.log(jsonData);
+          return myRes.end(JSON.stringify({ "code": 200, "msg": "搜索成功", 'data': jsonData }));
+          // console.log("天气:" + jsonData.weatherinfo.weather);
+          // console.log("最低气温:" + jsonData.weatherinfo.temp1);
+          // console.log("最高气温:" + jsonData.weatherinfo.temp2);
+          // console.log("天气信息发布的时间:" + jsonData.weatherinfo.ptime + '\n');
+          // console.log("请输入您要查询的城市名：");
+        })
+      })
+    }
+
+
+  });
+
+}
+
+
+
 
 

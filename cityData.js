@@ -1,6 +1,4 @@
-/**
- * Created by Turne 2017/2/15.
- */
+// 城市对应的编码    url = "http://www.weather.com.cn/data/cityinfo/" + citycode + ".html"  
 city = {
   '北京': '101010100',
   '海淀': '101010200',
