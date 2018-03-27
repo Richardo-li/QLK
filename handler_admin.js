@@ -153,3 +153,15 @@ module.exports.doEditRotation = function (req, res) {
 
 }
 
+//获取所有装备信息    
+module.exports.getEquipAllData = function (req, res) {
+  // req.session.user.LoginName;  //登录名
+  mymodule.getEquipAllData((err, result) => {
+    if (err) {
+      return res.end(JSON.stringify({ 'code': 500, 'msg': '获取装备信息失败！' }));
+    } else {
+      return res.end(JSON.stringify({ 'code': 200, 'msg': '获取装备信息成功！', 'data': result }));
+    }
+  })
+
+}

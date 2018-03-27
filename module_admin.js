@@ -40,17 +40,14 @@ module.exports.getRotationData = function (callback) {
 
 //修改首页轮播图      //一次更新多条，对应ID
 module.exports.updateImg = function (obj, callback) {
-  // var sql = `select * from rotation order by ID asc`;
-  // var sql = `update rotation set picture='${obj.p1}' where ID = '1'`;
-
   var sql = `UPDATE rotation
-  SET picture = CASE ID
-      WHEN 1 THEN '${obj.p1}'
-      WHEN 2 THEN '${obj.p2}'
-      WHEN 3 THEN '${obj.p3}'
-      WHEN 4 THEN '${obj.p4}'
-  END
-WHERE ID IN (1,2,3,4)`
+               SET picture = CASE ID
+                   WHEN 1 THEN '${obj.p1}'
+                   WHEN 2 THEN '${obj.p2}'
+                   WHEN 3 THEN '${obj.p3}'
+                   WHEN 4 THEN '${obj.p4}'
+               END
+             WHERE ID IN (1,2,3,4)`
 
   connection.query(sql, (err, result) => {
     if (err) {
@@ -61,4 +58,15 @@ WHERE ID IN (1,2,3,4)`
   });
 }
 
+//获取所有装备数据
+module.exports.getEquipAllData = function (callback) {
+  var sql = `select * from equip order by ID desc`;
+  connection.query(sql, (err, result) => {
+    if (err) {
+      callback(err);
+    } else {
+      callback(null, result);
+    }
+  });
+}
 

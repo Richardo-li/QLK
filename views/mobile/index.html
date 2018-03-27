@@ -133,33 +133,9 @@
               </a>
             </li>
             <li>
-              <a href="javascript:;">
-                <img src="mobile/images/a2.png">
-                <p>沙发客</p>
-              </a>
-            </li>
-            <li>
-              <a href="javascript:;">
-                <img src="mobile/images/a3.png">
-                <p>召集令</p>
-              </a>
-            </li>
-            <li>
-              <a href="javascript:;">
+              <a href="mobile/equip.html">
                 <img src="mobile/images/a4.png">
                 <p>装备</p>
-              </a>
-            </li>
-            <li>
-              <a href="javascript:;">
-                <img src="mobile/images/a5.png">
-                <p>游记</p>
-              </a>
-            </li>
-            <li>
-              <a href="mobile/strategy.html">
-                <img src="mobile/images/a6.png">
-                <p>攻略</p>
               </a>
             </li>
             <li>
@@ -176,6 +152,9 @@
             </li>
             <div class="clear"></div>
           </ul>
+
+
+
 
           <!-- tab 结合横向滚动 -->
           <div id="box" class="mui-scroll-wrapper mui-slider-indicator mui-segmented-control mui-segmented-control-inverted">
@@ -463,7 +442,7 @@
                   $.dialog({
                     width: '100px',
                     titleText: `${info.city}天气`,
-                    contentHtml: `<p>气&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;象：&nbsp;&nbsp;&nbsp;&nbsp;${info.weather}</p> 
+                    contentHtml: `<p>今&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;天：&nbsp;&nbsp;&nbsp;&nbsp;${info.weather}</p> 
                       <p>最低气温：&nbsp;&nbsp;&nbsp;&nbsp${info.temp1}</p> 
                       <p>最高气温：&nbsp;&nbsp;&nbsp;&nbsp${info.temp2}</p>
                       <p>发布时间：&nbsp;&nbsp;&nbsp;&nbsp${info.ptime}</P>
@@ -471,6 +450,7 @@
                   });
                 } else {
                   mui.toast(result.msg);
+                  flag = 1;
                 }
               }
             });

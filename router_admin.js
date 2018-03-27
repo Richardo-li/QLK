@@ -16,6 +16,7 @@ router.get('/logout', handler.doLogout);  //admin退出登录
 router.get('/getRotation', handler.getRotation);  //获取mobile首页轮播图
 router.post('/uploadImg', handler.uploadImg);  //上传主页轮播图
 router.post('/editRotation', handler.doEditRotation);  //修改主页轮播图
+router.get('/EquipAllData', handler.getEquipAllData);  //获取所有装备信息
 
 
 

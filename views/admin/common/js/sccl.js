@@ -397,17 +397,18 @@ $(function () {
 	var menu = [{
 		"id": "1", "name": "主菜单", "parentId": "0", "url": "", "icon": "", "order": "1", "isHeader": "1", "childMenus": [
 			{
-				"id": "3", "name": "商品管理", "parentId": "1", "url": "", "icon": "&#xe604;", "order": "1", "isHeader": "0", "childMenus": [
-					{ "id": "4", "name": "品牌管理", "parentId": "3", "url": "admin/page/test1.html", "icon": "", "order": "1", "isHeader": "0", "childMenus": "" },
-					{ "id": "5", "name": "分类管理", "parentId": "3", "url": "admin/page/test2.html", "icon": "", "order": "1", "isHeader": "0", "childMenus": "" }
+				"id": "3", "name": "信息管理", "parentId": "1", "url": "", "icon": "&#xe604;", "order": "1", "isHeader": "0", "childMenus": [
+					{ "id": "4", "name": "装备管理", "parentId": "3", "url": "admin/page/equip.html", "icon": "", "order": "1", "isHeader": "0", "childMenus": "" },
+					{ "id": "5", "name": "美食管理", "parentId": "3", "url": "admin/page/test2.html", "icon": "", "order": "2", "isHeader": "0", "childMenus": "" },
+					{ "id": "6", "name": "美景管理", "parentId": "3", "url": "admin/page/test3.html", "icon": "", "order": "3", "isHeader": "0", "childMenus": "" }
 				]
 			},
-			{
-				"id": "6", "name": "订单管理", "parentId": "1", "url": "", "icon": "&#xe602;", "order": "1", "isHeader": "0", "childMenus": [
-					{ "id": "7", "name": "已付款", "parentId": "6", "url": "admin/page/test3.html", "icon": "", "order": "1", "isHeader": "0", "childMenus": "" },
-					{ "id": "8", "name": "未付款", "parentId": "6", "url": "admin/page/test4.html", "icon": "", "order": "1", "isHeader": "0", "childMenus": "" }
-				]
-			}
+			// {
+			// 	"id": "6", "name": "订单管理", "parentId": "1", "url": "", "icon": "&#xe602;", "order": "1", "isHeader": "0", "childMenus": [
+			// 		{ "id": "7", "name": "已付款", "parentId": "6", "url": "admin/page/test3.html", "icon": "", "order": "1", "isHeader": "0", "childMenus": "" },
+			// 		{ "id": "8", "name": "未付款", "parentId": "6", "url": "admin/page/test4.html", "icon": "", "order": "1", "isHeader": "0", "childMenus": "" }
+			// 	]
+			// }
 		]
 	},
 	];
