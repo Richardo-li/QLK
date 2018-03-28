@@ -9,6 +9,23 @@
   <link rel="stylesheet" href="/node_modules/bootstrap/dist/css/bootstrap.css">
   <link rel="stylesheet" href="/node_modules/toastr/build/toastr.css">
   <style>
+    .delete {
+      color: blue;
+      cursor: pointer;
+    }
+
+    .edit {
+      color: blue;
+      cursor: pointer;
+    }
+
+    #tbody>tr>td {
+      text-align: center;
+    }
+
+    th {
+      text-align: center;
+    }
   </style>
 </head>
 
@@ -21,10 +38,10 @@
     <thead>
       <tr>
         <th>排序</th>
-        <th>链接</th>
         <th>标题</th>
         <th>图片</th>
         <th>内容</th>
+        <th>链接</th>
         <th>操作</th>
       </tr>
     </thead>
@@ -36,9 +53,86 @@
   </table>
 
 
+  <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal">添加</button>
+
+  <!-- 新增  模态框（Modal） -->
+  <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5>新增</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+            &times;
+          </button>
+        </div>
+        <div class="modal-body">
+          <form>
+            <div class="form-group">
+              <input type="text" class="form-control" placeholder="请输入标题" id="addTitle">
+            </div>
+            <div class="form-group">
+              <input type="text" class="form-control" placeholder="请输入内容" id="addContent">
+            </div>
+            <div class="form-group">
+              <input type="text" class="form-control" placeholder="请输入链接" id="addUrl">
+            </div>
+            <div class="form-group">
+              <input type="file" id="img" name="img">
+              <img id="photo" src="" last="" width="150" height="80" class="img-thumbnail Rotation">
+            </div>
+          </form>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default addCancer" data-dismiss="modal">
+            取消
+          </button>
+          <button type="button" class="btn btn-primary" id="addBtn">
+            添加
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
 
 
-
+  <!--编辑  模态框（Modal） -->
+  <div class="modal fade" id="myModal2" tabindex="-1" role="dialog" aria-labelledby="myModalLabel2" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5>编辑</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+            &times;
+          </button>
+        </div>
+        <div class="modal-body">
+          <form>
+            <div class="form-group">
+              <input type="text" class="form-control" placeholder="请输入标题" id="editTitle">
+            </div>
+            <div class="form-group">
+              <input type="text" class="form-control" placeholder="请输入内容" id="editContent">
+            </div>
+            <div class="form-group">
+              <input type="text" class="form-control" placeholder="请输入链接" id="editUrl">
+            </div>
+            <div class="form-group">
+              <input type="file" id="img2" name="img">
+              <img id="photo2" src="" last="" width="150" height="80" class="img-thumbnail Rotation">
+            </div>
+          </form>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default editCancer" data-dismiss="modal">
+            取消
+          </button>
+          <button type="button" class="btn btn-primary" id="editBtn">
+            修改
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
 
   <script type="text/javascript" src="../common/lib/jquery-1.9.0.min.js"></script>
   <script type="text/javascript" src="/node_modules/bootstrap/dist/js/bootstrap.min.js"></script>
@@ -54,7 +148,6 @@
     getEquipAllData();
     //获取所有装备内容
     function getEquipAllData() {
-
       $.ajax({
         type: 'get',
         url: "/EquipAllData",
@@ -65,11 +158,11 @@
             for (let i = 0; i < result.data.length; i++) {
               html += `<tr>
                          <td>${i + 1}</td>
-                         <td>${result.data[i].Link}</td>
                          <td>${result.data[i].Title}</td>
-                         <td>${result.data[i].img}</td>
+                         <td><img src="../../mobile/images/${result.data[i].img}" height='38' width='70' class="img-thumbnail Rotation"></td>
                          <td>${result.data[i].content}</td>
-                         <td>删除 编辑</td>
+                         <td>${result.data[i].Link}</td>                         
+                         <td><span class='delete' delID='${result.data[i].ID}' >删除</span> <span data-toggle="modal" data-target="#myModal2" class="edit" editID='${result.data[i].ID}'>编辑</span></td>
                        </tr>`;
             }
             $('#tbody').html(html);
@@ -80,8 +173,143 @@
       });
     }
 
+    //删除   事件委托
+    $('#tbody').on('click', '.delete', function () {
+      var delID = $(this).attr('delID');
+      $.ajax({
+        type: 'post',
+        data: 'id=' + delID,
+        url: "/deleteEquip",
+        dataType: "json",
+        success: function (result) {
+          if (result.code == 200) {
+            toastr.success(result.msg);
+            getEquipAllData();
+          } else {
+            toastr.error(result.msg);
+          }
+        }
+      });
 
 
+    })
+
+    //新增
+    $('#addBtn').on('click', function () {
+
+      if ($('#addTitle')[0].value.trim() == '') {
+        toastr.warning('请输入标题！');
+        return;
+      }
+      if ($('#addUrl')[0].value.trim() == '') {
+        toastr.warning('请输入链接！');
+        return;
+      }
+
+      data = {
+        Title: $('#addTitle')[0].value.trim(),
+        content: $('#addContent')[0].value.trim(),
+        Link: $('#addUrl')[0].value.trim(),
+        img: $("#photo").attr("src"),
+      }
+
+      $.ajax({
+        type: 'post',
+        url: "/addEquip",
+        data: data,
+        dataType: "json",
+        success: function (result) {
+          if (result.code == 200) {
+            toastr.success('添加成功！');
+            getEquipAllData();
+            $('#addTitle')[0].value = '';
+            $('#addContent')[0].value = '';
+            $('#addUrl')[0].value = '';
+            $('#photo')[0].src = '';
+            $('#myModal').modal('hide')
+          } else {
+            toastr.error('添加失败！');
+          }
+        }
+      });
+
+    })
+
+    //新增取消
+    $('.addCancer').on('click', function () {
+      $('#addTitle')[0].value = '';
+      $('#addContent')[0].value = '';
+      $('#addUrl')[0].value = '';
+      $('#photo')[0].src = '';
+    })
+
+    //获取编辑信息   事件委托
+    $('#tbody').on('click', '.edit', function () {
+
+      $('#editTitle')[0].value = '';
+      $('#editContent')[0].value = '';
+      $('#editUrl')[0].value = '';
+      $('#photo2')[0].src = '';
+
+      var editID = $(this).attr('editID');
+      $.ajax({
+        type: 'post',
+        data: 'id=' + editID,
+        url: "/getEquip",
+        dataType: "json",
+        success: function (result) {
+          if (result.code == 200) {
+            $('#editTitle')[0].value = result.data[0].Title;
+            $('#editContent')[0].value = result.data[0].content;
+            $('#editUrl')[0].value = result.data[0].Link;
+            $('#photo2')[0].src = '../../mobile/images/' + result.data[0].img;
+            // $('#myModal2').modal('toggle');
+          } else {
+            toastr.error(result.msg);
+          }
+        }
+      });
+
+
+
+    })
+
+
+
+    // 当用户选择图片之后，就立即进行图片的上传
+    $("#img").on("change", () => {
+      var formdata = new FormData();
+      var file = document.getElementById("img").files[0];
+      //用户取消上传时return;
+      if (file == undefined) {
+        return;
+      }
+      formdata.append("img", file);
+      // 重新选择图片上传的时候，将上次已经成功上传的文件名称传递到服务器，让服务器根据名称进行删除
+      // 注意，它是一个字符串值，并不是图片对象
+      formdata.append("last", $("#photo").attr("last"));
+      $.ajax({
+        type: "post",
+        // url: "/editHeadportrait",
+        url: "/uploadImg",
+        data: formdata,
+        // 因为图片上传需要做预览操作，所以需要服务器返回对应的数据
+        dataType: "json",
+        // 通过formdata传递参数必须添加两个属性设置 
+        processData: false, //告诉浏览器我自己来传递参数
+        contentType: false, // 告诉浏览器不要对数据进行默认的编码，我自己来编码
+        success: function (result) {
+          if (result.code == 200) {
+            $("#photo").attr("src", "../../mobile/images/" + result.img);
+            // 将当前成功上传的文件名称存储到自定义属性中
+            $("#photo").attr("last", result.img);
+            toastr.success('图片上传成功！');
+          } else {
+            toastr.error('图片上传失败！');
+          }
+        }
+      });
+    });
 
 
 

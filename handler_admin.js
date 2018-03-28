@@ -124,20 +124,15 @@ module.exports.uploadImg = function (req, res) {
   });
 }
 
-
 //admin修改轮播图
 module.exports.doEditRotation = function (req, res) {
   var str = "";
   req.on("data", (chunk) => {
     str += chunk;
   });
-
   req.on("end", () => {
     var obj = querystring.parse(str);   //querystring第三方模块将拿到的数据分解成对象
-    // console.log(obj);
     for (var x in obj) {
-      //  console.log(x);
-      //  console.log(obj[x]);
       obj[x] = path.basename(obj[x]);    //截取图片名+后缀
     }
     mymodule.updateImg(obj, (err, result) => {
@@ -148,9 +143,6 @@ module.exports.doEditRotation = function (req, res) {
       }
     })
   });
-
-
-
 }
 
 //获取所有装备信息    
@@ -163,5 +155,69 @@ module.exports.getEquipAllData = function (req, res) {
       return res.end(JSON.stringify({ 'code': 200, 'msg': '获取装备信息成功！', 'data': result }));
     }
   })
+
+}
+
+//删除装备信息
+module.exports.doDeleteEquip = function (req, res) {
+  //先得到前端传来的数据
+  var str = '';
+  req.on('data', (chunk) => {
+    str += chunk;
+  })
+  req.on('end', () => {
+    var obj = querystring.parse(str);   //querystring第三方模块将拿到的数据分解成对象
+
+    mymodule.doDeleteEquipData(obj, (err, result) => {
+      if (err) return res.end('服务器异常');
+      return res.end(JSON.stringify({
+        code: 200,
+        msg: '删除成功！'
+      }))
+
+    });
+
+  })
+
+}
+
+// 添加装备信息
+module.exports.doAddEquip = function (req, res) {
+  // 接收参数
+  // data事件可以接收参数，但是是以拼接的方式，如果参数较多，有可能分多次来接收，
+  var str = "";
+  req.on("data", (chunk) => {
+    str += chunk;
+  });
+  // 判断参数是否完全接收完毕
+  req.on("end", () => {
+    var obj = querystring.parse(str);   //querystring第三方模块将拿到的数据分解成对象
+    obj.img = path.basename(obj.img);
+    mymodule.doAddEquipData(obj, (err, result) => {
+      if (err) return res.end(JSON.stringify({ "code": 500, "msg": "添加失败" }));
+      res.end(JSON.stringify({ "code": 200, "msg": "添加成功" }));
+    })
+
+  });
+}
+
+//获取一条装备信息    
+module.exports.getEquip = function (req, res) {
+  var str = "";
+  req.on("data", (chunk) => {
+    str += chunk;
+  });
+  req.on("end", () => {
+    var obj = querystring.parse(str);   //querystring第三方模块将拿到的数据分解成对象
+    mymodule.getEquipData(obj, (err, result) => {
+      if (err) {
+        return res.end(JSON.stringify({ 'code': 500, 'msg': '获取装备信息失败！' }));
+      } else {
+        return res.end(JSON.stringify({ 'code': 200, 'msg': '获取装备信息成功！', 'data': result }));
+      }
+    })
+
+  });
+
 
 }

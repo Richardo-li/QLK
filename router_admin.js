@@ -17,6 +17,9 @@ router.get('/getRotation', handler.getRotation);  //获取mobile首页轮播图
 router.post('/uploadImg', handler.uploadImg);  //上传主页轮播图
 router.post('/editRotation', handler.doEditRotation);  //修改主页轮播图
 router.get('/EquipAllData', handler.getEquipAllData);  //获取所有装备信息
+router.post('/deleteEquip', handler.doDeleteEquip);  //删除装备信息
+router.post('/addEquip', handler.doAddEquip);  //添加装备信息
+router.post('/getEquip', handler.getEquip);  //获取一条装备信息
 
 
 

@@ -60,7 +60,7 @@ module.exports.updateImg = function (obj, callback) {
 
 //获取所有装备数据
 module.exports.getEquipAllData = function (callback) {
-  var sql = `select * from equip order by ID desc`;
+  var sql = `select * from equip order by ID asc`;
   connection.query(sql, (err, result) => {
     if (err) {
       callback(err);
@@ -70,3 +70,44 @@ module.exports.getEquipAllData = function (callback) {
   });
 }
 
+//删除装备
+module.exports.doDeleteEquipData = function (obj, callback) {
+  var sql = `delete from equip where ID = ${obj.id}`;
+  connection.query(sql, (err, result) => {
+    if (err) {
+      callback(err);
+    } else {
+      callback(null, result);
+    }
+  });
+}
+
+// 添加装备信息
+module.exports.doAddEquipData = function (obj, callback) {
+  var sql = `insert into equip(Title,img,content,Link) values('${obj.Title}','${obj.img}','${obj.content}','${obj.Link}')`;
+  connection.query(sql, (err, result) => {
+    if (err) {
+      console.log(err);
+      callback(err);
+    } else {
+      if (result.affectedRows == 1) {
+        callback();
+      } else {
+        callback(err);
+      }
+    }
+  })
+
+}
+
+//获取一条装备数据
+module.exports.getEquipData = function (obj, callback) {
+  var sql = `select * from equip where ID=${obj.id}`;
+  connection.query(sql, (err, result) => {
+    if (err) {
+      callback(err);
+    } else {
+      callback(null, result);
+    }
+  });
+}
