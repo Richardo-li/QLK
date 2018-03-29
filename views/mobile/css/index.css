@@ -17,6 +17,11 @@
     font-size: 0.25rem;
 }
 
+
+#box{
+    margin-top: 1.7rem;
+}
+
 #box ul {
     height: .5rem;
 }
