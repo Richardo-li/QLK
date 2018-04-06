@@ -70,7 +70,7 @@ module.exports.getEquipAllData = function (callback) {
   });
 }
 
-//删除装备
+//删除装备信息
 module.exports.doDeleteEquipData = function (obj, callback) {
   var sql = `delete from equip where ID = ${obj.id}`;
   connection.query(sql, (err, result) => {
@@ -103,6 +103,129 @@ module.exports.doAddEquipData = function (obj, callback) {
 //获取一条装备数据
 module.exports.getEquipData = function (obj, callback) {
   var sql = `select * from equip where ID=${obj.id}`;
+  connection.query(sql, (err, result) => {
+    if (err) {
+      callback(err);
+    } else {
+      callback(null, result);
+    }
+  });
+}
+
+//修改装备信息
+module.exports.doEditEquipData = function (obj, callback) {
+  var sql = `update equip set Link='${obj.Link}',Title='${obj.Title}',img='${obj.img}',content='${obj.content}' where ID = '${obj.id}'`;
+  //头像 Headportrait 为默认的，所以自动添加
+  connection.query(sql, (err, result) => {
+    if (err) {
+      return callback(err);
+    }
+    callback(null, result);
+  });
+
+}
+
+//获取所有美食数据
+module.exports.getFoodAllData = function (callback) {
+  var sql = `select * from food order by ID asc`;
+  connection.query(sql, (err, result) => {
+    if (err) {
+      callback(err);
+    } else {
+      callback(null, result);
+    }
+  });
+}
+
+//删除美食信息
+module.exports.doDeleteFoodData = function (obj, callback) {
+  var sql = `delete from food where ID = ${obj.id}`;
+  connection.query(sql, (err, result) => {
+    if (err) {
+      callback(err);
+    } else {
+      callback(null, result);
+    }
+  });
+}
+
+// 添加装备信息
+module.exports.doAddFoodData = function (obj, callback) {
+  var sql = `insert into food(Title,Picture,content) values('${obj.Title}','${obj.img}','${obj.content}')`;
+
+  connection.query(sql, (err, result) => {
+    if (err) {
+      console.log(err);
+      callback(err);
+    } else {
+      if (result.affectedRows == 1) {
+        callback();
+      } else {
+        callback(err);
+      }
+    }
+  })
+
+}
+
+//获取一条美食数据
+module.exports.getfoodData = function (obj, callback) {
+  var sql = `select * from food where ID=${obj.id}`;
+  connection.query(sql, (err, result) => {
+    if (err) {
+      callback(err);
+    } else {
+      callback(null, result);
+    }
+  });
+}
+
+//获取所有美食数据
+module.exports.getBeautifulAllData = function (callback) {
+  var sql = `select * from beautiful order by ID asc`;
+  connection.query(sql, (err, result) => {
+    if (err) {
+      callback(err);
+    } else {
+      callback(null, result);
+    }
+  });
+}
+
+//删除美景信息
+module.exports.doDeleteBeautifulData = function (obj, callback) {
+  var sql = `delete from beautiful where ID = ${obj.id}`;
+  connection.query(sql, (err, result) => {
+    if (err) {
+      callback(err);
+    } else {
+      callback(null, result);
+    }
+  });
+}
+
+// 添加装备信息
+module.exports.doAddBeautifulData = function (obj, callback) {
+  var sql = `insert into beautiful(Title,Picture,content) values('${obj.Title}','${obj.img}','${obj.content}')`;
+
+  connection.query(sql, (err, result) => {
+    if (err) {
+      console.log(err);
+      callback(err);
+    } else {
+      if (result.affectedRows == 1) {
+        callback();
+      } else {
+        callback(err);
+      }
+    }
+  })
+
+}
+
+//获取一条美食数据
+module.exports.getbeautifulData = function (obj, callback) {
+  var sql = `select * from beautiful where ID=${obj.id}`;
   connection.query(sql, (err, result) => {
     if (err) {
       callback(err);

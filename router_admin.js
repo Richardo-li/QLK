@@ -20,7 +20,15 @@ router.get('/EquipAllData', handler.getEquipAllData);  //获取所有装备信�
 router.post('/deleteEquip', handler.doDeleteEquip);  //删除装备信息
 router.post('/addEquip', handler.doAddEquip);  //添加装备信息
 router.post('/getEquip', handler.getEquip);  //获取一条装备信息
-
+router.post('/editEquip', handler.doEditEquip);  //编辑装备信息
+router.get('/foodAllData', handler.getFoodAllData);  //获取所有美食信息
+router.post('/deleteFood', handler.doDeleteFood);  //删除美食信息
+router.post('/addFood', handler.doAddFood);  //添加美食信息
+router.post('/getfood', handler.getfood);  //获取一条美食信息
+router.get('/beautifulAllData', handler.getBeautifulAllData);  //获取所有美景信息
+router.post('/deleteBeautiful', handler.doDeleteBeautiful);  //删除美景信息
+router.post('/addBeautiful', handler.doAddBeautiful);  //添加美景信息
+router.post('/getbeautiful', handler.getbeautiful);  //获取一条美食信息
 
 
 //向外暴露成员，供其他调用的模块使用

@@ -116,7 +116,7 @@ module.exports.uploadImg = function (req, res) {
     var obj = {
       "code": 200,
       "msg": "上传成功",
-      // 我们只需要文件名：因为数据文件中存储的仅仅是文件名称，并没有包含文件夹
+      // 只需要文件名：因为数据文件中存储的仅仅是文件名称，并没有包含文件夹
       "img": path.basename(files.img.path)
     }
     return res.end(JSON.stringify(obj));
@@ -214,6 +214,180 @@ module.exports.getEquip = function (req, res) {
         return res.end(JSON.stringify({ 'code': 500, 'msg': '获取装备信息失败！' }));
       } else {
         return res.end(JSON.stringify({ 'code': 200, 'msg': '获取装备信息成功！', 'data': result }));
+      }
+    })
+
+  });
+
+
+}
+
+//admin修改装备信息
+module.exports.doEditEquip = function (req, res) {
+  var str = "";
+  req.on("data", (chunk) => {
+    str += chunk;
+  });
+  req.on("end", () => {
+    var obj = querystring.parse(str);   //querystring第三方模块将拿到的数据分解成对象
+
+    obj.img = path.basename(obj.img);    //截取图片名+后缀
+
+    mymodule.doEditEquipData(obj, (err, result) => {
+      if (err) {
+        return res.end(JSON.stringify({ "code": 500, "msg": "修改失败" }));
+      } else {
+        res.end(JSON.stringify({ "code": 200, "msg": "修改成功" }));
+      }
+    })
+  });
+}
+
+//获取所有美食信息    
+module.exports.getFoodAllData = function (req, res) {
+  // req.session.user.LoginName;  //登录名
+  mymodule.getFoodAllData((err, result) => {
+    if (err) {
+      return res.end(JSON.stringify({ 'code': 500, 'msg': '获取美食信息失败！' }));
+    } else {
+      return res.end(JSON.stringify({ 'code': 200, 'msg': '获取美食信息成功！', 'data': result }));
+    }
+  })
+
+}
+
+//删除美食信息
+module.exports.doDeleteFood = function (req, res) {
+  //先得到前端传来的数据
+  var str = '';
+  req.on('data', (chunk) => {
+    str += chunk;
+  })
+  req.on('end', () => {
+    var obj = querystring.parse(str);   //querystring第三方模块将拿到的数据分解成对象
+
+    mymodule.doDeleteFoodData(obj, (err, result) => {
+      if (err) return res.end('服务器异常');
+      return res.end(JSON.stringify({
+        code: 200,
+        msg: '删除成功！'
+      }))
+
+    });
+
+  })
+
+}
+
+// 添加美食信息
+module.exports.doAddFood = function (req, res) {
+  // 接收参数
+  // data事件可以接收参数，但是是以拼接的方式，如果参数较多，有可能分多次来接收，
+  var str = "";
+  req.on("data", (chunk) => {
+    str += chunk;
+  });
+  // 判断参数是否完全接收完毕
+  req.on("end", () => {
+    var obj = querystring.parse(str);   //querystring第三方模块将拿到的数据分解成对象
+    obj.img = path.basename(obj.img);
+    mymodule.doAddFoodData(obj, (err, result) => {
+      if (err) return res.end(JSON.stringify({ "code": 500, "msg": "添加失败" }));
+      res.end(JSON.stringify({ "code": 200, "msg": "添加成功" }));
+    })
+
+  });
+}
+
+//获取一条美食信息    
+module.exports.getfood = function (req, res) {
+  var str = "";
+  req.on("data", (chunk) => {
+    str += chunk;
+  });
+  req.on("end", () => {
+    var obj = querystring.parse(str);   //querystring第三方模块将拿到的数据分解成对象
+    mymodule.getfoodData(obj, (err, result) => {
+      if (err) {
+        return res.end(JSON.stringify({ 'code': 500, 'msg': '获取美食信息失败！' }));
+      } else {
+        return res.end(JSON.stringify({ 'code': 200, 'msg': '获取美食信息成功！', 'data': result }));
+      }
+    })
+
+  });
+
+
+}
+
+//获取所有美食信息    
+module.exports.getBeautifulAllData = function (req, res) {
+  // req.session.user.LoginName;  //登录名
+  mymodule.getBeautifulAllData((err, result) => {
+    if (err) {
+      return res.end(JSON.stringify({ 'code': 500, 'msg': '获取美食信息失败！' }));
+    } else {
+      return res.end(JSON.stringify({ 'code': 200, 'msg': '获取美食信息成功！', 'data': result }));
+    }
+  })
+
+}
+
+//删除美景信息
+module.exports.doDeleteBeautiful = function (req, res) {
+  //先得到前端传来的数据
+  var str = '';
+  req.on('data', (chunk) => {
+    str += chunk;
+  })
+  req.on('end', () => {
+    var obj = querystring.parse(str);   //querystring第三方模块将拿到的数据分解成对象
+    mymodule.doDeleteBeautifulData(obj, (err, result) => {
+      if (err) return res.end('服务器异常');
+      return res.end(JSON.stringify({
+        code: 200,
+        msg: '删除成功！'
+      }))
+
+    });
+
+  })
+
+}
+
+// 添加美食信息
+module.exports.doAddBeautiful = function (req, res) {
+  // 接收参数
+  // data事件可以接收参数，但是是以拼接的方式，如果参数较多，有可能分多次来接收，
+  var str = "";
+  req.on("data", (chunk) => {
+    str += chunk;
+  });
+  // 判断参数是否完全接收完毕
+  req.on("end", () => {
+    var obj = querystring.parse(str);   //querystring第三方模块将拿到的数据分解成对象
+    obj.img = path.basename(obj.img);
+    mymodule.doAddBeautifulData(obj, (err, result) => {
+      if (err) return res.end(JSON.stringify({ "code": 500, "msg": "添加失败" }));
+      res.end(JSON.stringify({ "code": 200, "msg": "添加成功" }));
+    })
+
+  });
+}
+
+//获取一条美食信息    
+module.exports.getbeautiful = function (req, res) {
+  var str = "";
+  req.on("data", (chunk) => {
+    str += chunk;
+  });
+  req.on("end", () => {
+    var obj = querystring.parse(str);   //querystring第三方模块将拿到的数据分解成对象
+    mymodule.getbeautifulData(obj, (err, result) => {
+      if (err) {
+        return res.end(JSON.stringify({ 'code': 500, 'msg': '获取美景信息失败！' }));
+      } else {
+        return res.end(JSON.stringify({ 'code': 200, 'msg': '获取美景信息成功！', 'data': result }));
       }
     })
 

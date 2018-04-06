@@ -26,6 +26,23 @@
     th {
       text-align: center;
     }
+
+    .nowrap {
+      width: 130px;
+      height: 44px;
+      text-align: center;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      display: -webkit-box;
+      -webkit-box-orient: vertical;
+      -webkit-line-clamp: 2;
+      word-wrap: break-word;
+      /*支持英文*/
+    }
+
+    .btn {
+      color: white;
+    }
   </style>
 </head>
 
@@ -37,7 +54,7 @@
   <table class="table table-bordered table-hover">
     <thead>
       <tr>
-        <th>排序</th>
+        <th>#</th>
         <th>标题</th>
         <th>图片</th>
         <th>内容</th>
@@ -48,12 +65,14 @@
     <tbody id="tbody">
       <tr>
 
+
+
       </tr>
     </tbody>
   </table>
 
 
-  <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal">添加</button>
+  <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal">新增</button>
 
   <!-- 新增  模态框（Modal） -->
   <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
@@ -158,11 +177,16 @@
             for (let i = 0; i < result.data.length; i++) {
               html += `<tr>
                          <td>${i + 1}</td>
-                         <td>${result.data[i].Title}</td>
-                         <td><img src="../../mobile/images/${result.data[i].img}" height='38' width='70' class="img-thumbnail Rotation"></td>
-                         <td>${result.data[i].content}</td>
-                         <td>${result.data[i].Link}</td>                         
-                         <td><span class='delete' delID='${result.data[i].ID}' >删除</span> <span data-toggle="modal" data-target="#myModal2" class="edit" editID='${result.data[i].ID}'>编辑</span></td>
+                         <td><div class='nowrap'>${result.data[i].Title}</div></td>
+                         <td><img src="../../mobile/images/${result.data[i].img}" height='35' width='90' class="img-thumbnail Rotation"></td>
+                         <td><div class='nowrap'>${result.data[i].content}</div></td>
+                         <td><div class='nowrap'>${result.data[i].Link}</div></td>                       
+                         <td>
+                             <div class='nowrap'>
+                                  <button type="button" class="btn btn-danger delete" delID='${result.data[i].ID}' >删除</button>
+                                  <button type="button" class="btn btn-info edit" data-toggle="modal" data-target="#myModal2" editID='${result.data[i].ID}'>编辑</button>
+                             </div>
+                        </td>
                        </tr>`;
             }
             $('#tbody').html(html);
@@ -226,6 +250,7 @@
             $('#addContent')[0].value = '';
             $('#addUrl')[0].value = '';
             $('#photo')[0].src = '';
+            $('#img').val('');
             $('#myModal').modal('hide')
           } else {
             toastr.error('添加失败！');
@@ -241,6 +266,7 @@
       $('#addContent')[0].value = '';
       $('#addUrl')[0].value = '';
       $('#photo')[0].src = '';
+      $('#img').val('');
     })
 
     //获取编辑信息   事件委托
@@ -250,6 +276,7 @@
       $('#editContent')[0].value = '';
       $('#editUrl')[0].value = '';
       $('#photo2')[0].src = '';
+      $('#img2').val('');
 
       var editID = $(this).attr('editID');
       $.ajax({
@@ -263,6 +290,7 @@
             $('#editContent')[0].value = result.data[0].content;
             $('#editUrl')[0].value = result.data[0].Link;
             $('#photo2')[0].src = '../../mobile/images/' + result.data[0].img;
+            $('#editBtn').attr('editID', editID);  //自定义属性
             // $('#myModal2').modal('toggle');
           } else {
             toastr.error(result.msg);
@@ -275,8 +303,47 @@
     })
 
 
+    $('#editBtn').on('click', function () {
 
-    // 当用户选择图片之后，就立即进行图片的上传
+      if ($('#editTitle')[0].value.trim() == '') {
+        toastr.warning('标题不能为空！');
+        return;
+      }
+      if ($('#editUrl')[0].value.trim() == '') {
+        toastr.warning('链接不能为空！');
+        return;
+      }
+
+      data = {
+        Title: $('#editTitle')[0].value.trim(),
+        content: $('#editContent')[0].value.trim(),
+        Link: $('#editUrl')[0].value.trim(),
+        img: $("#photo2").attr("src"),
+        id: $(this).attr('editID')
+      }
+
+      $.ajax({
+        type: 'post',
+        data: data,
+        url: "/editEquip",
+        dataType: "json",
+        success: function (result) {
+          console.log(result);
+          if (result.code == 200) {
+            toastr.success('修改成功！');
+            getEquipAllData();
+            $('#myModal2').modal('hide');
+          } else {
+            toastr.error(result.msg);
+          }
+        }
+      });
+
+
+    })
+
+
+    // 当用户选择图片之后，就立即进行图片的上传（新增时）
     $("#img").on("change", () => {
       var formdata = new FormData();
       var file = document.getElementById("img").files[0];
@@ -310,6 +377,44 @@
         }
       });
     });
+
+
+    // 编辑时的图片修改
+    $("#img2").on("change", () => {
+      var formdata = new FormData();
+      var file = document.getElementById("img2").files[0];
+      //用户取消上传时return;
+      if (file == undefined) {
+        return;
+      }
+      formdata.append("img", file);
+      // 重新选择图片上传的时候，将上次已经成功上传的文件名称传递到服务器，让服务器根据名称进行删除
+      // 注意，它是一个字符串值，并不是图片对象
+      formdata.append("last", $("#photo2").attr("last"));
+      $.ajax({
+        type: "post",
+        // url: "/editHeadportrait",
+        url: "/uploadImg",
+        data: formdata,
+        // 因为图片上传需要做预览操作，所以需要服务器返回对应的数据
+        dataType: "json",
+        // 通过formdata传递参数必须添加两个属性设置 
+        processData: false, //告诉浏览器我自己来传递参数
+        contentType: false, // 告诉浏览器不要对数据进行默认的编码，我自己来编码
+        success: function (result) {
+          if (result.code == 200) {
+            $("#photo2").attr("src", "../../mobile/images/" + result.img);
+            // 将当前成功上传的文件名称存储到自定义属性中
+            $("#photo2").attr("last", result.img);
+            toastr.success('图片上传成功！');
+          } else {
+            toastr.error('图片上传失败！');
+          }
+        }
+      });
+    });
+
+
 
 
 

@@ -399,8 +399,8 @@ $(function () {
 			{
 				"id": "3", "name": "信息管理", "parentId": "1", "url": "", "icon": "&#xe604;", "order": "1", "isHeader": "0", "childMenus": [
 					{ "id": "4", "name": "装备管理", "parentId": "3", "url": "admin/page/equip.html", "icon": "", "order": "1", "isHeader": "0", "childMenus": "" },
-					{ "id": "5", "name": "美食管理", "parentId": "3", "url": "admin/page/test2.html", "icon": "", "order": "2", "isHeader": "0", "childMenus": "" },
-					{ "id": "6", "name": "美景管理", "parentId": "3", "url": "admin/page/test3.html", "icon": "", "order": "3", "isHeader": "0", "childMenus": "" }
+					{ "id": "5", "name": "美食管理", "parentId": "3", "url": "admin/page/food.html", "icon": "", "order": "2", "isHeader": "0", "childMenus": "" },
+					{ "id": "6", "name": "美景管理", "parentId": "3", "url": "admin/page/beautiful.html", "icon": "", "order": "3", "isHeader": "0", "childMenus": "" }
 				]
 			},
 			// {
