@@ -46,10 +46,54 @@ module.exports.getMobileIndexPageCompanion = function (req, res) {
 
 //结伴页面所有数据   
 module.exports.getMobileIndexPageAllCompanion = function (req, res) {
-  //通过登录名查找
   mymodule.getCompanionAllData(req.session.user, (err, data) => {
     if (err) return res.end("err");
     res.render(__dirname + '/views/mobile/companion.html', { 'companionAlldata': data }, (err1, result) => {
+      //数据库获取到的是数组，然而模板传入数据要的是对象，所以写成  {'heros':data}
+      if (err1) {
+        res.end("err1");
+      } else {
+        res.end(result);
+      }
+    })
+  })
+}
+
+//装备页面所有数据   
+module.exports.getEquipPage = function (req, res) {
+  mymodule.getEquipAllData((err, data) => {
+    if (err) return res.end("err");
+    res.render(__dirname + '/views/mobile/equip.html', { 'equipAlldata': data }, (err1, result) => {
+      //数据库获取到的是数组，然而模板传入数据要的是对象，所以写成  {'heros':data}
+      if (err1) {
+        res.end("err1");
+      } else {
+        res.end(result);
+      }
+    })
+  })
+}
+
+//美食页面所有数据   
+module.exports.getFoodPage = function (req, res) {
+  mymodule.getFoodAllData((err, data) => {
+    if (err) return res.end("err");
+    res.render(__dirname + '/views/mobile/food.html', { 'foodAlldata': data }, (err1, result) => {
+      //数据库获取到的是数组，然而模板传入数据要的是对象，所以写成  {'heros':data}
+      if (err1) {
+        res.end("err1");
+      } else {
+        res.end(result);
+      }
+    })
+  })
+}
+
+//美景页面所有数据   
+module.exports.getBeautifulPage = function (req, res) {
+  mymodule.getBeautifulAllData((err, data) => {
+    if (err) return res.end("err");
+    res.render(__dirname + '/views/mobile/beautiful.html', { 'beautifulAlldata': data }, (err1, result) => {
       //数据库获取到的是数组，然而模板传入数据要的是对象，所以写成  {'heros':data}
       if (err1) {
         res.end("err1");

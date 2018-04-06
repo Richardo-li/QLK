@@ -5,15 +5,22 @@
   <meta charset="UTF-8">
   <!-- 理想视窗 -->
   <meta name="viewport" content="width=device-width, initial-scale=1.0,maximum-scale=1,minimum-scale=1,user-scalable=no">
-  <title>千旅客网-美食</title>
+  <title>美食</title>
   <link rel="shortcut icon" href="jd.ico" />
   <!-- 添加ico -->
-  <link rel="stylesheet" href="lib/mui/css/mui.min.css" />
+  <link rel="stylesheet" href="mobile/lib/mui/css/mui.min.css" />
   <!-- <link rel="stylesheet" href="lib/fontAwesome/css/font-awesome.min.css" /> -->
   <!-- 字体图标用阿里巴巴的 或者 Mui icon图标 -->
-  <link rel="stylesheet" href="css/common.css" />
+  <link rel="stylesheet" href="mobile/css/common.css" />
   <!-- 公共样式 顶部侧滑的是公共的-->
-  <link rel="stylesheet" href="css/food.css" />
+  <link rel="stylesheet" href="mobile/css/food.css" />
+  <style>
+   .Picture{
+     width: 100%;
+     height: 1.8rem !important;
+   }
+  </style>
+
 </head>
 
 <body>
@@ -37,21 +44,20 @@
               </a>
             </li>
             <li class="mui-table-view-cell">
-              <a href="javascript:;" class="mui-navigate-right">
+              <a href="/register" class="mui-navigate-right">
                 注册
               </a>
             </li>
             <li class="mui-table-view-cell">
-              <a href="./user/login.html" class="mui-navigate-right">
+              <a href="/login" class="mui-navigate-right">
                 登录
               </a>
             </li>
             <li class="mui-table-view-cell">
-              <a href="./user/personalCenter.html" class="mui-navigate-right">
+              <a href="/personalCenter" class="mui-navigate-right">
                 个人中心
               </a>
             </li>
-
           </ul>
 
           <button id="offCanvasHide" type="button" class="mui-btn mui-btn-danger mui-btn-block" style="padding: 5px 10px;margin-top:40px;">关闭侧滑菜单</button>
@@ -75,44 +81,14 @@
           <ul class="mui-table-view mui-grid-view">
             <!-- <a href="https://www.baidu.com/" class="kuang"></a> -->
 
+            {{each foodAlldata}}
             <li class="mui-table-view-cell mui-media mui-col-xs-6">
               <a href="https://www.baidu.com/">
-                <img class="mui-media-object" src="./images/meishi1.jpg">
-                <div class="mui-media-body">金华美食小吃</div>
+                <img class="mui-media-object Picture" src="mobile/images/{{$value.Picture}}" >
+                <div class="mui-media-body">{{$value.Title}}</div>
               </a>
             </li>
-            <li class="mui-table-view-cell mui-media mui-col-xs-6">
-              <a href="#">
-                <img class="mui-media-object" src="./images/meishi2.jpg">
-                <div class="mui-media-body">福祥聚传统破酥</div>
-              </a>
-            </li>
-            <li class="mui-table-view-cell mui-media mui-col-xs-6">
-              <a href="#">
-                <img class="mui-media-object" src="./images/meishi3.jpg">
-                <div class="mui-media-body">街头小食</div>
-              </a>
-            </li>
-            <li class="mui-table-view-cell mui-media mui-col-xs-6">
-              <a href="#">
-                <img class="mui-media-object" src="./images/meishi4.jpg">
-                <div class="mui-media-body">香蕉薄饼</div>
-              </a>
-            </li>
-            <li class="mui-table-view-cell mui-media mui-col-xs-6">
-              <a href="#">
-                <img class="mui-media-object" src="./images/meishi5.jpg">
-                <div class="mui-media-body">炸鱼薯条</div>
-              </a>
-            </li>
-            <li class="mui-table-view-cell mui-media mui-col-xs-6">
-              <a href="#">
-                <img class="mui-media-object" src="./images/meishi6.jpg">
-                <div class="mui-media-body">香椿</div>
-              </a>
-            </li>
-
-
+            {{/each}}
 
           </ul>
         </div>
@@ -124,12 +100,12 @@
 </body>
 
 </html>
-<script src="lib/zepto/zepto.min.js"></script>
+<script src="mobile/lib/zepto/zepto.min.js"></script>
 <!-- 移动端jquery -->
-<script src="lib/mui/js/mui.min.js"></script>
+<script src="mobile/lib/mui/js/mui.min.js"></script>
 <!-- mui -->
-<script src="lib/artTemplate/template-native.js"></script>
+<script src="mobile/lib/artTemplate/template-native.js"></script>
 <!-- 模板引擎，不用拼接字符串 -->
-<script src="js/common.js"></script>
+<script src="mobile/js/common.js"></script>
 <!-- 公共js工具 包括 全局ajax工具函数 -->
-<script src="js/food.js"></script>
+<script src="mobile/js/food.js"></script>

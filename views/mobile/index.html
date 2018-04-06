@@ -5,7 +5,7 @@
   <meta charset="UTF-8">
   <!-- 理想视窗 -->
   <meta name="viewport" content="width=device-width, initial-scale=1.0,maximum-scale=1,minimum-scale=1,user-scalable=no">
-  <title>千旅客网-首页</title>
+  <title>首页</title>
   <link rel="shortcut icon" href="jd.ico" />
   <!-- 添加ico -->
   <link rel="stylesheet" href="mobile/lib/mui/css/mui.min.css" />
@@ -79,37 +79,7 @@
           <div class="mui-slider">
             <div class="mui-slider-group mui-slider-loop" id="rotation">
               <!--支持循环，需要重复图片节点-->
-              <div class="mui-slider-item mui-slider-item-duplicate">
-                <a href="#">
-                  <img src="mobile/images/4.jpg" />
-                </a>
-              </div>
-              <div class="mui-slider-item">
-                <a href="#">
-                  <img src="mobile/images/1.jpg" />
-                </a>
-              </div>
-              <div class="mui-slider-item">
-                <a href="#">
-                  <img src="mobile/images/2.jpg" />
-                </a>
-              </div>
-              <div class="mui-slider-item">
-                <a href="#">
-                  <img src="mobile/images/3.jpg" />
-                </a>
-              </div>
-              <div class="mui-slider-item">
-                <a href="#">
-                  <img src="mobile/images/4.jpg" />
-                </a>
-              </div>
-              <!--支持循环，需要重复图片节点-->
-              <div class="mui-slider-item mui-slider-item-duplicate">
-                <a href="#">
-                  <img src="mobile/images/1.jpg" />
-                </a>
-              </div>
+
             </div>
             <div class="mui-slider-indicator">
               <div class="mui-indicator mui-active"></div>
@@ -127,19 +97,19 @@
               </a>
             </li>
             <li>
-              <a href="mobile/equip.html">
+              <a href="/equip">
                 <img src="mobile/images/a4.png">
                 <p>装备</p>
               </a>
             </li>
             <li>
-              <a href="mobile/food.html">
+              <a href="/food">
                 <img src="mobile/images/a7.png">
                 <p>美食</p>
               </a>
             </li>
             <li>
-              <a href="mobile/beautiful.html">
+              <a href="/beautiful">
                 <img src="mobile/images/a8.png">
                 <p>美景</p>
               </a>
@@ -148,33 +118,7 @@
           </ul>
 
           <!-- tab 结合横向滚动 -->
-          <div id="box" >
-            <!-- <ul class="mui-scroll">
-              <li class="mui-control-item mui-active">
-                结伴
-              </li>
-              <li class="mui-control-item">
-                沙发客
-              </li>
-              <li class="mui-control-item">
-                召集令
-              </li>
-              <li class="mui-control-item">
-                游记
-              </li>
-              <li class="mui-control-item">
-                资讯
-              </li>
-              <li class="mui-control-item">
-                攻略
-              </li>
-              <li class="mui-control-item">
-                美食
-              </li>
-              <li class="mui-control-item">
-                美景
-              </li>
-            </ul> -->
+          <div id="box">
 
             <div style="display: block;">
               {{each companion}}
@@ -187,7 +131,7 @@
               {{/each}}
               <a style="height:0.8rem;line-height:0.8rem;color:#333;  " href="/companion">更多...</a>
             </div>
- 
+
           </div>
 
         </div>
@@ -265,7 +209,7 @@
       });
     }
 
-    //这里的请求会触发多次，我也不知道为什么，用个flag控制一下
+    //这里的请求会触发多次，不知道为什么，用个flag控制一下
     var flag = 0;
     $('#weatherSearch').on('focus', function () {
       flag = 1

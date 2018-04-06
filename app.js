@@ -38,7 +38,7 @@ app.listen(3000, () => {
 // next:如果执行完当前中间件的操作之后需要继续后续的操作，则需要使用next继续操作，如果没有添加next,那么操作到这里就结束了
 // 全局中间件
 app.use((req, res, next) => {             //str.indexOf("3") != -1
-  if (req.session.isLogin == true || req.url == "/login" || req.url == "/getWeather" || req.url == "/getRotation" || req.url == "/" || req.url == '/register' || req.url == '/companion' || req.url == '/editHeadportrait' || req.url.indexOf('/companionDetail') != -1) {
+  if (req.session.isLogin == true || req.url == "/login" || req.url == "/equip" || req.url == "/beautiful" || req.url == "/food" || req.url == "/getWeather" || req.url == "/getRotation" || req.url == "/" || req.url == '/register' || req.url == '/companion' || req.url == '/editHeadportrait' || req.url.indexOf('/companionDetail') != -1) {
     next(); //不需要登录的页面，直接跳过！
   } else {
     res.writeHeader(200, {
@@ -47,9 +47,6 @@ app.use((req, res, next) => {             //str.indexOf("3") != -1
     //需要登录才能使用
     res.end("<script>alert('您还没有登陆，请先登陆');location.href='/login';</script>");
   }
-
-
-
 });
 
 

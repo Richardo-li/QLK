@@ -5,13 +5,13 @@
   <meta charset="UTF-8">
   <!-- 理想视窗 -->
   <meta name="viewport" content="width=device-width, initial-scale=1.0,maximum-scale=1,minimum-scale=1,user-scalable=no">
-  <title>千旅客网-攻略</title>
+  <title>装备</title>
   <link rel="shortcut icon" href="jd.ico" />
   <!-- 添加ico -->
-  <link rel="stylesheet" href="lib/mui/css/mui.min.css" />
+  <link rel="stylesheet" href="mobile/lib/mui/css/mui.min.css" />
   <!-- <link rel="stylesheet" href="lib/fontAwesome/css/font-awesome.min.css" /> -->
   <!-- 字体图标用阿里巴巴的 或者 Mui icon图标 -->
-  <link rel="stylesheet" href="css/common.css" />
+  <link rel="stylesheet" href="mobile/css/common.css" />
   <!-- 公共样式 顶部侧滑的是公共的-->
   <style>
     .mui-table-view-cell {
@@ -42,31 +42,25 @@
           </div>
           <ul class="mui-table-view mui-table-view-chevron mui-table-view-inverted menu">
             <li class="mui-table-view-cell">
-              <a href="./#" class="mui-navigate-right">
+              <a href="/#" class="mui-navigate-right">
                 首页
               </a>
             </li>
             <li class="mui-table-view-cell">
-              <a href="javascript:;" class="mui-navigate-right">
+              <a href="/register" class="mui-navigate-right">
                 注册
               </a>
             </li>
             <li class="mui-table-view-cell">
-              <a href="./user/login.html" class="mui-navigate-right">
+              <a href="/login" class="mui-navigate-right">
                 登录
               </a>
             </li>
             <li class="mui-table-view-cell">
-              <a href="./user/personalCenter.html" class="mui-navigate-right">
+              <a href="/personalCenter" class="mui-navigate-right">
                 个人中心
               </a>
             </li>
-            <li class="mui-table-view-cell">
-              <a href="javascript:;" class="mui-navigate-right">
-                我的文章
-              </a>
-            </li>
-
           </ul>
 
           <button id="offCanvasHide" type="button" class="mui-btn mui-btn-danger mui-btn-block" style="padding: 5px 10px;margin-top:40px;">关闭侧滑菜单</button>
@@ -93,92 +87,17 @@
             <ul class="mui-table-view">
 
 
-
-
+              {{each equipAlldata}}
               <li class="mui-table-view-cell mui-media">
-                <a href="javascript:;">
-                  <img class="mui-media-object mui-pull-right" src="./images/1.jpg">
+                <a href="{{$value.Link}}">
+                  <img class="mui-media-object mui-pull-right" src="mobile/images/{{$value.img}}">
                   <div class="mui-media-body">
-                    户外纯色抓绒裤登山滑雪裤
-                    <p class="mui-ellipsis">最适合登山滑雪！</p>
+                    {{$value.Title}}
+                    <p class="mui-ellipsis">{{$value.content}}</p>
                   </div>
                 </a>
               </li>
-              <li class="mui-table-view-cell mui-media">
-                <a href="javascript:;">
-                  <img class="mui-media-object mui-pull-right" src="./images/2.jpg">
-                  <div class="mui-media-body">
-                    户外野营露营信封睡袋
-                    <p class="mui-ellipsis">可做被子午休秋冬成人睡袋超轻.</p>
-                  </div>
-                </a>
-              </li>
-              <li class="mui-table-view-cell mui-media">
-                <a href="javascript:;">
-                  <img class="mui-media-object mui-pull-right" src="./images/3.jpg">
-                  <div class="mui-media-body">
-                    正品户外提水桶
-                    <p class="mui-ellipsis">自驾游PC水桶四方车载储水矿泉水桶12L透明水桶</p>
-                  </div>
-                </a>
-              </li>
-              <li class="mui-table-view-cell mui-media">
-                <a href="javascript:;">
-                  <img class="mui-media-object mui-pull-right" src="./images/1.jpg">
-                  <div class="mui-media-body">
-                    韩国烤肉炉家用烤肉锅烧烤炉
-                    <p class="mui-ellipsis">方麦饭石烤盘卡式炉室内烧烤盘烧烤机</p>
-                  </div>
-                </a>
-              </li>
-              <li class="mui-table-view-cell mui-media">
-                <a href="javascript:;">
-                  <img class="mui-media-object mui-pull-right" src="./images/4.jpg">
-                  <div class="mui-media-body">
-                    LTVT骑行手套
-                    <p class="mui-ellipsis">山地自行车手套春夏季全指半指透气男女运动防滑装备</p>
-                  </div>
-                </a>
-              </li>
-              <li class="mui-table-view-cell mui-media">
-                <a href="javascript:;">
-                  <img class="mui-media-object mui-pull-right" src="./images/3.jpg">
-                  <div class="mui-media-body">
-                    远眺
-                    <p class="mui-ellipsis">静静的看这个世界，最后终于疯了</p>
-                  </div>
-                </a>
-              </li>
-              <li class="mui-table-view-cell mui-media">
-                <a href="javascript:;">
-                  <img class="mui-media-object mui-pull-right" src="./images/3.jpg">
-                  <div class="mui-media-body">
-                    远眺
-                    <p class="mui-ellipsis">静静的看这个世界，最后终于疯了</p>
-                  </div>
-                </a>
-              </li>
-              <li class="mui-table-view-cell mui-media">
-                <a href="javascript:;">
-                  <img class="mui-media-object mui-pull-right" src="./images/3.jpg">
-                  <div class="mui-media-body">
-                    远眺
-                    <p class="mui-ellipsis">静静的看这个世界，最后终于疯了</p>
-                  </div>
-                </a>
-              </li>
-              <li class="mui-table-view-cell mui-media">
-                <a href="javascript:;">
-                  <img class="mui-media-object mui-pull-right" src="./images/3.jpg">
-                  <div class="mui-media-body">
-                    远眺
-                    <p class="mui-ellipsis">静静的看这个世界，最后终于疯了</p>
-                  </div>
-                </a>
-              </li>
-
-
-
+              {{/each}}
 
 
             </ul>
@@ -195,13 +114,13 @@
 </body>
 
 </html>
-<script src="lib/zepto/zepto.min.js"></script>
+<script src="mobile/lib/zepto/zepto.min.js"></script>
 <!-- 移动端jquery -->
-<script src="lib/mui/js/mui.min.js"></script>
+<script src="mobile/lib/mui/js/mui.min.js"></script>
 <!-- mui -->
-<script src="lib/artTemplate/template-native.js"></script>
+<script src="mobile/lib/artTemplate/template-native.js"></script>
 <!-- 模板引擎，不用拼接字符串 -->
-<script src="js/common.js"></script>
+<script src="mobile/js/common.js"></script>
 <!-- 公共js工具 包括 全局ajax工具函数 -->
 <script>
   $(function () {

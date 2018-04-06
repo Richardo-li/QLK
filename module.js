@@ -43,6 +43,42 @@ module.exports.getCompanionAllData = function (user, callback) {
   })
 }
 
+//装备页面所有记录
+module.exports.getEquipAllData = function (callback) {
+  var sql = 'select * from equip order by ID desc';
+  connection.query(sql, (err, result) => {
+    if (err) {
+      callback(err);
+    } else {
+      callback(null, result);
+    }
+  })
+}
+
+//美食页面所有记录
+module.exports.getFoodAllData = function (callback) {
+  var sql = 'select * from food order by ID desc';
+  connection.query(sql, (err, result) => {
+    if (err) {
+      callback(err);
+    } else {
+      callback(null, result);
+    }
+  })
+}
+
+//美景页面所有记录
+module.exports.getBeautifulAllData = function (callback) {
+  var sql = 'select * from beautiful order by ID desc';
+  connection.query(sql, (err, result) => {
+    if (err) {
+      callback(err);
+    } else {
+      callback(null, result);
+    }
+  })
+}
+
 // 增加一条记录到结伴信息表
 module.exports.doAddCompanioninfo = function (newObj, callback) {
 

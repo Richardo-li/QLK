@@ -29,22 +29,9 @@ router.get('/published', handler.getPublished);  //获取会员发表过的信�
 router.post('/deleteCompanion', handler.doDeleteCompanion);  //会员删除结伴信息
 router.get('/getRotation', handler.getRotation);  //获取mobile首页轮播图
 router.post('/getWeather', handler.getWeather);  //获取天气信息
-
-
-// router.get('/', handler.getIndexPage);
-// router.post("/postUpload", handler.postUpload);
-// router.get("/add", handler.getAddPage);
-// router.post("/add", handler.doAdd);
-// router.get("/edit", handler.getEditPage);
-// router.post("/edit", handler.doEdit);
-// router.get("/del", handler.doDel);
-// router.get('/login', handler.getLoginPage);
-// router.post('/login', handler.doLogin);
-
-
-//这是另一个文件的路由 handler-register
-// router.get('/register', handlerReg.getRegisterPage);
-// router.post('/register', handlerReg.doRegister);
+router.get('/equip', handler.getEquipPage);  //装备所有记录
+router.get('/food', handler.getFoodPage);  //美食所有记录
+router.get('/beautiful', handler.getBeautifulPage);  //美景所有记录
 
 
 //向外暴露成员，供其他调用的模块使用
