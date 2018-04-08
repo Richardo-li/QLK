@@ -511,7 +511,11 @@ module.exports.getWeather = function (req, res) {
 
 }
 
-
+//渲染美食详情页面   res.render()方法渲染页面
+module.exports.getfoodDetailPage = function (req, res) {
+  res.setHeader("Content-Type", "text/html");
+  res.render(__dirname + '/views/mobile/foodDetail.html'); //res.render() 为第三方模块 express 内置的方法！
+}
 
 
 
