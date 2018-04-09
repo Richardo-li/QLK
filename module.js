@@ -219,3 +219,29 @@ module.exports.getRotationData = function (callback) {
     }
   });
 }
+
+//美食详情
+module.exports.getfoodDetailData = function (ID, callback) {
+  var sql = `select *  from food where  ID=${ID}`;
+  connection.query(sql, (err, result) => {
+    if (err) {
+      console.log(err);
+      callback(err);
+    } else {
+      callback(null, result);
+    }
+  })
+}
+
+//美景详情
+module.exports.getbeautifulDetailData = function (ID, callback) {
+  var sql = `select *  from beautiful where  ID=${ID}`;
+  connection.query(sql, (err, result) => {
+    if (err) {
+      console.log(err);
+      callback(err);
+    } else {
+      callback(null, result);
+    }
+  })
+}

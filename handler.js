@@ -511,11 +511,44 @@ module.exports.getWeather = function (req, res) {
 
 }
 
-//渲染美食详情页面   res.render()方法渲染页面
+//渲染美食详情页面  
 module.exports.getfoodDetailPage = function (req, res) {
-  res.setHeader("Content-Type", "text/html");
-  res.render(__dirname + '/views/mobile/foodDetail.html'); //res.render() 为第三方模块 express 内置的方法！
+  var url = req.url;
+  // 接收参数
+  var ID = myurl.parse(url, true).query.ID;
+  //通过CP_ID查找
+  mymodule.getfoodDetailData(ID, (err, data) => {
+    if (err) return res.end("err");
+    res.render(__dirname + '/views/mobile/foodDetail.html', { 'foodDetailData': data }, (err1, result) => {
+      //数据库获取到的是数组，然而模板传入数据要的是对象，所以写成  {'heros':data}
+      if (err1) {
+        res.end("err1");
+      } else {
+        res.end(result);
+      }
+    })
+  })
 }
+
+//渲染美景详情页面  
+module.exports.getbeautifulDetailPage = function (req, res) {
+  var url = req.url;
+  // 接收参数
+  var ID = myurl.parse(url, true).query.ID;
+  //通过CP_ID查找
+  mymodule.getbeautifulDetailData(ID, (err, data) => {
+    if (err) return res.end("err");
+    res.render(__dirname + '/views/mobile/beautifulDetail.html', { 'beautifulDetailData': data }, (err1, result) => {
+      //数据库获取到的是数组，然而模板传入数据要的是对象，所以写成  {'heros':data}
+      if (err1) {
+        res.end("err1");
+      } else {
+        res.end(result);
+      }
+    })
+  })
+}
+
 
 
 

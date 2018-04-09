@@ -39,8 +39,8 @@
       <tr>
         <th>#</th>
         <th>标题</th>
-        <th>图片</th>
         <th>内容</th>
+        <th>图片</th>
         <th>操作</th>
       </tr>
     </thead>
@@ -68,7 +68,8 @@
               <input type="text" class="form-control" placeholder="请输入标题" id="addTitle">
             </div>
             <div class="form-group">
-              <input type="text" class="form-control" placeholder="请输入内容" id="addContent">
+              <textarea name="" id="addContent" cols="61" rows="5" style="padding:10px;border:1px solid #ced4da;border-radius:5px;" placeholder="请输入内容"></textarea>
+              <!-- <input type="text" class="form-control" placeholder="请输入内容" id="addContent"> -->
             </div>
             <div class="form-group">
               <input type="file" id="img" name="img">
@@ -102,10 +103,11 @@
         <div class="modal-body">
           <form>
             <div class="form-group">
-              <input type="text" class="form-control" placeholder="请输入标题" id="checkTitle">
+              <input type="text" class="form-control" id="checkTitle">
             </div>
             <div class="form-group">
-              <input type="text" class="form-control" placeholder="请输入内容" id="checkContent">
+              <textarea name="" id="checkContent" cols="61" rows="5" style="padding:10px;border:1px solid #ced4da;border-radius:5px;"></textarea>
+              <!-- <input type="text" class="form-control" placeholder="请输入内容" id="checkContent"> -->
             </div>
             <div class="form-group">
               <img id="photo2" src="" last="" width="150" height="80" class="img-thumbnail Rotation">

@@ -5,7 +5,7 @@
   <meta charset="UTF-8">
   <!-- 理想视窗 -->
   <meta name="viewport" content="width=device-width, initial-scale=1.0,maximum-scale=1,minimum-scale=1,user-scalable=no">
-  <title>美景</title>
+  <title>美景详情</title>
   <link rel="shortcut icon" href="jd.ico" />
   <!-- 添加ico -->
   <link rel="stylesheet" href="mobile/lib/mui/css/mui.min.css" />
@@ -13,7 +13,22 @@
   <!-- 字体图标用阿里巴巴的 或者 Mui icon图标 -->
   <link rel="stylesheet" href="mobile/css/common.css" />
   <!-- 公共样式 顶部侧滑的是公共的-->
-  <link rel="stylesheet" href="mobile/css/beautiful.css" />
+  <style>
+    .mui-card-header.mui-card-media {
+      box-shadow: 0 11px 25px -13px #b1b1b1 inset;
+    }
+
+    .mui-card-header.mui-card-media .mui-media-body {
+      text-align: center;
+      margin-left: 0;
+    }
+
+    .mui_media_footer {
+      width: 100%;
+      word-wrap: break-word;
+      padding: 0.13rem;
+    }
+  </style>
 </head>
 
 <body>
@@ -65,28 +80,29 @@
 
         <a href="javascript:history.go(-1)" class="mui-icon mui-icon-back" style="color:black"></a>
 
-        <h1 class="mui-title">美景介绍 </h1>
+        <h1 class="mui-title">美景详情</h1>
 
       </header>
       <div id="offCanvasContentScroll" class="mui-content mui-scroll-wrapper">
         <div class="mui-scroll">
 
 
-          {{each beautifulAlldata}}
+          {{each beautifulDetailData}}
           <div class="mui-card">
-            <a href="/beautifulDetail?ID={{$value.ID}}">
-              <div class="mui-card-header mui-card-media" style="height:40vw;background-image:url(mobile/images/{{$value.Picture}})"></div>
-              <div class="mui-card-content">
-                <div class="mui-card-content-inner">
-                  <span style="color: #333;">{{$value.Title}}
-                  </span>
-                </div>
+            <div class="mui-card-header mui-card-media">
+              <div class="mui-media-body">
+                <h3>{{$value.Title}}</h3>
               </div>
-            </a>
+
+            </div>
+            <div class="mui-card-content">
+              <img src="mobile/images/{{$value.Picture}}" alt="" width="100%">
+            </div>
+            <div class="mui_media_footer">
+              {{$value.content}}
+            </div>
           </div>
           {{/each}}
-
-
 
 
 
@@ -107,4 +123,3 @@
 <!-- 模板引擎，不用拼接字符串 -->
 <script src="mobile/js/common.js"></script>
 <!-- 公共js工具 包括 全局ajax工具函数 -->
-<script src="mobile/js/beautiful.js"></script>

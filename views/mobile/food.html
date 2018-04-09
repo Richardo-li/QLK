@@ -83,7 +83,7 @@
 
             {{each foodAlldata}}
             <li class="mui-table-view-cell mui-media mui-col-xs-6">
-              <a href="/foodDetail">
+              <a href="/foodDetail?ID={{$value.ID}}">
                 <img class="mui-media-object Picture" src="mobile/images/{{$value.Picture}}">
                 <div class="mui-media-body">{{$value.Title}}</div>
               </a>

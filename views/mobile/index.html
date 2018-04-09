@@ -80,6 +80,46 @@
             <div class="mui-slider-group mui-slider-loop" id="rotation">
               <!--支持循环，需要重复图片节点-->
 
+
+
+              <!--支持循环，需要重复图片节点-->
+              <div class="mui-slider-item mui-slider-item-duplicate">
+                <a href="#">
+                  <img src="" />
+                </a>
+              </div>
+              <div class="mui-slider-item">
+                <a href="#">
+                  <img src="" />
+                </a>
+              </div>
+              <div class="mui-slider-item">
+                <a href="#">
+                  <img src="" />
+                </a>
+              </div>
+              <div class="mui-slider-item">
+                <a href="#">
+                  <img src="" />
+                </a>
+              </div>
+              <div class="mui-slider-item">
+                <a href="#">
+                  <img src="" />
+                </a>
+              </div>
+
+              <!--支持循环，需要重复图片节点-->
+              <div class="mui-slider-item mui-slider-item-duplicate">
+                <a href="#">
+                  <img src="" />
+                </a>
+              </div>
+
+
+
+
+
             </div>
             <div class="mui-slider-indicator">
               <div class="mui-indicator mui-active"></div>
@@ -155,9 +195,17 @@
 <!-- 公共js工具 包括 全局ajax工具函数 -->
 <script src="mobile/js/dialog.js"></script>
 <!-- 对话框 -->
-<script src="mobile/js/index.js"></script>
 <script>
   $(function () {
+
+
+    //获得slider插件对象
+    var gallery = mui('.mui-slider');
+    gallery.slider({
+      interval: 1000//自动轮播周期，若为0则不自动播放，默认为0；  
+    });
+
+
 
     getRotation();
     //获取首页轮播图

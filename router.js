@@ -33,6 +33,7 @@ router.get('/equip', handler.getEquipPage);  //装备所有记录
 router.get('/food', handler.getFoodPage);  //美食所有记录
 router.get('/beautiful', handler.getBeautifulPage);  //美景所有记录
 router.get('/foodDetail', handler.getfoodDetailPage);  //美食详情
+router.get('/beautifulDetail', handler.getbeautifulDetailPage);  //美景详情
 
 
 //向外暴露成员，供其他调用的模块使用
