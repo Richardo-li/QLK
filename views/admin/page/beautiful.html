@@ -123,8 +123,14 @@
     </div>
   </div>
 
+
+  <!-- 下面是控制分页控件，必须要是ul元素才行 -->
+  <ul id='bp-element'></ul>
+
   <script type="text/javascript" src="../common/lib/jquery-1.9.0.min.js"></script>
   <script type="text/javascript" src="/node_modules/bootstrap/dist/js/bootstrap.min.js"></script>
+  <script type="text/javascript" src="../common/lib/bootstrap-paginator.js"></script>
+  <!-- bootstrap分页插件 -->
   <script type="text/javascript" src="/node_modules/toastr/build/toastr.min.js"></script>
 </body>
 
@@ -134,15 +140,50 @@
 
     toastr.options.positionClass = 'toast-bottom-right';
 
-    getBeautifulData();
+    // test();
+    function test(currentPage, totalPages) {
+
+      var element = $('#bp-element');
+      options = {
+        bootstrapMajorVersion: 3, //对应的bootstrap版本
+        currentPage: currentPage, //当前页数，这里是用的EL表达式，获取从后台传过来的值
+        numberOfPages: 5, //每页页数
+        totalPages: totalPages, //总页数，这里是用的EL表达式，获取从后台传过来的值
+        shouldShowPage: true,//是否显示该按钮
+        itemTexts: function (type, page, current) {//设置显示的样式，默认是箭头
+          switch (type) {
+            case "first":
+              return "首页";
+            case "prev":
+              return "上一页";
+            case "next":
+              return "下一页";
+            case "last":
+              return "末页";
+            case "page":
+              return page;
+          }
+        },
+        //点击事件
+        onPageClicked: function (event, originalEvent, type, page) {
+          getBeautifulData(page);
+        }
+      };
+      element.bootstrapPaginator(options);
+    }
+
+
+    getBeautifulData(1);
 
     //获取美食信息
-    function getBeautifulData() {
+    function getBeautifulData(pageNo) {
       $.ajax({
         type: 'get',
-        url: "/beautifulAllData",
+        url: "/beautifulAllData?pageNo=" + pageNo,
         dataType: "json",
         success: function (result) {
+          console.log(result);
+
           if (result.code == 200) {
             var html = '';
             for (let i = 0; i < result.data.length; i++) {
@@ -160,6 +201,11 @@
                        </tr>`;
             }
             $('#tbody').html(html);
+
+
+            test(result.currentPage, result.total);
+
+
           } else {
             toastr.error(result.msg);
           }

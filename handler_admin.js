@@ -320,16 +320,41 @@ module.exports.getfood = function (req, res) {
 
 }
 
-//获取所有美食信息    
+//获取所有美景信息    
 module.exports.getBeautifulAllData = function (req, res) {
-  // req.session.user.LoginName;  //登录名
-  mymodule.getBeautifulAllData((err, result) => {
+  var url = req.url;
+  // 接收参数
+  var pageNo = myurl.parse(url, true).query.pageNo;
+
+
+  var total = '';
+
+  //获取总条数
+  mymodule.getBeautifulCount((err, result) => {
     if (err) {
-      return res.end(JSON.stringify({ 'code': 500, 'msg': '获取美食信息失败！' }));
+      return res.end(JSON.stringify({ 'code': 500, 'msg': '获取总条数失败！' }));
     } else {
-      return res.end(JSON.stringify({ 'code': 200, 'msg': '获取美食信息成功！', 'data': result }));
+      total = result[0].total;
+
+      // console.log(total);
+
+
+      //根据pageNo获取数据
+      mymodule.getBeautifulAllData(pageNo, (err, result) => {
+        if (err) {
+          return res.end(JSON.stringify({ 'code': 500, 'msg': '获取美景信息失败！' }));
+        } else {
+          return res.end(JSON.stringify({ 'code': 200, 'msg': '获取美景信息成功！', 'data': result, 'total': total, 'currentPage': pageNo }));
+        }
+      })
+
+
+
     }
   })
+
+
+
 
 }
 

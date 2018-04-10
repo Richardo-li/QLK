@@ -180,9 +180,23 @@ module.exports.getfoodData = function (obj, callback) {
   });
 }
 
-//获取所有美食数据
-module.exports.getBeautifulAllData = function (callback) {
-  var sql = `select * from beautiful order by ID asc`;
+//查询美景数据总条数
+module.exports.getBeautifulCount = function (callback) {
+  var sql = `select count(*) as total from beautiful`;
+  connection.query(sql, (err, result) => {
+    if (err) {
+      callback(err);
+    } else {
+      callback(null, result);
+    }
+  });
+}
+
+//获取所有美景数据
+module.exports.getBeautifulAllData = function (pageNo, callback) {
+  var page = (pageNo - 1) * 5;
+  var sql = `select * from beautiful limit ${page},5`;
+
   connection.query(sql, (err, result) => {
     if (err) {
       callback(err);
