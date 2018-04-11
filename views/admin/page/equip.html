@@ -8,6 +8,7 @@
   <title>装备管理</title>
   <link rel="stylesheet" href="/node_modules/bootstrap/dist/css/bootstrap.css">
   <link rel="stylesheet" href="/node_modules/toastr/build/toastr.css">
+  <link rel="stylesheet" href="../common/css/jquery.pagination.css">
   <style>
     .delete {
       color: blue;
@@ -43,6 +44,12 @@
     .btn {
       color: white;
     }
+
+    #myBtn {
+      position: fixed;
+      left: 10px;
+      bottom: 10px;
+    }
   </style>
 </head>
 
@@ -72,7 +79,7 @@
   </table>
 
 
-  <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal">新增</button>
+  <button id="myBtn" type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal">新增</button>
 
   <!-- 新增  模态框（Modal） -->
   <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
@@ -153,8 +160,11 @@
     </div>
   </div>
 
+  <div id="pagination1" class="page fl"></div>
+
   <script type="text/javascript" src="../common/lib/jquery-1.9.0.min.js"></script>
   <script type="text/javascript" src="/node_modules/bootstrap/dist/js/bootstrap.min.js"></script>
+  <script type="text/javascript" src="../common/lib/jquery.pagination.min.js"></script>
   <script type="text/javascript" src="/node_modules/toastr/build/toastr.min.js"></script>
 </body>
 
@@ -162,14 +172,17 @@
 <script>
   $(function () {
 
-    toastr.options.positionClass = 'toast-bottom-right';
+    toastr.options.positionClass = 'toast-top-center';
 
-    getEquipAllData();
+
+
+
+    getEquipAllData(1);
     //获取所有装备内容
-    function getEquipAllData() {
+    function getEquipAllData(pageNo) {
       $.ajax({
         type: 'get',
-        url: "/EquipAllData",
+        url: "/EquipAllData?pageNo=" + pageNo,
         dataType: "json",
         success: function (result) {
           if (result.code == 200) {
@@ -190,6 +203,17 @@
                        </tr>`;
             }
             $('#tbody').html(html);
+
+            var totalPage = Math.ceil(result.total / 5);
+            $("#pagination1").pagination({
+              currentPage: Number(result.currentPage),
+              totalPage: totalPage,
+              callback: function (current) {
+                $("#current1").text(current);
+                getEquipAllData(current);
+              }
+            });
+
           } else {
             toastr.error(result.msg);
           }
@@ -208,7 +232,7 @@
         success: function (result) {
           if (result.code == 200) {
             toastr.success(result.msg);
-            getEquipAllData();
+            getEquipAllData(1);
           } else {
             toastr.error(result.msg);
           }
@@ -230,6 +254,13 @@
         return;
       }
 
+      if (isValidURL($('#addUrl')[0].value.trim()) == false) {
+        toastr.warning('请输入有效链接！');
+        return;
+      }
+
+
+
       data = {
         Title: $('#addTitle')[0].value.trim(),
         content: $('#addContent')[0].value.trim(),
@@ -245,7 +276,11 @@
         success: function (result) {
           if (result.code == 200) {
             toastr.success('添加成功！');
-            getEquipAllData();
+
+            setTimeout(() => {
+              location.reload()
+            }, 1000);
+
             $('#addTitle')[0].value = '';
             $('#addContent')[0].value = '';
             $('#addUrl')[0].value = '';
@@ -298,9 +333,17 @@
         }
       });
 
-
-
     })
+
+
+    function isValidURL(url) {
+      var urlRegExp = /^((https|http|ftp|rtsp|mms)?:\/\/)+[A-Za-z0-9]+\.[A-Za-z0-9]+[\/=\?%\-&_~`@[\]\':+!]*([^<>\"\"])*$/;
+      if (urlRegExp.test(url)) {
+        return true;
+      } else {
+        return false;
+      }
+    }
 
 
     $('#editBtn').on('click', function () {
@@ -311,6 +354,11 @@
       }
       if ($('#editUrl')[0].value.trim() == '') {
         toastr.warning('链接不能为空！');
+        return;
+      }
+
+      if (isValidURL($('#editUrl')[0].value.trim()) == false) {
+        toastr.warning('请输入有效链接！');
         return;
       }
 
@@ -331,7 +379,9 @@
           console.log(result);
           if (result.code == 200) {
             toastr.success('修改成功！');
-            getEquipAllData();
+            setTimeout(() => {
+              location.reload()
+            }, 1000);
             $('#myModal2').modal('hide');
           } else {
             toastr.error(result.msg);

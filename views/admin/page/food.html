@@ -8,6 +8,7 @@
   <title>美食管理</title>
   <link rel="stylesheet" href="/node_modules/bootstrap/dist/css/bootstrap.css">
   <link rel="stylesheet" href="/node_modules/toastr/build/toastr.css">
+  <link rel="stylesheet" href="../common/css/jquery.pagination.css">
   <style>
     #tbody>tr>td {
       text-align: center;
@@ -28,6 +29,12 @@
       -webkit-line-clamp: 2;
       word-wrap: break-word;
       /*支持英文*/
+    }
+
+    #myBtn {
+      position: fixed;
+      left: 10px;
+      bottom: 10px;
     }
   </style>
 </head>
@@ -50,7 +57,7 @@
   </table>
 
 
-  <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal">新增</button>
+  <button id="myBtn" type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal">新增</button>
 
   <!-- 新增  模态框（Modal） -->
   <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
@@ -123,8 +130,11 @@
     </div>
   </div>
 
+  <div id="pagination1" class="page fl"></div>
+
   <script type="text/javascript" src="../common/lib/jquery-1.9.0.min.js"></script>
   <script type="text/javascript" src="/node_modules/bootstrap/dist/js/bootstrap.min.js"></script>
+  <script type="text/javascript" src="../common/lib/jquery.pagination.min.js"></script>
   <script type="text/javascript" src="/node_modules/toastr/build/toastr.min.js"></script>
 </body>
 
@@ -132,15 +142,15 @@
 <script>
   $(function () {
 
-    toastr.options.positionClass = 'toast-bottom-right';
+    toastr.options.positionClass = 'toast-top-center';
 
-    getFoodData();
+    getFoodData(1);
 
     //获取美食信息
-    function getFoodData() {
+    function getFoodData(pageNo) {
       $.ajax({
         type: 'get',
-        url: "/foodAllData",
+        url: "/foodAllData?pageNo=" + pageNo,
         dataType: "json",
         success: function (result) {
           if (result.code == 200) {
@@ -160,6 +170,16 @@
                        </tr>`;
             }
             $('#tbody').html(html);
+
+            var totalPage = Math.ceil(result.total / 5);
+            $("#pagination1").pagination({
+              currentPage: Number(result.currentPage),
+              totalPage: totalPage,
+              callback: function (current) {
+                $("#current1").text(current);
+                getFoodData(current);
+              }
+            });
           } else {
             toastr.error(result.msg);
           }
@@ -180,7 +200,7 @@
         success: function (result) {
           if (result.code == 200) {
             toastr.success(result.msg);
-            getFoodData();
+            getFoodData(1);
           } else {
             toastr.error(result.msg);
           }
@@ -192,7 +212,6 @@
 
     //新增
     $('#addBtn').on('click', function () {
-
       if ($('#addTitle')[0].value.trim() == '') {
         toastr.warning('请输入标题！');
         return;
@@ -201,13 +220,11 @@
         toastr.warning('请输入内容！');
         return;
       }
-
       data = {
         Title: $('#addTitle')[0].value.trim(),
         content: $('#addContent')[0].value.trim(),
         img: $("#photo").attr("src"),
       }
-
       $.ajax({
         type: 'post',
         url: "/addFood",
@@ -216,7 +233,9 @@
         success: function (result) {
           if (result.code == 200) {
             toastr.success('添加成功！');
-            getFoodData();
+            setTimeout(() => {
+              location.reload()
+            }, 1000);
             $('#addTitle')[0].value = '';
             $('#addContent')[0].value = '';
             $('#photo')[0].src = '';
@@ -227,7 +246,6 @@
           }
         }
       });
-
     })
 
     //新增取消
@@ -261,7 +279,6 @@
           }
         }
       });
-
     })
 
     // 当用户选择图片之后，就立即进行图片的上传（新增时）

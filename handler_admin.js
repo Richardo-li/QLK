@@ -95,14 +95,12 @@ module.exports.uploadImg = function (req, res) {
   var form = new formidable.IncomingForm();
   // 2，设置上传的目录   是当前文件的目录，handler.js
   form.uploadDir = './views/mobile/images/';
-
   form.keepExtensions = true;
-
   form.parse(req, function (err, fields, files) {
     // 获取一次传递的图片的名称
     var last = fields.last;
 
-    // 实现删除操作
+    // 实现删除操作，删除上一张不要的图片
     fs.unlink(__dirname + "/views/mobile/images/" + last, (err) => {
       res.end("没事，继续！！！");
     });
@@ -145,17 +143,28 @@ module.exports.doEditRotation = function (req, res) {
   });
 }
 
-//获取所有装备信息    
+//分页获取装备信息    
 module.exports.getEquipAllData = function (req, res) {
-  // req.session.user.LoginName;  //登录名
-  mymodule.getEquipAllData((err, result) => {
+  var url = req.url;
+  // 接收参数
+  var pageNo = myurl.parse(url, true).query.pageNo;
+  var total = '';
+  //获取总条数
+  mymodule.getEquipCount((err, result) => {
     if (err) {
-      return res.end(JSON.stringify({ 'code': 500, 'msg': '获取装备信息失败！' }));
+      return res.end(JSON.stringify({ 'code': 500, 'msg': '获取总条数失败！' }));
     } else {
-      return res.end(JSON.stringify({ 'code': 200, 'msg': '获取装备信息成功！', 'data': result }));
+      total = result[0].total;
+      //根据pageNo获取数据
+      mymodule.getEquipAllData(pageNo, (err, result) => {
+        if (err) {
+          return res.end(JSON.stringify({ 'code': 500, 'msg': '获取美景信息失败！' }));
+        } else {
+          return res.end(JSON.stringify({ 'code': 200, 'msg': '获取美景信息成功！', 'data': result, 'total': total, 'currentPage': pageNo }));
+        }
+      })
     }
   })
-
 }
 
 //删除装备信息
@@ -243,17 +252,28 @@ module.exports.doEditEquip = function (req, res) {
   });
 }
 
-//获取所有美食信息    
+//分页获取美食信息    
 module.exports.getFoodAllData = function (req, res) {
-  // req.session.user.LoginName;  //登录名
-  mymodule.getFoodAllData((err, result) => {
+  var url = req.url;
+  // 接收参数
+  var pageNo = myurl.parse(url, true).query.pageNo;
+  var total = '';
+  //获取总条数
+  mymodule.getfoodCount((err, result) => {
     if (err) {
-      return res.end(JSON.stringify({ 'code': 500, 'msg': '获取美食信息失败！' }));
+      return res.end(JSON.stringify({ 'code': 500, 'msg': '获取总条数失败！' }));
     } else {
-      return res.end(JSON.stringify({ 'code': 200, 'msg': '获取美食信息成功！', 'data': result }));
+      total = result[0].total;
+      //根据pageNo获取数据
+      mymodule.getFoodAllData(pageNo, (err, result) => {
+        if (err) {
+          return res.end(JSON.stringify({ 'code': 500, 'msg': '获取美景信息失败！' }));
+        } else {
+          return res.end(JSON.stringify({ 'code': 200, 'msg': '获取美景信息成功！', 'data': result, 'total': total, 'currentPage': pageNo }));
+        }
+      })
     }
   })
-
 }
 
 //删除美食信息
@@ -320,25 +340,18 @@ module.exports.getfood = function (req, res) {
 
 }
 
-//获取所有美景信息    
+//分页获取美景信息      
 module.exports.getBeautifulAllData = function (req, res) {
   var url = req.url;
   // 接收参数
   var pageNo = myurl.parse(url, true).query.pageNo;
-
-
   var total = '';
-
   //获取总条数
   mymodule.getBeautifulCount((err, result) => {
     if (err) {
       return res.end(JSON.stringify({ 'code': 500, 'msg': '获取总条数失败！' }));
     } else {
       total = result[0].total;
-
-      // console.log(total);
-
-
       //根据pageNo获取数据
       mymodule.getBeautifulAllData(pageNo, (err, result) => {
         if (err) {
@@ -347,15 +360,8 @@ module.exports.getBeautifulAllData = function (req, res) {
           return res.end(JSON.stringify({ 'code': 200, 'msg': '获取美景信息成功！', 'data': result, 'total': total, 'currentPage': pageNo }));
         }
       })
-
-
-
     }
   })
-
-
-
-
 }
 
 //删除美景信息

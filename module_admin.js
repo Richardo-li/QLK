@@ -58,9 +58,23 @@ module.exports.updateImg = function (obj, callback) {
   });
 }
 
-//获取所有装备数据
-module.exports.getEquipAllData = function (callback) {
-  var sql = `select * from equip order by ID asc`;
+//查询装备数据总条数
+module.exports.getEquipCount = function (callback) {
+
+  var sql = `select count(*) as total from equip`;
+  connection.query(sql, (err, result) => {
+    if (err) {
+      callback(err);
+    } else {
+      callback(null, result);
+    }
+  });
+}
+
+//分页获取装备数据
+module.exports.getEquipAllData = function (pageNo, callback) {
+  var page = (pageNo - 1) * 5;
+  var sql = `select * from equip limit ${page},5`;
   connection.query(sql, (err, result) => {
     if (err) {
       callback(err);
@@ -125,9 +139,22 @@ module.exports.doEditEquipData = function (obj, callback) {
 
 }
 
+//查询美食数据总条数
+module.exports.getfoodCount = function (callback) {
+  var sql = `select count(*) as total from food`;
+  connection.query(sql, (err, result) => {
+    if (err) {
+      callback(err);
+    } else {
+      callback(null, result);
+    }
+  });
+}
+
 //获取所有美食数据
-module.exports.getFoodAllData = function (callback) {
-  var sql = `select * from food order by ID asc`;
+module.exports.getFoodAllData = function (pageNo, callback) {
+  var page = (pageNo - 1) * 5;
+  var sql = `select * from food limit ${page},5`;
   connection.query(sql, (err, result) => {
     if (err) {
       callback(err);
@@ -196,7 +223,6 @@ module.exports.getBeautifulCount = function (callback) {
 module.exports.getBeautifulAllData = function (pageNo, callback) {
   var page = (pageNo - 1) * 5;
   var sql = `select * from beautiful limit ${page},5`;
-
   connection.query(sql, (err, result) => {
     if (err) {
       callback(err);

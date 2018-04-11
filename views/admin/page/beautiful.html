@@ -8,6 +8,8 @@
   <title>美景管理</title>
   <link rel="stylesheet" href="/node_modules/bootstrap/dist/css/bootstrap.css">
   <link rel="stylesheet" href="/node_modules/toastr/build/toastr.css">
+  <link rel="stylesheet" href="../common/css/jquery.pagination.css">
+
   <style>
     #tbody>tr>td {
       text-align: center;
@@ -28,6 +30,12 @@
       -webkit-line-clamp: 2;
       word-wrap: break-word;
       /*支持英文*/
+    }
+
+    #myBtn{
+      position: fixed;
+      left: 10px;
+      bottom: 10px;
     }
   </style>
 </head>
@@ -50,7 +58,7 @@
   </table>
 
 
-  <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal">新增</button>
+  <button id="myBtn" type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal">新增</button>
 
   <!-- 新增  模态框（Modal） -->
   <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
@@ -124,13 +132,12 @@
   </div>
 
 
-  <!-- 下面是控制分页控件，必须要是ul元素才行 -->
-  <ul id='bp-element'></ul>
+  <div id="pagination1" class="page fl"></div>
+
 
   <script type="text/javascript" src="../common/lib/jquery-1.9.0.min.js"></script>
   <script type="text/javascript" src="/node_modules/bootstrap/dist/js/bootstrap.min.js"></script>
-  <script type="text/javascript" src="../common/lib/bootstrap-paginator.js"></script>
-  <!-- bootstrap分页插件 -->
+  <script type="text/javascript" src="../common/lib/jquery.pagination.min.js"></script>
   <script type="text/javascript" src="/node_modules/toastr/build/toastr.min.js"></script>
 </body>
 
@@ -138,43 +145,9 @@
 <script>
   $(function () {
 
-    toastr.options.positionClass = 'toast-bottom-right';
-
-    // test();
-    function test(currentPage, totalPages) {
-
-      var element = $('#bp-element');
-      options = {
-        bootstrapMajorVersion: 3, //对应的bootstrap版本
-        currentPage: currentPage, //当前页数，这里是用的EL表达式，获取从后台传过来的值
-        numberOfPages: 5, //每页页数
-        totalPages: totalPages, //总页数，这里是用的EL表达式，获取从后台传过来的值
-        shouldShowPage: true,//是否显示该按钮
-        itemTexts: function (type, page, current) {//设置显示的样式，默认是箭头
-          switch (type) {
-            case "first":
-              return "首页";
-            case "prev":
-              return "上一页";
-            case "next":
-              return "下一页";
-            case "last":
-              return "末页";
-            case "page":
-              return page;
-          }
-        },
-        //点击事件
-        onPageClicked: function (event, originalEvent, type, page) {
-          getBeautifulData(page);
-        }
-      };
-      element.bootstrapPaginator(options);
-    }
-
+    toastr.options.positionClass = 'toast-top-center';
 
     getBeautifulData(1);
-
     //获取美食信息
     function getBeautifulData(pageNo) {
       $.ajax({
@@ -182,8 +155,6 @@
         url: "/beautifulAllData?pageNo=" + pageNo,
         dataType: "json",
         success: function (result) {
-          console.log(result);
-
           if (result.code == 200) {
             var html = '';
             for (let i = 0; i < result.data.length; i++) {
@@ -201,10 +172,15 @@
                        </tr>`;
             }
             $('#tbody').html(html);
-
-
-            test(result.currentPage, result.total);
-
+            var totalPage = Math.ceil(result.total / 5);
+            $("#pagination1").pagination({
+              currentPage: Number(result.currentPage),
+              totalPage: totalPage,
+              callback: function (current) {
+                $("#current1").text(current);
+                getBeautifulData(current);
+              }
+            });
 
           } else {
             toastr.error(result.msg);
@@ -226,7 +202,7 @@
         success: function (result) {
           if (result.code == 200) {
             toastr.success(result.msg);
-            getBeautifulData();
+            getBeautifulData(1);
           } else {
             toastr.error(result.msg);
           }
@@ -262,12 +238,17 @@
         success: function (result) {
           if (result.code == 200) {
             toastr.success('添加成功！');
-            getBeautifulData();
+
+            setTimeout(() => {
+              location.reload()
+            }, 1000);
+
             $('#addTitle')[0].value = '';
             $('#addContent')[0].value = '';
             $('#photo')[0].src = '';
             $('#img').val('');
-            $('#myModal').modal('hide')
+            $('#myModal').modal('hide');
+
           } else {
             toastr.error('添加失败！');
           }
