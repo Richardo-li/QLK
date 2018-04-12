@@ -23,6 +23,6 @@ ul li {
 }
 
 .menu{
-margin-top: 2.8rem;
+margin-top: 2.8rem !important;
 margin-bottom: .2rem;
 }

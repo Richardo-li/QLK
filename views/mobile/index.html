@@ -6,11 +6,10 @@
   <!-- 理想视窗 -->
   <meta name="viewport" content="width=device-width, initial-scale=1.0,maximum-scale=1,minimum-scale=1,user-scalable=no">
   <title>首页</title>
-  <link rel="shortcut icon" href="jd.ico" />
+  <link rel="shortcut icon" href="mobile/favicon.ico" />
   <!-- 添加ico -->
   <link rel="stylesheet" href="mobile/lib/mui/css/mui.min.css" />
   <!-- <link rel="stylesheet" href="lib/fontAwesome/css/font-awesome.min.css" /> -->
-  <!-- 字体图标用阿里巴巴的 或者 Mui icon图标 -->
   <link rel="stylesheet" href="mobile/css/common.css" />
   <!-- 公共样式 顶部侧滑的是公共的-->
   <link rel="stylesheet" href="mobile/css/index.css" />
@@ -29,7 +28,7 @@
 
           <p style="color:white;font-size:.38rem;margin:.2rem 0 .2rem .2rem;">名言</p>
           <div style="color:#bbb;font-size:.23rem;padding:0 .2rem .2rem .2rem;text-align:left;">
-            人生至少要有两次冲动，一为奋不顾身的爱情，一为说走就走的旅行。
+            愿你出走半生，归来仍是少年。
           </div>
           <ul class="mui-table-view mui-table-view-chevron mui-table-view-inverted menu">
             <li class="mui-table-view-cell">
@@ -78,9 +77,6 @@
           <!-- 轮播图 -->
           <div class="mui-slider">
             <div class="mui-slider-group mui-slider-loop" id="rotation">
-              <!--支持循环，需要重复图片节点-->
-
-
 
               <!--支持循环，需要重复图片节点-->
               <div class="mui-slider-item mui-slider-item-duplicate">
@@ -115,9 +111,6 @@
                   <img src="" />
                 </a>
               </div>
-
-
-
 
 
             </div>
@@ -159,7 +152,6 @@
 
           <!-- tab 结合横向滚动 -->
           <div id="box">
-
             <div style="display: block;">
               {{each companion}}
               <a href="/companionDetail?CP_ID={{$value.CP_ID}}">
@@ -169,7 +161,7 @@
                 <span>{{$value.Content}}</span>
               </a>
               {{/each}}
-              <a style="height:0.8rem;line-height:0.8rem;color:#333;  " href="/companion">更多...</a>
+              <a style="height:0.8rem;line-height:0.8rem;color:#333;text-align: center;" href="/companion">更多...</a>
             </div>
 
           </div>
@@ -197,15 +189,11 @@
 <!-- 对话框 -->
 <script>
   $(function () {
-
-
     //获得slider插件对象
     var gallery = mui('.mui-slider');
     gallery.slider({
       interval: 1000//自动轮播周期，若为0则不自动播放，默认为0；  
     });
-
-
 
     getRotation();
     //获取首页轮播图
@@ -257,14 +245,14 @@
       });
     }
 
-    //这里的请求会触发多次，不知道为什么，用个flag控制一下
+    //天气搜索
     var flag = 0;
     $('#weatherSearch').on('focus', function () {
       flag = 1
       $(document).keyup(function (e) {//捕获文档对象的按键弹起事件  
         if (e.keyCode == 13) {//按键信息对象以参数的形式传递进来了 
           if (flag == 1) {
-            console.log('6666666666');
+            // console.log('6666666666');
             var data = {};
             data.city = $('#weatherSearch')[0].value.trim();
             $.ajax({
@@ -274,7 +262,7 @@
               dataType: "json",
               success: function (result) {
                 if (result.code == 200) {
-                  console.log(result.data.weatherinfo);
+                  // console.log(result.data.weatherinfo);
                   var info = result.data.weatherinfo;
                   $.dialog({
                     width: '100px',
